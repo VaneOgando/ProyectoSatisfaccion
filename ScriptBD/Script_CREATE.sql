@@ -11,8 +11,9 @@ CREATE TABLE ENCUESTA(
 
 	idEncuesta 			INT 		NOT NULL,
 	encuesta			VARCHAR(50) NOT NULL,
-	titulo				VARCHAR(50),
+	titulo				VARCHAR(250),
 	descripcion			VARCHAR(500),
+	evaluacion			CHAR(1)		NOT NULL,
 	usuarioCreador		VARCHAR(50) NOT NULL,
 	fechaCreacion		DATE		NOT NULL,
 	
@@ -32,8 +33,9 @@ CREATE TABLE ENVIO(
 CREATE TABLE OPCION(
 
 	idOpcion 			INT 		 NOT NULL,
-	opcion				VARCHAR(100) NOT NULL,
-		
+	opcion				VARCHAR(250) NOT NULL,
+	valor				FLOAT,
+	
 	CONSTRAINT opcion_pk PRIMARY KEY (idOpcion)
 );
 
@@ -43,6 +45,7 @@ CREATE TABLE PREGUNTA(
 	titulo				VARCHAR(250) NOT NULL,
 	ayuda				VARCHAR(250),
 	tipo				VARCHAR(50)  NOT NULL,
+	evaluacion			CHAR(1)		 NOT NULL,
 	estado				CHAR(1) 	 NOT NULL,
 	usuarioCreador		VARCHAR(50)  NOT NULL,
 	fechaCreacion		DATE		 NOT NULL,
@@ -53,7 +56,7 @@ CREATE TABLE PREGUNTA(
 CREATE TABLE PROYECTO(
 
 	idProyecto 			INT 		 NOT NULL,
-	proyecto			VARCHAR(100) NOT NULL,
+	proyecto			VARCHAR(250) NOT NULL,
 		
 	CONSTRAINT proyecto_pk PRIMARY KEY (idProyecto)
 );
@@ -63,6 +66,7 @@ CREATE TABLE RESPUESTA(
 	idRespuesta			INT 		 NOT NULL,
 	observacion			VARCHAR(500),
 	valoracion			FLOAT,
+	usuarioEvaluado 	VARCHAR(50),
 			
 	CONSTRAINT respuesta_pk PRIMARY KEY (idRespuesta)
 );
