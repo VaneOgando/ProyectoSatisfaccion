@@ -80,20 +80,20 @@ body {
 .detalleDivDerecho{
 
     position: relative;
-    width: 70%;
-    float: right;
+    width: 60%;
+    float: left;
     margin-bottom: 2%;
+    margin-top: 2%;
     display: table-column;
 }
 
 .detalleDivIzquierdo{
 
-    position: absolute;
-    width: 30%;
+    position: relative;
+    width: 40%;
+    float: left;
     margin-bottom: 2%;
     margin-top: 2%;
-    top: 0px;
-    bottom: 0px;
     display: table-column;
 }
 
