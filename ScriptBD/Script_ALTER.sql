@@ -6,8 +6,8 @@ ALTER TABLE ENC_PRE	ADD CONSTRAINT ep_fkEncuesta	FOREIGN KEY (fkEncuesta)		REFER
 ALTER TABLE ENC_PRE	ADD CONSTRAINT ep_fkPregunta	FOREIGN KEY (fkPregunta)		REFERENCES PREGUNTA (idPregunta);
 
 
-ALTER TABLE ENCUESTA ADD CONSTRAINT enc_evaluacion_check
-  CHECK (evaluacion IN ('S', 'N'));
+ALTER TABLE ENCUESTA ADD CONSTRAINT enc_tipoEncuesta_check
+  CHECK (tipoEncuesta IN ('N', 'E'));
 
 
 ALTER TABLE ENVIO 	ADD fkEncuesta 		INT NOT NULL;
@@ -26,10 +26,10 @@ ALTER TABLE OPCION	ADD CONSTRAINT opc_fkPregunta	FOREIGN KEY (fkPregunta)		REFER
 
 ALTER TABLE PREGUNTA ADD CONSTRAINT pre_estado_check
   CHECK (estado IN ('A', 'I'));
-ALTER TABLE PREGUNTA ADD CONSTRAINT pre_tipo_check
-  CHECK (tipo IN ('abierta', 'simple', 'ranking'));
-ALTER TABLE PREGUNTA ADD CONSTRAINT pre_evaluacion_check
-  CHECK (evaluacion IN ('S', 'N'));
+ALTER TABLE PREGUNTA ADD CONSTRAINT pre_tipoPregunta_check
+  CHECK (tipoPregunta IN ('abierta', 'simple', 'ranking'));
+ALTER TABLE PREGUNTA ADD CONSTRAINT pre_tipoEncuesta_check
+  CHECK (tipoEncuesta IN ('N', 'E'));
 
 
 ALTER TABLE RESPUESTA 	ADD fkPregunta	INT NOT NULL;

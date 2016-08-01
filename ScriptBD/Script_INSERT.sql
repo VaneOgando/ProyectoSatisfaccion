@@ -112,8 +112,8 @@ INSERT INTO RESPUESTA VALUES (respuesta_seq.nextval, 'Muchas felicidades por sus
 
 /*PREGUNTA*/
 
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la PUNTUALIDAD del recurso?', 'Apoyarse en los registros de entrada y salida del PM', 'simple', 'S', 'A', 'Ricardo', '01/01/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el desempeño del recurso?', 'Tome en cuenta todos los aspectos valorados por la empresa', 'ranking', 'S', 'A', 'Ricardo', '01/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la PUNTUALIDAD del recurso?', 'Apoyarse en los registros de entrada y salida del PM', 'simple', 'E', 'A', 'Ricardo', '01/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el desempeño del recurso?', 'Tome en cuenta todos los aspectos valorados por la empresa', 'ranking', 'E', 'A', 'Ricardo', '01/01/2016');
 
 
 /*OPCION*/
@@ -126,7 +126,7 @@ INSERT INTO OPCION VALUES (opcion_seq.nextval, 'Deficiente', 1, 7 );
 
 /*ENCUESTA*/
 
-INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'evaluacion TCS', 'Evaluacion mensual a miembros del equipo de TCS', null, 'S', 'Ricardo', '01/01/2016' );
+INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'evaluacion TCS', 'Evaluacion mensual a miembros del equipo de TCS', null, 'E', 'Ricardo', '01/01/2016' );
 
 
 /*ENC_PRE*/
