@@ -18,7 +18,7 @@ import java.util.List;
 						"ORDER BY p.estado, p.fechaCreacion DESC "),
 
 		@NamedQuery(name = "HQL_PREGUNTA_POR_ID",
-				query = "SELECT p FROM PreguntaEntity p join fetch p.opciones o " +
+				query = "SELECT p FROM PreguntaEntity p " +
 						"WHERE p.id = :idPregunta")
 
 })

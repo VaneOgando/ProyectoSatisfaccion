@@ -19,98 +19,99 @@
 
 			<div class="detalleDivIzquierdo">
 
-				<p:panelGrid styleClass="font panelInvisible" style=" vertical-align: middle">
+				<p:panelGrid styleClass="font panelInvisible" style=" height: 100%;">
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Estado:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="Activa" rendered="#{detallePreguntaBean.pregunta.estado.equals('A')}"/>
-							<h:outputLabel value="Inactiva" rendered="#{detallePreguntaBean.pregunta.estado.equals('I')}"/>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Estado:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="Activa" rendered="#{detallePreguntaBean.pregunta.estado.equals('A')}"/>
+						<h:outputLabel value="Inactiva" rendered="#{detallePreguntaBean.pregunta.estado.equals('I')}"/>
+					</p:column>
+				</p:row>
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Pregunta:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="#{detallePreguntaBean.pregunta.tipoPregunta}"/>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Pregunta:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="#{detallePreguntaBean.pregunta.tipoPregunta}"/>
+					</p:column>
+				</p:row>
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Encuesta:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="Normal" rendered="#{detallePreguntaBean.pregunta.tipoEncuesta.equals('N')}"/>
-							<h:outputLabel value="Evaluacion" rendered="#{detallePreguntaBean.pregunta.tipoEncuesta.equals('E')}"/>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Encuesta:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="Normal" rendered="#{detallePreguntaBean.pregunta.tipoEncuesta.equals('N')}"/>
+						<h:outputLabel value="Evaluacion" rendered="#{detallePreguntaBean.pregunta.tipoEncuesta.equals('E')}"/>
+					</p:column>
+				</p:row>
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Respuestas obtenidas:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="#{detallePreguntaBean.respuestas}"/>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Respuestas obtenidas:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="#{detallePreguntaBean.respuestas}"/>
+					</p:column>
+				</p:row>
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Usuario creador:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="#{detallePreguntaBean.pregunta.usuarioCreador}"/>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Usuario creador:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="#{detallePreguntaBean.pregunta.usuarioCreador}"/>
+					</p:column>
+				</p:row>
 
-					<p:row>
-						<p:column styleClass="panelColumnaIzq">
-							<h:outputLabel value="Fecha creacion:"/>
-						</p:column>
-						<p:column styleClass="panelColumnaDer">
-							<h:outputLabel value="#{detallePreguntaBean.pregunta.fechaCreacion}">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-							</h:outputLabel>
-						</p:column>
-					</p:row>
+				<p:row>
+					<p:column styleClass="panelColumnaIzq">
+						<h:outputLabel value="Fecha creacion:"/>
+					</p:column>
+					<p:column styleClass="panelColumnaDer">
+						<h:outputLabel value="#{detallePreguntaBean.pregunta.fechaCreacion}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						</h:outputLabel>
+					</p:column>
+				</p:row>
 
-				</p:panelGrid>
+			</p:panelGrid>
 
 			</div>
 
 			<div class="detalleDivDerecho">
 
-				<span>#{detallePreguntaBean.pregunta.titulo}</span>
+				<div class="tituloPregunta">
+					<span>#{detallePreguntaBean.pregunta.titulo}</span>
+				</div>
 
 				<br/>
 
-				<span>#{detallePreguntaBean.pregunta.ayuda}</span>
+				<div class="ayudaPregunta">
+					<span>#{detallePreguntaBean.pregunta.ayuda}</span>
+				</div>
 
 				<br/>
 
-				<c:if test="#{detallePreguntaBean.pregunta.tipoPregunta.equals('simple')}">
-					<ul class="listaOpciones">
-						<ui:repeat value="#{detallePreguntaBean.pregunta.opciones}" var="opcion">
-							<li style="margin-bottom: 1%">
-								<h:outputLabel value="#{opcion.titulo}"/>
-							</li>
-						</ui:repeat>
-					</ul>
 
-				</c:if>
+				<ul class="listaOpciones">
+
+					<ui:repeat value="#{detallePreguntaBean.opciones}" var="opcion">
+						<li style="margin-bottom: 2%">#{opcion.titulo}</li>
+					</ui:repeat>
+
+				</ul>
 
 
 			</div>
 
-
 		</div>
 
-		<div class="contenedorDetalle">
+		<div class="contenedorBotonesDetalle">
 			<div id="botonesDetalle" class="detalleBotones">
 
 			<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
@@ -121,10 +122,10 @@
 						</p:commandButton>
 					</p:column>
 					<p:column>
-						<p:commandButton id="analizar" value="Analizar" immediate="true"  onclick="bloquear(this)" />
+						<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this);" action="#{detallePreguntaBean.analizar}" update="DialogoMensaje"/>
 					</p:column>
 					<p:column>
-						<p:commandButton id="eliminar" value="Eliminar" immediate="true" onclick="bloquear(this);" />
+						<p:commandButton id="eliminar" value="Eliminar" immediate="true" onclick="bloquear(this);"  action="#{detallePreguntaBean.eliminar}" update="DialogoMensaje" />
 					</p:column>
 				</p:row>
 			</p:panelGrid>

@@ -9,6 +9,10 @@ import java.util.List;
 
 @NamedQueries(value={
 
+		@NamedQuery(name = "HQL_OPCION_POR_PREGUNTA",
+				query = "SELECT o FROM OpcionEntity o join o.pregunta p " +
+						"WHERE p.id = :idPregunta ")
+
 
 })
 

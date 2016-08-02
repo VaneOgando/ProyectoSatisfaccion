@@ -36,7 +36,17 @@ public class DetallePreguntaServicio {
 	}
 
 	@Transactional
-	public int consultarNumeroRespuestas(int idPregunta) throws DataAccessException {
+	public List<OpcionEntity> consultarOpcionesPreg(int idPregunta) throws DataAccessException {
+
+		List<OpcionEntity> resultList = getEntityManager().createNamedQuery("HQL_OPCION_POR_PREGUNTA")
+				.setParameter("idPregunta", idPregunta)
+				.getResultList();
+
+		return resultList;
+	}
+
+	@Transactional
+	public int consultarNumRespuestasPreg(int idPregunta) throws DataAccessException {
 
 		List<Object> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_PREGUNTA_NUMERO")
 				.setParameter("idPregunta", idPregunta)

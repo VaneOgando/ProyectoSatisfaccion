@@ -58,7 +58,16 @@ body {
     padding: 3px; !important;
 }
 
+.ui-button.botonMensaje{
+    font-size: small; !important;
+    float: right;
+}
 
+.textoMensaje{
+    margin-bottom: 2%;
+    max-width: 80%;
+    max-height: 75%;
+}
 
 
 /*CONSULTA PREGUNTA*/
@@ -80,27 +89,43 @@ body {
 .detalleDivDerecho{
 
     position: relative;
-    width: 60%;
-    float: left;
+    width: 65%;
+    float: right;
     margin-bottom: 2%;
     margin-top: 2%;
     display: table-column;
+}
+
+.tituloPregunta{
+
+    font-weight: bold;
+    font-size: 40px;
+    text-align: justify;
+    margin-right: 5%;
+}
+
+.ayudaPregunta{
+
+    font-size: 15px;
+    text-indent: 50px;
+}
+
+.listaOpciones{
+
+    font-size: 20px;
+    margin-left: 8%;
 }
 
 .detalleDivIzquierdo{
 
-    position: relative;
-    width: 40%;
+    position: absolute;
+    width: 35%;
     float: left;
     margin-bottom: 2%;
     margin-top: 2%;
+    top: 0;
+    bottom: 0;
     display: table-column;
-}
-
-.detalleBotones{
-    display: table-row;
-    margin-top: 3%;
-    border: none;
 }
 
 .panelColumnaIzq{
@@ -114,19 +139,21 @@ body {
     font-size: medium;
 }
 
-.tituloPregunta{
+.contenedorBotonesDetalle{
 
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: table;
 }
 
-.ayudaPregunta{
-
+.detalleBotones{
+    display: table-row;
+    margin-top: 3%;
+    border: none;
 }
 
-.listaOpciones{
 
-    font-size: larger;
-    margin-left: 20%;
-}
 
 
 
