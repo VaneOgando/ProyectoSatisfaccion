@@ -3,15 +3,13 @@ package com.satisfaccion.primefaces.beans;
 import com.satisfaccion.jpa.data.*;
 import com.satisfaccion.spring.service.ConsultarPreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
+import com.satisfaccion.util.comun.MensajesComun;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 @ManagedBean

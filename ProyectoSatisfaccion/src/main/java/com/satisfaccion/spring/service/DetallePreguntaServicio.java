@@ -36,13 +36,28 @@ public class DetallePreguntaServicio {
 	}
 
 	@Transactional
-	public List<OpcionEntity> consultarOpcionesPreg(int idPregunta) throws DataAccessException {
+	public List<OpcionEntity> consultarOpciones(int idPregunta) throws DataAccessException {
 
 		List<OpcionEntity> resultList = getEntityManager().createNamedQuery("HQL_OPCION_POR_PREGUNTA")
 				.setParameter("idPregunta", idPregunta)
 				.getResultList();
 
 		return resultList;
+	}
+
+	@Transactional
+	public int consultarNumRespuestas(int idPregunta) throws DataAccessException {
+
+		List<Object> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_PREGUNTA_NUMERO")
+				.setParameter("idPregunta", idPregunta)
+				.getResultList();
+
+		if(resultList.size() < 1){
+			return 0;
+		}else{
+			return Integer.parseInt(resultList.get(0).toString());
+		}
+
 	}
 
 	@Transactional
@@ -56,6 +71,34 @@ public class DetallePreguntaServicio {
 			return 0;
 		}else{
 			return Integer.parseInt(resultList.get(0).toString());
+		}
+
+	}
+
+	@Transactional
+	public boolean eliminarPregunta(boolean eliminar, PreguntaEntity pregunta) throws DataAccessException {
+
+		try{
+
+			if (eliminar){
+				//Remove solo funciona si se conoce la entidad, no se puede eliinar en una transaccion nueva
+				entityManager.remove(entityManager.contains(pregunta) ? pregunta : entityManager.merge(pregunta));
+			}else{
+				pregunta.setEstado("I");
+				entityManager.merge(pregunta);
+			}
+
+			eliminar = true;
+
+		}catch(Exception e){
+			eliminar = false;
+			throw e;
+
+		}finally {
+
+			entityManager.close();
+			return eliminar;
+
 		}
 
 	}

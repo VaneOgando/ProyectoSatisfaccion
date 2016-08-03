@@ -17,8 +17,10 @@ public class Constantes {
 
     /*CONSTANTES*/
 
-    public static final String D_DESC_HISTORIAL_CREACION_EQ  = "Creación del equipo ";
-    public static final String D_DESC_HISTORIAL_CREACION_ACC = "Creación del accesorio ";
+    public static final String MENSAJE_TIPO_EXITO  = "Éxito";
+    public static final String MENSAJE_TIPO_ERROR  = "Error";
+
+
 
     public static final String REPORTE_ASIGNACION = "cartaAsignacionRecurso.jasper";
     public static final String REPORTE_DEVOLUCION = "cartaDevolucionRecurso.jasper";
@@ -32,9 +34,10 @@ public class Constantes {
 
     /*ERRORES*/
     public static final String ERR_LOGIN_INVALIDO = "Usuario y/o contraseña invalida";
-    public static final String ERR_CREAR = "ERROR! No se pudo ingresar el recurso";
-    public static final String ERR_RECURSO_ELIMINADO = "ERROR! Este recurso se encuentra fuera del satisfaccion";
-    public static final String ERR_RECURSO_ASIGNADO = "ERROR! Este recurso se encuentra asignado, por favor realizar su respectiva devolución";
+
+    public static final String ERR_ELIMINAR_DEFINITIVO = "";
+    public static final String ERR_ELIMINAR_DESACTIVAR = "";
+    public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
     public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
     public static final String ERR_SELECCION_ITEM = "ERROR! Seleccione un item";
     public static final String ERR_SELECCION_RECURSO = "ERROR! Por favor seleccione un recurso a gestionar";
@@ -43,8 +46,11 @@ public class Constantes {
 
 
     /*EXITO*/
-    public static final String EX_CREAR = "EXITO! El recurso se ingreso satisfactoriamente";
-    public static final String EX_CAMBIO_ESTADO = "EXITO! El estado se cambio satisfactoriamente";
+    public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta fue eliminada definitivamente exitosamente.";
+    public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta fue desactivada exitosamente, la misma no podra ser agregada ni respondida en ninguna pregunta.";
+
+
+
     public static final String EX_GESTION = "EXITO! El/los recurso(s) se gestionaron satisfactoriamente";
     public static final String EX_MODIFICAR = "EXITO! El recurso se modifico satisfactoriamente";
 

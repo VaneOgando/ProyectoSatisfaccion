@@ -75,15 +75,18 @@
 				<div id="mensajes">
 					<h:form id="DialogoMensaje">
 
-						<p:dialog id="Mensaje" header="#{comunBean.tipoMensaje}" widgetVar="mensaje" modal="true" closable="false" draggable="false"
-								  visible="true" resizable="false" appendTo="@(body)" rendered="#{comunBean.mensaje != null}">
+						<p:dialog id="Mensaje" header="#{mensajesComun.tipoMensaje}" widgetVar="mensaje" modal="true" closable="false" draggable="false"
+								  visible="true" resizable="false" appendTo="@(body)" rendered="#{mensajesComun.mensaje != null}" styleClass="dialogoMensaje">
 
 							<div class="textoMensaje">
-								<h:outputText value="#{comunBean.mensaje}" />
+								<h:outputText value="#{mensajesComun.mensaje}" />
 							</div>
 
-							<p:commandButton value="Aceptar" styleClass="botonMensaje" onclick="javascript:PF('mensaje').hide()"
-											 action="#{comunBean.limpiarMenajes}"/>
+							<div class="botonMensaje">
+								<p:commandButton value="Aceptar" onclick="javascript:PF('mensaje').hide()"
+											 action="#{mensajesComun.limpiarMenajes}"/>
+							</div>
+
 						</p:dialog>
 
 					</h:form>

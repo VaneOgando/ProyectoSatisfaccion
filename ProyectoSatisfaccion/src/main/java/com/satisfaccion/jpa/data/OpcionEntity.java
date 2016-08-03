@@ -1,6 +1,13 @@
 package com.satisfaccion.jpa.data;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.List;
 
 
@@ -27,8 +34,9 @@ public class OpcionEntity {
 	@Column(name = "VALOR")
 	private Float valor;
 
-	@ManyToOne(optional = true)
+	@ManyToOne
 	@JoinColumn(name = "FKPREGUNTA")
+	@Cascade(CascadeType.ALL)
 	private PreguntaEntity pregunta;
 
 	@OneToMany(mappedBy = "opcion", fetch = FetchType.LAZY)

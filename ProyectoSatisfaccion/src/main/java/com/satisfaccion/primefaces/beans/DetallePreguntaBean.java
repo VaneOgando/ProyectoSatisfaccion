@@ -2,13 +2,10 @@ package com.satisfaccion.primefaces.beans;
 
 import com.satisfaccion.jpa.data.OpcionEntity;
 import com.satisfaccion.jpa.data.PreguntaEntity;
-import com.satisfaccion.spring.service.ConsultarPreguntaServicio;
 import com.satisfaccion.spring.service.DetallePreguntaServicio;
-import com.satisfaccion.primefaces.beans.ComunBean;
 import com.satisfaccion.util.comun.Constantes;
-import org.primefaces.context.RequestContext;
+import com.satisfaccion.util.comun.MensajesComun;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -23,35 +20,64 @@ public class DetallePreguntaBean{
 	@ManagedProperty("#{detallePreguntaServicio}")
 	private DetallePreguntaServicio detallePreguntaServicio;
 
-	@ManagedProperty(value="#{comunBean}")
-	private ComunBean comunBean;
+	@ManagedProperty(value="#{mensajesComun}")
+	private MensajesComun mensajesComun;
 
 	private PreguntaEntity pregunta = new PreguntaEntity();
 	private List<OpcionEntity> opciones = new ArrayList<OpcionEntity>();
 	private int respuestas = 0;
 
+	private boolean eliminar = false;
 
 	/*METODOS*/
 
 	public void cargarDetallePregunta() {
 
 		pregunta = detallePreguntaServicio.consultarPregunta(pregunta.getId());
-		opciones = detallePreguntaServicio.consultarOpcionesPreg(pregunta.getId());
-		respuestas = detallePreguntaServicio.consultarNumRespuestasPreg(pregunta.getId());
+		opciones = detallePreguntaServicio.consultarOpciones(pregunta.getId());
+		respuestas = detallePreguntaServicio.consultarNumRespuestas(pregunta.getId());
 
 	}
 
-	public void analizar(){
+	public void bt_eliminarPregunta(){
 
-	comunBean.setTipoMensaje("Exito");
-		comunBean.setMensaje("Ya se encuentran registradas respuestas para esta pregunta, por lo que no puede ser modificada ni eliminada. La misma fue desactivada y no podra ser utilizada en futuras encuestas.");
+		if (pregunta.getEstado().equals("A")){
 
-	}
+			if (respuestas > 0){
+				//Desactivar pregunta
 
-	public void eliminar(){
+				eliminar = detallePreguntaServicio.eliminarPregunta(false, pregunta);
 
-		comunBean.setTipoMensaje("Error");
-		comunBean.setMensaje("mensaje prueba de error");
+				if (eliminar){
+					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
+					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DESACTIVAR);
+				}else{
+					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
+					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DESACTIVAR);
+				}
+
+
+			}else{
+				//Eliminar pregunta
+
+				eliminar = detallePreguntaServicio.eliminarPregunta(true, pregunta);
+
+				if (eliminar){
+					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
+					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DEFINITIVO);
+				}else{
+					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
+					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DEFINITIVO);
+				}
+
+			}
+
+		}else{
+
+			mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
+			mensajesComun.setMensaje(Constantes.ERR_PREGUNTA_INACTIVA);
+
+		}
 
 	}
 
@@ -67,12 +93,12 @@ public class DetallePreguntaBean{
 		this.detallePreguntaServicio = detallePreguntaServicio;
 	}
 
-	public ComunBean getComunBean() {
-		return comunBean;
+	public MensajesComun getMensajesComun() {
+		return mensajesComun;
 	}
 
-	public void setComunBean(ComunBean comunBean) {
-		this.comunBean = comunBean;
+	public void setMensajesComun(MensajesComun mensajesComun) {
+		this.mensajesComun = mensajesComun;
 	}
 
 	public PreguntaEntity getPregunta() {
