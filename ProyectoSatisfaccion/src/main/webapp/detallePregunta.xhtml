@@ -127,7 +127,7 @@
 								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this);"/>
 							</p:column>
 							<p:column>
-								<p:commandButton id="eliminar" value="Eliminar" immediate="true" onclick="bloquear(this);" action="#{detallePreguntaBean.bt_eliminarPregunta}" update=":DialogoMensaje DetallePregunta" />
+								<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" onclick="bloquear(this);" action="#{detallePreguntaBean.bt_eliminarPregunta}"  update=":DialogoMensajes DetallePregunta" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

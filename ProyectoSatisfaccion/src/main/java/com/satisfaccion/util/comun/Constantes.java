@@ -17,6 +17,9 @@ public class Constantes {
 
     /*CONSTANTES*/
 
+    public static final String GROWL_EXITO = "Exito_container";
+    public static final String GROWL_ERROR = "Error_container";
+
     public static final String MENSAJE_TIPO_EXITO  = "Éxito";
     public static final String MENSAJE_TIPO_ERROR  = "Error";
 

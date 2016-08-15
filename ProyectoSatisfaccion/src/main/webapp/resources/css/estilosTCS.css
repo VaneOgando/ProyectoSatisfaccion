@@ -39,6 +39,9 @@ body {
     color: #666;
 }
 
+
+
+
 /*CLASES GLOBALES*/
 .requerido{
     color: red;
@@ -58,26 +61,7 @@ body {
     padding: 3px; !important;
 }
 
-/*.ui-button.botonMensaje{*/
-.botonMensaje{
-    font-size: small; !important;
-    float: right;
-    margin-right: 5%;
-    margin-bottom: 1%;
-}
 
-.dialogoMensaje{
-
-    max-width: 60%;
-    min-width: 25%;
-
-}
-
-.textoMensaje{
-    margin-bottom: 3%;
-    text-indent: 30px;
-    line-height: 30px;
-}
 
 
 /*CONSULTA PREGUNTA*/
@@ -164,6 +148,31 @@ body {
 }
 
 
+/*CREAR PREGUNTA*/
+
+.encabezadoCrear{
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
+.encabezadoCrearIzq{
+    width: 25%;
+}
+
+.encabezadoCrearDer{
+    width: 100%;
+
+}
+
+.encabezadoCrearDer .ui-inputtext{
+    width: 90%;
+}
+
+.crearBotones{
+    margin-top: 3%;
+    border: none;
+}
 
 
 

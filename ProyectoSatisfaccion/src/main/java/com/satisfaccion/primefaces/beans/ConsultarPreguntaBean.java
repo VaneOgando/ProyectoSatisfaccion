@@ -8,6 +8,7 @@ import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,11 @@ public class ConsultarPreguntaBean {
 	/*ATRIBUTOS*/
 	@ManagedProperty("#{consultarPreguntaServicio}")
 	private ConsultarPreguntaServicio consultarPreguntaServicio;
+
+	@ManagedProperty(value="#{mensajesComun}")
+	private MensajesComun mensajesComun;
+
+	private FacesContext context = FacesContext.getCurrentInstance();
 
 	private List<PreguntaEntity> items = new ArrayList<PreguntaEntity>();
 	private List<PreguntaEntity> itemsBuscados;
@@ -69,6 +75,10 @@ public class ConsultarPreguntaBean {
 		return "";
 	}
 
+	public String bt_crearPregunta(){
+
+		return "Crear";
+	}
 
 
 
@@ -82,6 +92,22 @@ public class ConsultarPreguntaBean {
 
 	public void setConsultarPreguntaServicio(ConsultarPreguntaServicio consultarPreguntaServicio) {
 		this.consultarPreguntaServicio = consultarPreguntaServicio;
+	}
+
+	public MensajesComun getMensajesComun() {
+		return mensajesComun;
+	}
+
+	public void setMensajesComun(MensajesComun mensajesComun) {
+		this.mensajesComun = mensajesComun;
+	}
+
+	public FacesContext getContext() {
+		return context;
+	}
+
+	public void setContext(FacesContext context) {
+		this.context = context;
 	}
 
 	public List<PreguntaEntity> getItems() {

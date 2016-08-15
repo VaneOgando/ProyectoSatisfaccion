@@ -81,7 +81,7 @@ public class DetallePreguntaServicio {
 		try{
 
 			if (eliminar){
-				//Remove solo funciona si se conoce la entidad, no se puede eliinar en una transaccion nueva
+				//Remove solo funciona si se conoce la entidad, no se puede eliminar en una transaccion nueva
 				entityManager.remove(entityManager.contains(pregunta) ? pregunta : entityManager.merge(pregunta));
 			}else{
 				pregunta.setEstado("I");

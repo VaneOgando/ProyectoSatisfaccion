@@ -61,6 +61,11 @@
 				</div>
 
 				<div id="cuerpo">
+					<h:form id="Mensajes">
+						<p:growl id="Exito" showDetail="true" sticky="true" life="4000" autoUpdate="true" severity="info" />
+						<p:growl id="Error" showDetail="true" sticky="true" life="4000" autoUpdate="true" severity="error" />
+					</h:form>
+
 					<ui:insert name="cuerpo">
 
 					</ui:insert>
@@ -70,29 +75,6 @@
 				<div id="footer">
 					<span>T.C.S. TECHNOLOGY CONSULTING SOLUTION, C.A.. J-30774587-8</span>
 				</div>
-
-
-				<div id="mensajes">
-					<h:form id="DialogoMensaje">
-
-						<p:dialog id="Mensaje" header="#{mensajesComun.tipoMensaje}" widgetVar="mensaje" modal="true" closable="false" draggable="false"
-								  visible="true" resizable="false" appendTo="@(body)" rendered="#{mensajesComun.mensaje != null}" styleClass="dialogoMensaje">
-
-							<div class="textoMensaje">
-								<h:outputText value="#{mensajesComun.mensaje}" />
-							</div>
-
-							<div class="botonMensaje">
-								<p:commandButton value="Aceptar" onclick="javascript:PF('mensaje').hide()"
-											 action="#{mensajesComun.limpiarMenajes}"/>
-							</div>
-
-						</p:dialog>
-
-					</h:form>
-				</div>
-
-
 
 			</div>
 

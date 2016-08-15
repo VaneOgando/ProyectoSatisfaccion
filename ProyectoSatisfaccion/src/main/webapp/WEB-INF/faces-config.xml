@@ -12,17 +12,27 @@
 		<phase-listener>com.satisfaccion.primefaces.beans.InicioSesionBean</phase-listener>
 	</lifecycle>
 
-<!--
 	<navigation-rule>
-		<from-view-id>/index.xhtml</from-view-id>
+		<from-view-id>/consultarPregunta.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{inicioSesionBean.bt_ingresar_action}</from-action>
-			<from-outcome>consultarInventario</from-outcome>
-			<to-view-id>/consultarInventario.xhtml</to-view-id>
+			<from-action>#{consultarPreguntaBean.bt_crearPregunta}</from-action>
+			<from-outcome>Crear</from-outcome>
+			<to-view-id>/crearPregunta.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
--->
+
+	<navigation-rule>
+		<from-view-id>/detallePregunta.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{detallePreguntaBean.bt_eliminarPregunta}</from-action>
+			<from-outcome>Exito</from-outcome>
+			<to-view-id>/consultarPregunta.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+
 
 
 

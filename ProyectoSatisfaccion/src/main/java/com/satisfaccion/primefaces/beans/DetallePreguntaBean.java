@@ -9,6 +9,8 @@ import com.satisfaccion.util.comun.MensajesComun;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class DetallePreguntaBean{
 
 	}
 
-	public void bt_eliminarPregunta(){
+	public String bt_eliminarPregunta() throws IOException {
 
 		if (pregunta.getEstado().equals("A")){
 
@@ -51,11 +53,15 @@ public class DetallePreguntaBean{
 				if (eliminar){
 					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
 					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DESACTIVAR);
+					mensajesComun.guardarMensaje(Constantes.GROWL_EXITO);
 				}else{
 					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
 					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DESACTIVAR);
+					mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
 				}
 
+				mensajesComun.setRedireccionar(false);
+				return "";
 
 			}else{
 				//Eliminar pregunta
@@ -65,9 +71,18 @@ public class DetallePreguntaBean{
 				if (eliminar){
 					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
 					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DEFINITIVO);
+
+					mensajesComun.setRedireccionar(true);
+					mensajesComun.guardarMensaje(Constantes.GROWL_EXITO);
+					return "Exito";
+
 				}else{
 					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
 					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DEFINITIVO);
+
+					mensajesComun.setRedireccionar(false);
+					mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
+					return "";
 				}
 
 			}
@@ -77,7 +92,11 @@ public class DetallePreguntaBean{
 			mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
 			mensajesComun.setMensaje(Constantes.ERR_PREGUNTA_INACTIVA);
 
+			mensajesComun.setRedireccionar(false);
+			mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
+			return "";
 		}
+
 
 	}
 

@@ -1,6 +1,13 @@
 package com.satisfaccion.jpa.data;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
@@ -45,13 +52,13 @@ public class PreguntaEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
-	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
 	private List<OpcionEntity> opciones;
 
 	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY)
 	private List<RespuestaEntity> respuestas;
 
-	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
 	private List<EncPreEntity> encPre;
 
 
