@@ -1,19 +1,9 @@
 package com.satisfaccion.util.comun;
 
-import com.satisfaccion.jpa.data.*;
-import com.satisfaccion.spring.service.CrearRecursoServicio;
-import org.primefaces.context.RequestContext;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 @ManagedBean
 @SessionScoped
@@ -39,7 +29,8 @@ public class MensajesComun {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		}
 
-		FacesContext.getCurrentInstance().addMessage(tipo, new FacesMessage(tipoMensaje, mensaje));
+		FacesContext.getCurrentInstance().addMessage(tipo, new FacesMessage(FacesMessage.SEVERITY_ERROR,tipoMensaje, mensaje));
+
 	}
 
 	/*GET & SET*/

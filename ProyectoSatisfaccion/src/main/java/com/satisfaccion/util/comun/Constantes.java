@@ -23,6 +23,7 @@ public class Constantes {
     public static final String MENSAJE_TIPO_EXITO  = "Éxito";
     public static final String MENSAJE_TIPO_ERROR  = "Error";
 
+    public static final int CANT_MINIMA_OPCIONES = 2;
 
 
     public static final String REPORTE_ASIGNACION = "cartaAsignacionRecurso.jasper";
@@ -41,6 +42,9 @@ public class Constantes {
     public static final String ERR_ELIMINAR_DEFINITIVO = "";
     public static final String ERR_ELIMINAR_DESACTIVAR = "";
     public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
+
+    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener al menos ? opciones";
+
     public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
     public static final String ERR_SELECCION_ITEM = "ERROR! Seleccione un item";
     public static final String ERR_SELECCION_RECURSO = "ERROR! Por favor seleccione un recurso a gestionar";
@@ -50,7 +54,7 @@ public class Constantes {
 
     /*EXITO*/
     public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta fue eliminada definitivamente exitosamente.";
-    public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta fue desactivada exitosamente, la misma no podra ser agregada ni respondida en ninguna pregunta.";
+    public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta fue desactivada exitosamente, la misma no podra ser agregada ni respondida en ninguna encuesta.";
 
 
 

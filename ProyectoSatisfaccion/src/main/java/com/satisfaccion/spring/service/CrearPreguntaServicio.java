@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class CrearRecursoServicio {
+public class CrearPreguntaServicio {
 
 	/*ATRIBUTO*/
 	protected EntityManager entityManager;

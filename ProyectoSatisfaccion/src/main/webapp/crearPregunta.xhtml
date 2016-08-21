@@ -9,80 +9,143 @@
 
 	<ui:define name="cuerpo">
 
-		<h:form id="CrearPregunta">
+		<h:form id="CrearPregunta" prependId="true">
 
-			<div id="TitulosPregunta" class="encabezadoCrear">
+			<div id="DetallePregunta" class="encabezadoCrear">
 				<p:panelGrid styleClass="panelInvisible" style="width: 100%" >
 
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
-							<p:outputLabel value="Titulo"/>
+							<h:outputLabel value="Titulo"/>
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:inputText />
+							<p:inputText value="#{crearPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
+									requiredMessage="Debe ingresar un titulo para la pregunta"/>
+							<h:outputLabel value="*" styleClass="requerido"/>
 						</p:column>
 					</p:row>
 
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
-							<p:outputLabel value="Texto de ayuda"/>
+							<h:outputLabel value="Texto de ayuda"/>
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:inputText />
+							<p:inputText value="#{crearPreguntaBean.pregunta.ayuda}" maxlength="250" />
 						</p:column>
 					</p:row>
 
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
-							<p:outputLabel value="Tipo pregunta"/>
+							<h:outputLabel value="Tipo pregunta"/>
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:selectOneMenu id="tipoPregunta" style="width:150px">
+							<p:selectOneMenu id="tipoPregunta" style="width:150px" value="#{crearPreguntaBean.tipoPregunta}">
 								<f:selectItem itemLabel="Simple" itemValue="simple" />
-								<f:selectItem itemLabel="Ranking" itemValue="rankink" />
+								<f:selectItem itemLabel="Ranking" itemValue="ranking" />
 								<f:selectItem itemLabel="Abierta" itemValue="abierta" />
+								<p:ajax update="CrearPregunta" event="change" process="@this" />
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
 
 					<p:row>
+						<p:column styleClass="encabezadoCrearIzq"/>
+
+						<p:column styleClass="encabezadoCrearDer">
+							<p:selectBooleanCheckbox value="#{crearPreguntaBean.evaluacion}">
+								<p:ajax update="CrearPregunta" immediate="true"/>
+							</p:selectBooleanCheckbox>
+
+							<h:outputLabel value="Encuesta" style="margin-left: 10px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
+
+							<p:outputLabel value ="Opciones" rendered="#{crearPreguntaBean.tipoPregunta == 'simple'}" />
+							<p:outputLabel value ="Escala" rendered="#{crearPreguntaBean.tipoPregunta == 'ranking'}"/>
 
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:selectOneRadio>
-								<f:selectItem itemLabel="Encuesta" />
-								<f:selectItem itemLabel="Evaluacion" />
-							</p:selectOneRadio>
+							<div id="PreguntaRanking">
+								<p:selectOneMenu id="escalaRanking" style="width:150px" rendered="#{crearPreguntaBean.tipoPregunta == 'ranking'}" >
+									<f:selectItem itemLabel="3" itemValue="3" />
+									<f:selectItem itemLabel="4" itemValue="4" />
+									<f:selectItem itemLabel="5" itemValue="5" />
+									<f:selectItem itemLabel="6" itemValue="6" />
+									<f:selectItem itemLabel="7" itemValue="7" />
+									<f:selectItem itemLabel="8" itemValue="8" />
+									<f:selectItem itemLabel="9" itemValue="9" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+								</p:selectOneMenu>
+							</div>
 						</p:column>
 					</p:row>
 
+					<p:row>
+						<p:column styleClass="encabezadoCrearIzq"/>
+
+						<p:column styleClass="encabezadoCrearDer">
+							<div id="PreguntaSimple">
+
+								<h:form id="opcionesPregunta">
+									<p:panelGrid styleClass="panelInvisible" rendered="#{crearPreguntaBean.tipoPregunta == 'simple'}">
+
+										<c:forEach items="#{crearPreguntaBean.opciones}" var="opcion">
+
+											<p:row>
+												<p:column>
+													<p:inputText value="#{opcion.titulo}" />
+													<p:outputLabel value="*" styleClass="requerido" />
+												</p:column>
+
+												<p:column rendered="#{crearPreguntaBean.evaluacion}">
+													<p:inputText value="#{opcion.valor}" />
+												</p:column>
+
+												<p:column>
+													<p:commandButton icon="ui-icon-plus" process="opcionesPregunta" action="#{crearPreguntaBean.agregarOpcion(opcion)}"
+																	 update=":CrearPregunta"/>
+													<p:commandButton icon="ui-icon-minus" process="opcionesPregunta" action="#{crearPreguntaBean.eliminarOpcion(opcion)}"
+																	 update=":CrearPregunta"/>
+												</p:column>
+											</p:row>
+
+										</c:forEach>
+
+									</p:panelGrid>
+								</h:form>
+							</div>
+
+						</p:column>
+
+					</p:row>
 				</p:panelGrid>
 
 			</div>
 
-			<div id="TipoPregunta">
 
-			</div>
 
-			<div id="CrearBotones" class="crearBotones">
+			<div id="BotonesCreacion" class="crearBotones">
 
 				<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 					<p:row>
 						<p:column>
-							<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" >
-								<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
-							</p:commandButton>
+							<p:commandButton id="crear" value="Crear" onclick="bloquear(this)"/>
 						</p:column>
 						<p:column>
-							<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this);"/>
+							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="bloquear(this);" action="#{crearPreguntaBean.limpiarPregunta}"
+									update="CrearPregunta"/>
 						</p:column>
 						<p:column>
-							<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" onclick="bloquear(this);" action="#{detallePreguntaBean.bt_eliminarPregunta}"  update=":DialogoMensajes DetallePregunta" />
+							<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false"
+											 onclick="bloquear(this); if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
+											action="#{crearPreguntaBean.bt_cancelar}"/>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
