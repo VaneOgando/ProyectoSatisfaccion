@@ -17,8 +17,8 @@ public class Constantes {
 
     /*CONSTANTES*/
 
-    public static final String GROWL_EXITO = "Exito_container";
-    public static final String GROWL_ERROR = "Error_container";
+    public static final String GROWL_EXITO = "Mensajes:Exito_container";
+    public static final String GROWL_ERROR = "Mensajes:Error_container";
 
     public static final String MENSAJE_TIPO_EXITO  = "Éxito";
     public static final String MENSAJE_TIPO_ERROR  = "Error";
@@ -43,7 +43,7 @@ public class Constantes {
     public static final String ERR_ELIMINAR_DESACTIVAR = "";
     public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
 
-    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener al menos ? opciones";
+    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un minimo de opciones";
 
     public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
     public static final String ERR_SELECCION_ITEM = "ERROR! Seleccione un item";

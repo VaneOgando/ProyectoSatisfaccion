@@ -29,7 +29,7 @@ public class MensajesComun {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		}
 
-		FacesContext.getCurrentInstance().addMessage(tipo, new FacesMessage(FacesMessage.SEVERITY_ERROR,tipoMensaje, mensaje));
+		FacesContext.getCurrentInstance().addMessage(tipo, new FacesMessage(null,tipoMensaje, mensaje));
 
 	}
 

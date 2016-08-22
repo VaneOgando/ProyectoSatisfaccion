@@ -20,8 +20,8 @@
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:inputText value="#{crearPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
-									requiredMessage="Debe ingresar un titulo para la pregunta"/>
+							<p:inputText id="titulo" value="#{crearPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
+									requiredMessage="Debe ingresar un titulo para la pregunta" />
 							<h:outputLabel value="*" styleClass="requerido"/>
 						</p:column>
 					</p:row>
@@ -32,7 +32,7 @@
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:inputText value="#{crearPreguntaBean.pregunta.ayuda}" maxlength="250" />
+							<p:inputText id="ayuda" value="#{crearPreguntaBean.pregunta.ayuda}" maxlength="250" />
 						</p:column>
 					</p:row>
 
@@ -42,11 +42,11 @@
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:selectOneMenu id="tipoPregunta" style="width:150px" value="#{crearPreguntaBean.tipoPregunta}">
-								<f:selectItem itemLabel="Simple" itemValue="simple" />
+							<p:selectOneMenu id="tipoPregunta" style="width:150px" value="#{crearPreguntaBean.pregunta.tipoPregunta}">
+								<f:selectItem itemLabel="Simple" itemValue="simple"  />
 								<f:selectItem itemLabel="Ranking" itemValue="ranking" />
 								<f:selectItem itemLabel="Abierta" itemValue="abierta" />
-								<p:ajax update="CrearPregunta" event="change" process="@this" />
+								<p:ajax update="CrearPregunta" event="change" process="@this,titulo,ayuda,evaluacion" listener="#{crearPreguntaBean.cambiarTipoPregunta}"/>
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
@@ -55,8 +55,9 @@
 						<p:column styleClass="encabezadoCrearIzq"/>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<p:selectBooleanCheckbox value="#{crearPreguntaBean.evaluacion}">
-								<p:ajax update="CrearPregunta" immediate="true"/>
+							<p:selectBooleanCheckbox id="evaluacion" value="#{crearPreguntaBean.evaluacion}">
+								<p:ajax update="CrearPregunta:opcionesPregunta" process="@this,titulo,ayuda,tipoPregunta,opcionesPregunta"
+										listener="#{crearPreguntaBean.cambiarEvaluacion}"/>
 							</p:selectBooleanCheckbox>
 
 							<h:outputLabel value="Encuesta" style="margin-left: 10px" />
@@ -66,14 +67,14 @@
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
 
-							<p:outputLabel value ="Opciones" rendered="#{crearPreguntaBean.tipoPregunta == 'simple'}" />
-							<p:outputLabel value ="Escala" rendered="#{crearPreguntaBean.tipoPregunta == 'ranking'}"/>
+							<p:outputLabel value ="Opciones" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
+							<p:outputLabel value ="Escala" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
 
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
 							<div id="PreguntaRanking">
-								<p:selectOneMenu id="escalaRanking" style="width:150px" rendered="#{crearPreguntaBean.tipoPregunta == 'ranking'}" >
+								<p:selectOneMenu id="escalaRanking" style="width:150px" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}" >
 									<f:selectItem itemLabel="3" itemValue="3" />
 									<f:selectItem itemLabel="4" itemValue="4" />
 									<f:selectItem itemLabel="5" itemValue="5" />
@@ -93,8 +94,7 @@
 						<p:column styleClass="encabezadoCrearDer">
 							<div id="PreguntaSimple">
 
-								<h:form id="opcionesPregunta">
-									<p:panelGrid styleClass="panelInvisible" rendered="#{crearPreguntaBean.tipoPregunta == 'simple'}">
+									<p:panelGrid id="opcionesPregunta" styleClass="panelInvisible" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'simple'}">
 
 										<c:forEach items="#{crearPreguntaBean.opciones}" var="opcion">
 
@@ -110,16 +110,16 @@
 
 												<p:column>
 													<p:commandButton icon="ui-icon-plus" process="opcionesPregunta" action="#{crearPreguntaBean.agregarOpcion(opcion)}"
-																	 update=":CrearPregunta"/>
+																	 update="opcionesPregunta"/>
 													<p:commandButton icon="ui-icon-minus" process="opcionesPregunta" action="#{crearPreguntaBean.eliminarOpcion(opcion)}"
-																	 update=":CrearPregunta"/>
+																	 update="opcionesPregunta"/>
 												</p:column>
 											</p:row>
 
 										</c:forEach>
 
 									</p:panelGrid>
-								</h:form>
+
 							</div>
 
 						</p:column>

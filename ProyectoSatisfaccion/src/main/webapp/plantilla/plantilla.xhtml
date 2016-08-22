@@ -61,9 +61,13 @@
 				</div>
 
 				<div id="cuerpo">
-					<h:form id="Mensajes">
-						<p:growl id="Exito" showDetail="true" sticky="true" life="4000" autoUpdate="true" severity="info" />
-						<p:growl id="Error" showDetail="true" sticky="true" life="4000" autoUpdate="true" severity="error" />
+					<h:form id="MensajesGrowl">
+						<p:growl id="Exito" showDetail="true" sticky="true" life="4000" severity="info" />
+						<p:growl id="Error" showDetail="true" sticky="true" life="4000" severity="error" />
+					</h:form>
+
+					<h:form id="MensajesRequired">
+						<p:messages id="required" autoUpdate="true" closable="false" />
 					</h:form>
 
 					<ui:insert name="cuerpo">

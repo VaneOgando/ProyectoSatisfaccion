@@ -39,7 +39,36 @@ public class CrearPreguntaBean {
 	@PostConstruct
 	public void init() {
 
+		pregunta.setTipoPregunta("simple");
 		inicializarOpciones();
+	}
+
+	public void inicializarOpciones(){
+
+		int i = 1;
+
+		while (i <= Constantes.CANT_MINIMA_OPCIONES){
+			opciones.add(new OpcionEntity());
+			i++;
+		}
+
+	}
+
+	public void cambiarTipoPregunta(){
+
+		opciones = new ArrayList<OpcionEntity>();
+		inicializarOpciones();
+
+		//Limpiar Variable de escala
+	}
+
+	public void cambiarEvaluacion(){
+
+		if (pregunta.getTipoPregunta().equals("simple")) {
+			for (OpcionEntity opcion : opciones) {
+				opcion.setValor(null);
+			}
+		}
 	}
 
 /*
@@ -137,22 +166,11 @@ public class CrearPreguntaBean {
 
 	}
 
-	public void inicializarOpciones(){
-
-		int i = 1;
-
-		while (i <= Constantes.CANT_MINIMA_OPCIONES){
-			opciones.add(new OpcionEntity());
-			i++;
-		}
-
-	}
-
 	public void limpiarPregunta(){
 
 		pregunta = new PreguntaEntity();
 		opciones = new ArrayList<OpcionEntity>();
-		tipoPregunta = "simple";
+		pregunta.setTipoPregunta("simple");
 		evaluacion = false;
 
 		inicializarOpciones();
