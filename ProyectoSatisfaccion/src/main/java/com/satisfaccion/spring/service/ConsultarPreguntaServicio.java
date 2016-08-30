@@ -32,6 +32,20 @@ public class ConsultarPreguntaServicio {
 		return resultList;
 	}
 
+	@Transactional
+	public int consultarNumRespuestas(int idPregunta) throws DataAccessException {
+
+		List<Object> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_PREGUNTA_NUMERO")
+				.setParameter("idPregunta", idPregunta)
+				.getResultList();
+
+		if(resultList.size() < 1){
+			return 0;
+		}else{
+			return Integer.parseInt(resultList.get(0).toString());
+		}
+
+	}
 
 
 	/*GET & SET*/

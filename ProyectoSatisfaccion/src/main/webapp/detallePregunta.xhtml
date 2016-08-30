@@ -119,7 +119,7 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" >
+								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" >
 									<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
 								</p:commandButton>
 							</p:column>

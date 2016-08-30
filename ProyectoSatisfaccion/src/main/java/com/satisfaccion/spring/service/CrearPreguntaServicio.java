@@ -127,49 +127,20 @@ public class CrearPreguntaServicio {
 		}
 
 	}
-
+*/
 	@Transactional
-	public boolean crearRecurso(ProyectoEntity marca, RespuestaEntity modelo, OpcionEntity categoria, EncPreEntity estado, EnvioEntity historial, EncuestaEntity equipo, PreguntaEntity accesorio, String opcion) throws DataAccessException{
+	public boolean crearPregunta(PreguntaEntity pregunta, List<OpcionEntity> opciones) throws DataAccessException{
 
 		boolean creacion = false;
 
 		try {
 
-			if (marca.getId() == 0){ //Marca no existe
-				entityManager.persist(marca);
+			entityManager.persist(pregunta);
+
+			for (OpcionEntity opcion : opciones){
+				opcion.setPregunta(pregunta);
+				entityManager.persist(opcion);
 			}
-
-			modelo.setMarca(marca);
-
-			if(modelo.getId() == 0){//modelo no existe
-				entityManager.persist(modelo);
-			}
-
-			if(opcion.equals("E")) {
-
-				equipo.setEstado(estado);
-				equipo.setModelo(modelo);
-				entityManager.persist(equipo);
-
-				historial.setEquipo(equipo);
-
-			}else if(opcion.equals("A")){
-
-				if(categoria.getId() == 0){//categoria no existe
-					categoria.setTipoCategoria("accesorio");
-					entityManager.persist(categoria);
-				}
-
-				accesorio.setEstado(estado);
-				accesorio.setModelo(modelo);
-				accesorio.setCategoria(categoria);
-				entityManager.persist(accesorio);
-
-				historial.setAccesorio(accesorio);
-
-			}
-
-			entityManager.persist(historial);
 
 			creacion = true;
 
@@ -186,7 +157,7 @@ public class CrearPreguntaServicio {
 	}
 
 
-*/
+
 	/*GET & SET*/
 	public EntityManager getEntityManager() {
 		return entityManager;

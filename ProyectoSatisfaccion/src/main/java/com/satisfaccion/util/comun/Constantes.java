@@ -17,11 +17,8 @@ public class Constantes {
 
     /*CONSTANTES*/
 
-    public static final String GROWL_EXITO = "Mensajes:Exito_container";
-    public static final String GROWL_ERROR = "Mensajes:Error_container";
-
-    public static final String MENSAJE_TIPO_EXITO  = "Éxito";
-    public static final String MENSAJE_TIPO_ERROR  = "Error";
+    public static final String MENSAJE_TIPO_EXITO  = "Éxito!";
+    public static final String MENSAJE_TIPO_ERROR  = "Error!";
 
     public static final int CANT_MINIMA_OPCIONES = 2;
 
@@ -39,11 +36,16 @@ public class Constantes {
     /*ERRORES*/
     public static final String ERR_LOGIN_INVALIDO = "Usuario y/o contraseña invalida";
 
-    public static final String ERR_ELIMINAR_DEFINITIVO = "";
-    public static final String ERR_ELIMINAR_DESACTIVAR = "";
-    public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
+    public static final String ERR_ELIMINAR_DEFINITIVO = "La pregunta no pudo ser eliminada, intentelo más tarde";
+    public static final String ERR_ELIMINAR_DESACTIVAR = "La pregunta no pudo ser desactivada, intentelo más tarde";
+    public static final String ERR_CREAR_PREGUNTA = "La pregunta no pudo ser creada, intentelo más tarde";
+    public static final String ERR_MODIFICAR_PREGUNTA = "La pregunta no pudo ser modificada, intentelo más tarde";
 
-    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un minimo de opciones";
+    public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
+    public static final String ERR_PREGUNTA_RESPONDIDA = "Acción no permitida. Esta pregunta ya posee respuestas almacenadas.";
+
+    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un mínimo de opciones";
+
 
     public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
     public static final String ERR_SELECCION_ITEM = "ERROR! Seleccione un item";
@@ -56,6 +58,8 @@ public class Constantes {
     public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta fue eliminada definitivamente exitosamente.";
     public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta fue desactivada exitosamente, la misma no podra ser agregada ni respondida en ninguna encuesta.";
 
+    public static final String EX_CREAR_PREGUNTA = "La pregunta fue creada exitosamente.";
+    public static final String EX_MODIFICAR_PREGUNTA = "La pregunta fue modificada exitosamente.";
 
 
     public static final String EX_GESTION = "EXITO! El/los recurso(s) se gestionaron satisfactoriamente";

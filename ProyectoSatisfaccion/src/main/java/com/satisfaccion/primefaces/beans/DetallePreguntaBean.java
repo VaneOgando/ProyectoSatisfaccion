@@ -51,16 +51,11 @@ public class DetallePreguntaBean{
 				eliminar = detallePreguntaServicio.eliminarPregunta(false, pregunta);
 
 				if (eliminar){
-					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
-					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DESACTIVAR);
-					mensajesComun.guardarMensaje(Constantes.GROWL_EXITO);
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_ELIMINAR_DESACTIVAR);
 				}else{
-					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
-					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DESACTIVAR);
-					mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ELIMINAR_DESACTIVAR);
 				}
 
-				mensajesComun.setRedireccionar(false);
 				return "";
 
 			}else{
@@ -69,19 +64,13 @@ public class DetallePreguntaBean{
 				eliminar = detallePreguntaServicio.eliminarPregunta(true, pregunta);
 
 				if (eliminar){
-					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_EXITO);
-					mensajesComun.setMensaje(Constantes.EX_ELIMINAR_DEFINITIVO);
 
-					mensajesComun.setRedireccionar(true);
-					mensajesComun.guardarMensaje(Constantes.GROWL_EXITO);
+					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.ERR_ELIMINAR_DEFINITIVO);
 					return "Exito";
 
 				}else{
-					mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
-					mensajesComun.setMensaje(Constantes.ERR_ELIMINAR_DEFINITIVO);
 
-					mensajesComun.setRedireccionar(false);
-					mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ELIMINAR_DEFINITIVO);
 					return "";
 				}
 
@@ -89,16 +78,25 @@ public class DetallePreguntaBean{
 
 		}else{
 
-			mensajesComun.setTipoMensaje(Constantes.MENSAJE_TIPO_ERROR);
-			mensajesComun.setMensaje(Constantes.ERR_PREGUNTA_INACTIVA);
-
-			mensajesComun.setRedireccionar(false);
-			mensajesComun.guardarMensaje(Constantes.GROWL_ERROR);
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_INACTIVA);
 			return "";
 		}
 
+	}
+
+	public String bt_modificarPregunta() {
+
+		if (respuestas == 0){
+			return "modificarPregunta.xhtml?faces-redirect=true&id=" + pregunta.getId();
+
+		}else{
+
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);
+			return "";
+		}
 
 	}
+
 
 
 

@@ -119,7 +119,9 @@
 					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarPreguntaBean.detallePregunta}">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
 					</p:commandButton>
-					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" />
+					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarPreguntaBean.modificarPregunta}">
+						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
+					</p:commandButton>
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small" />
 					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" />
 				</p:column>

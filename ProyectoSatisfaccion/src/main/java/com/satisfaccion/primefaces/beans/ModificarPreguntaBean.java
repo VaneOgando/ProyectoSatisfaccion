@@ -1,28 +1,27 @@
 package com.satisfaccion.primefaces.beans;
 
-import com.satisfaccion.jpa.data.*;
+import com.satisfaccion.jpa.data.OpcionEntity;
+import com.satisfaccion.jpa.data.PreguntaEntity;
 import com.satisfaccion.spring.service.CrearPreguntaServicio;
+import com.satisfaccion.spring.service.ModificarPreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean
 @ViewScoped
-public class CrearPreguntaBean {
+public class ModificarPreguntaBean {
 
 	/*ATRIBUTOS*/
-	@ManagedProperty("#{crearPreguntaServicio}")
-	private CrearPreguntaServicio crearPreguntaServicio;
+	@ManagedProperty("#{modificarPreguntaServicio}")
+	private ModificarPreguntaServicio modificarPreguntaServicio;
 
 	@ManagedProperty(value="#{mensajesComun}")
 	private MensajesComun mensajesComun;
@@ -33,19 +32,22 @@ public class CrearPreguntaBean {
 	private String tipoPregunta = "simple";
 	private Boolean evaluacion = false;
 
-	private Date fechaActual = new Date();
-	private String usuarioCreador = "";
-
-	private Boolean creacion = false;
+	private Boolean modificacion = false;
 
 
 /*METODOS*/
 
-	@PostConstruct
-	public void init() {
+	public void cargarDetallePregunta(){
 
-		pregunta.setTipoPregunta("simple");
-		inicializarOpciones();
+		pregunta = modificarPreguntaServicio.consultarPregunta(pregunta.getId());
+		opciones = modificarPreguntaServicio.consultarOpciones(pregunta.getId());
+
+		if (pregunta.getTipoEncuesta().equals("E")){
+			evaluacion = true;
+		}else{
+			evaluacion = false;
+		}
+
 	}
 
 	public void inicializarOpciones(){
@@ -77,18 +79,9 @@ public class CrearPreguntaBean {
 	}
 
 
-	public String bt_crearPregunta(){
+	public String bt_modificarPregunta(){
 
 		try {
-
-			pregunta.setEstado("A");
-			pregunta.setFechaCreacion(fechaActual);
-
-			//Obtener usuario conectado
-			//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			//pregunta.setUsuarioCreador(auth.getName);
-
-			pregunta.setUsuarioCreador("vanessa.rodriguez");
 
 			if (evaluacion) {
 				pregunta.setTipoEncuesta("E");
@@ -96,25 +89,23 @@ public class CrearPreguntaBean {
 				pregunta.setTipoEncuesta("N");
 			}
 
-			creacion = crearPreguntaServicio.crearPregunta(pregunta, opciones);
+			modificacion = modificarPreguntaServicio.modificarPregunta(pregunta, opciones);
 
-			if (creacion) {
+			if (modificacion) {
 
-				mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_CREAR_PREGUNTA);
+				mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_MODIFICAR_PREGUNTA);
 				return "Exito";
 
 			}else {
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_PREGUNTA);
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_MODIFICAR_PREGUNTA);
 
-				limpiarPregunta();
 				return "";
 
 			}
 
 		}catch (Exception e){
-			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_PREGUNTA);
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_MODIFICAR_PREGUNTA);
 
-			limpiarPregunta();
 			return "";
 
 		}
@@ -148,16 +139,6 @@ public class CrearPreguntaBean {
 
 	}
 
-	public void limpiarPregunta(){
-
-		pregunta = new PreguntaEntity();
-		opciones = new ArrayList<OpcionEntity>();
-		pregunta.setTipoPregunta("simple");
-		evaluacion = false;
-
-		inicializarOpciones();
-	}
-
 	public String bt_cancelar(){
 
 		return "Cancelar";
@@ -165,12 +146,12 @@ public class CrearPreguntaBean {
 
 /*GET & SET*/
 
-	public CrearPreguntaServicio getCrearPreguntaServicio() {
-		return crearPreguntaServicio;
+	public ModificarPreguntaServicio getModificarPreguntaServicio() {
+		return modificarPreguntaServicio;
 	}
 
-	public void setCrearPreguntaServicio(CrearPreguntaServicio crearPreguntaServicio) {
-		this.crearPreguntaServicio = crearPreguntaServicio;
+	public void setModificarPreguntaServicio(ModificarPreguntaServicio modificarPreguntaServicio) {
+		this.modificarPreguntaServicio = modificarPreguntaServicio;
 	}
 
 	public MensajesComun getMensajesComun() {
@@ -213,20 +194,5 @@ public class CrearPreguntaBean {
 		this.evaluacion = evaluacion;
 	}
 
-	public Date getFechaActual() {
-		return fechaActual;
-	}
-
-	public void setFechaActual(Date fechaActual) {
-		this.fechaActual = fechaActual;
-	}
-
-	public String getUsuarioCreador() {
-		return usuarioCreador;
-	}
-
-	public void setUsuarioCreador(String usuarioCreador) {
-		this.usuarioCreador = usuarioCreador;
-	}
 }
 

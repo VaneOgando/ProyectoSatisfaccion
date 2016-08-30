@@ -34,6 +34,8 @@ public class ConsultarPreguntaBean {
 	private String tipoPregunta;
 	private String tipoEncuesta;
 
+	private int respuestas = 0;
+
 	private ArrayList<String> tiposPregunta = Constantes.tipoPreguntas;
 
 
@@ -69,6 +71,25 @@ public class ConsultarPreguntaBean {
 		if (itemSeleccionado != null) {
 
 			return "detallePregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+
+		}
+
+		return "";
+	}
+
+	public String modificarPregunta() {
+
+		if (itemSeleccionado != null) {
+
+			respuestas = consultarPreguntaServicio.consultarNumRespuestas(itemSeleccionado.getId());
+
+			if (respuestas == 0){
+				return "modificarPregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+			}else{
+
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);
+				return "";
+			}
 
 		}
 
@@ -156,6 +177,14 @@ public class ConsultarPreguntaBean {
 
 	public void setTipoEncuesta(String tipoEncuesta) {
 		this.tipoEncuesta = tipoEncuesta;
+	}
+
+	public int getRespuestas() {
+		return respuestas;
+	}
+
+	public void setRespuestas(int respuestas) {
+		this.respuestas = respuestas;
 	}
 
 	public ArrayList<String> getTiposPregunta() {
