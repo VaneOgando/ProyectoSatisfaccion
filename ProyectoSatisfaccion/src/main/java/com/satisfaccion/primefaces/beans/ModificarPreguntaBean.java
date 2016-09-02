@@ -6,14 +6,18 @@ import com.satisfaccion.spring.service.CrearPreguntaServicio;
 import com.satisfaccion.spring.service.ModificarPreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @ViewScoped
@@ -37,7 +41,13 @@ public class ModificarPreguntaBean {
 
 /*METODOS*/
 
+	@PostConstruct
 	public void cargarDetallePregunta(){
+
+		//Obtener parametro
+		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+
+		pregunta.setId(Integer.parseInt(id));
 
 		pregunta = modificarPreguntaServicio.consultarPregunta(pregunta.getId());
 		opciones = modificarPreguntaServicio.consultarOpciones(pregunta.getId());
@@ -47,7 +57,6 @@ public class ModificarPreguntaBean {
 		}else{
 			evaluacion = false;
 		}
-
 	}
 
 	public void inicializarOpciones(){

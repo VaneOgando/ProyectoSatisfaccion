@@ -9,11 +9,6 @@
 
 	<ui:define name="cuerpo">
 
-		<f:metadata>
-			<f:viewParam name="id" value="#{modificarPreguntaBean.pregunta.id}" required="true"/>
-			<f:event type="preRenderView" listener="#{modificarPreguntaBean.cargarDetallePregunta}"/>
-		</f:metadata>
-
 		<h:form id="ModificarPregunta" prependId="true">
 
 			<div id="tituloModificarPregunta">
@@ -105,7 +100,7 @@
 
 									<p:panelGrid id="opcionesPregunta" styleClass="panelInvisible" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}">
 
-										<ui:repeat value="#{modificarPreguntaBean.opciones}" var="opcion">
+										<c:forEach items="#{modificarPreguntaBean.opciones}"  var="opcion">
 
 											<p:row>
 												<p:column>
@@ -125,7 +120,7 @@
 												</p:column>
 											</p:row>
 
-										</ui:repeat>
+										</c:forEach>
 									</p:panelGrid>
 
 							</div>

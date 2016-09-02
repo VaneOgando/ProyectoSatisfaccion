@@ -54,11 +54,11 @@ public class ModificarPreguntaServicio {
 
 		try {
 
-			entityManager.persist(pregunta);
+			entityManager.merge(pregunta);
 
 			for (OpcionEntity opcion : opciones){
 				opcion.setPregunta(pregunta);
-				entityManager.persist(opcion);
+				entityManager.merge(opcion);
 			}
 
 			modificacion = true;

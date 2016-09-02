@@ -30,6 +30,12 @@
 			<to-view-id>/consultarPregunta.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-action>#{detallePreguntaBean.bt_modificarPregunta}</from-action>
+			<from-outcome>Exito</from-outcome>
+			<to-view-id>/modificarPregunta.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
