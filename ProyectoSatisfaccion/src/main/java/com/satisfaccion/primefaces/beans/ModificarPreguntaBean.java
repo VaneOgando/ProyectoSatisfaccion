@@ -115,6 +115,12 @@ public class ModificarPreguntaBean {
 
 		try {
 
+			//Validacion de envio de opciones vacias en tipo "simple", true si esta
+			if (validarOpcionesVacias()){
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_OPCION_VACIA);
+				return "";
+			}
+
 			if (evaluacion) {
 				pregunta.setTipoEncuesta("E");
 			}else{
@@ -144,9 +150,22 @@ public class ModificarPreguntaBean {
 
 	}
 
-	/*
-	*
-	* */
+	public boolean validarOpcionesVacias(){
+
+		if (pregunta.getTipoPregunta().equals("simple")){
+
+			for (OpcionEntity opcion : opciones){
+
+				if (opcion.getTitulo() == null || opcion.getTitulo().trim().equals("")){
+					return true;
+				}
+
+			}
+
+		}
+
+		return false;
+	}
 
 	public void agregarOpcion(OpcionEntity opcion) {
 

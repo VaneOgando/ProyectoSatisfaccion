@@ -45,7 +45,9 @@ public class Constantes {
     public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
     public static final String ERR_PREGUNTA_RESPONDIDA = "Acción no permitida. Esta pregunta ya posee respuestas almacenadas.";
 
-    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un mínimo de opciones";
+    public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un mínimo de opciones.";
+
+    public static final String ERR_OPCION_VACIA = "Por favor ingrese una descripcion para cada una de las opciones.";
 
 
     public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
