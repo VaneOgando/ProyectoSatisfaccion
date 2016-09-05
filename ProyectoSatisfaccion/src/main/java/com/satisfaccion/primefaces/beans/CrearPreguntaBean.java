@@ -81,12 +81,6 @@ public class CrearPreguntaBean {
 
 		try {
 
-			//Validacion de envio de opciones vacias en tipo "simple", true si esta vacio
-			if (validarOpcionesVacias()){
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_OPCION_VACIA);
-				return "";
-			}
-
 			pregunta.setEstado("A");
 			pregunta.setFechaCreacion(fechaActual);
 
@@ -127,19 +121,9 @@ public class CrearPreguntaBean {
 
 	}
 
-	public boolean validarOpcionesVacias(){
-
-		if (pregunta.getTipoPregunta().equals("simple")){
-
-			for (OpcionEntity opcion : opciones){
-
-				if (opcion.getTitulo() == null || opcion.getTitulo().equals("")){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+	/*
+	*
+	* */
 
 	public void agregarOpcion(OpcionEntity opcion) {
 

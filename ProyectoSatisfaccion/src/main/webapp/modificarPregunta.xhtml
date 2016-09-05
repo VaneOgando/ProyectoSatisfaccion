@@ -25,7 +25,7 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<p:inputText id="titulo" value="#{modificarPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
-									requiredMessage="Debe ingresar un titulo para la pregunta"/>
+									requiredMessage="Debe ingresar un titulo para la pregunta" />
 							<h:outputLabel value="*" styleClass="requerido"/>
 						</p:column>
 					</p:row>
@@ -78,7 +78,16 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<div id="PreguntaRanking">
-								<p:spinner stepFactor="1" min="3" max="10" size="2" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+								<p:selectOneMenu id="escalaRanking" style="width:150px" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" >
+									<f:selectItem itemLabel="3" itemValue="3" />
+									<f:selectItem itemLabel="4" itemValue="4" />
+									<f:selectItem itemLabel="5" itemValue="5" />
+									<f:selectItem itemLabel="6" itemValue="6" />
+									<f:selectItem itemLabel="7" itemValue="7" />
+									<f:selectItem itemLabel="8" itemValue="8" />
+									<f:selectItem itemLabel="9" itemValue="9" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+								</p:selectOneMenu>
 							</div>
 						</p:column>
 					</p:row>
@@ -95,12 +104,12 @@
 
 											<p:row>
 												<p:column>
-													<p:inputText value="#{opcion.titulo}" maxlength="250" />
+													<p:inputText value="#{opcion.titulo}" />
 													<p:outputLabel value="*" styleClass="requerido" />
 												</p:column>
 
 												<p:column rendered="#{modificarPreguntaBean.evaluacion}">
-													<p:spinner value="#{opcion.valor}" stepFactor="0.25" min="1" max="10" size="2" />
+													<p:inputText value="#{opcion.valor}" />
 												</p:column>
 
 												<p:column>

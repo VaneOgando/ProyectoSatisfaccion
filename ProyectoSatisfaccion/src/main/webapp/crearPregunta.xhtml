@@ -25,8 +25,7 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<p:inputText id="titulo" value="#{crearPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
-									requiredMessage="Debe ingresar un titulo para la pregunta">
-							</p:inputText>
+									requiredMessage="Debe ingresar un titulo para la pregunta" />
 							<h:outputLabel value="*" styleClass="requerido"/>
 						</p:column>
 					</p:row>
@@ -105,7 +104,7 @@
 
 											<p:row>
 												<p:column>
-													<p:inputText value="#{opcion.titulo}" maxlength="250" />
+													<p:inputText value="#{opcion.titulo}" />
 													<p:outputLabel value="*" styleClass="requerido" />
 												</p:column>
 

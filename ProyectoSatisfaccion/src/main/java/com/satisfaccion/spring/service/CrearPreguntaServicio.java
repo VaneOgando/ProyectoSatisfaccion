@@ -135,14 +135,10 @@ public class CrearPreguntaServicio {
 
 		try {
 
-			//Eliminar espcios blancos ingresados al inicio
-			pregunta.setTitulo(pregunta.getTitulo().trim());
-			pregunta.setAyuda(pregunta.getAyuda().trim());
 			entityManager.persist(pregunta);
 
 			for (OpcionEntity opcion : opciones){
 				opcion.setPregunta(pregunta);
-				opcion.setTitulo(opcion.getTitulo().trim());
 				entityManager.persist(opcion);
 			}
 
