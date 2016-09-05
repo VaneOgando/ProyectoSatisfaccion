@@ -9,6 +9,10 @@ import java.util.List;
 
 @NamedQueries(value={
 
+		@NamedQuery(name = "HQL_ENC_PRE_POR_EVALUACION_PREGUNTA",
+				query = "SELECT ep FROM EncPreEntity ep join ep.encuesta e join ep.pregunta p " +
+						"WHERE e.tipoEncuesta = :tipoEncuesta and p.id = :idPregunta ")
+
 })
 
 public class EncPreEntity {

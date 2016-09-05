@@ -35,6 +35,7 @@ public class Constantes {
 
     /*ERRORES*/
     public static final String ERR_LOGIN_INVALIDO = "Usuario y/o contraseña invalida";
+    public static final String ERR_INESPERADO = "Ha ocurrido un error inesperado, intentelo más tarde";
 
     public static final String ERR_ELIMINAR_DEFINITIVO = "La pregunta no pudo ser eliminada, intentelo más tarde";
     public static final String ERR_ELIMINAR_DESACTIVAR = "La pregunta no pudo ser desactivada, intentelo más tarde";

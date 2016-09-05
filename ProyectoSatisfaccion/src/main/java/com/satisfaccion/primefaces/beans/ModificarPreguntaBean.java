@@ -33,10 +33,14 @@ public class ModificarPreguntaBean {
 	private PreguntaEntity pregunta = new PreguntaEntity();
 	private List<OpcionEntity> opciones = new ArrayList<OpcionEntity>();
 
-	private String tipoPregunta = "simple";
-	private Boolean evaluacion = false;
+	private Boolean evaluacion;
 
 	private Boolean modificacion = false;
+
+	private String tipoPregunta;
+	private Boolean banderaPregunta = false;
+	private Boolean banderaEvaluacion = false;
+	private List<OpcionEntity> opcionesEliminar = new ArrayList<OpcionEntity>();
 
 
 /*METODOS*/
@@ -44,7 +48,7 @@ public class ModificarPreguntaBean {
 	@PostConstruct
 	public void cargarDetallePregunta(){
 
-		//Obtener parametro
+		//Obtener parametro por redireccion
 		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
 
 		pregunta.setId(Integer.parseInt(id));
@@ -57,6 +61,9 @@ public class ModificarPreguntaBean {
 		}else{
 			evaluacion = false;
 		}
+
+		//Referencia a tipo de pregunta antes de modificacion
+		tipoPregunta = pregunta.getTipoPregunta();
 	}
 
 	public void inicializarOpciones(){
@@ -70,15 +77,31 @@ public class ModificarPreguntaBean {
 
 	}
 
-	public void cambiarTipoPregunta(){
+	public void cambiarTipoPregunta() {
+
+		if (tipoPregunta.equals("simple")) {
+			//Almaceno opciones iniciales, ya que no puedo perder IDs
+			opcionesEliminar = opciones;
+			banderaPregunta = true;
+		}
+
+		tipoPregunta = pregunta.getTipoPregunta();
 
 		opciones = new ArrayList<OpcionEntity>();
 		inicializarOpciones();
 
 		//Limpiar Variable de escala
+
 	}
 
 	public void cambiarEvaluacion(){
+
+		//Bandera señalando que se modifico la evaluacion, para posteriormente eliminarlo de encuesta
+		if(banderaEvaluacion){
+			banderaEvaluacion = false; //Vuelve estado original
+		}else {
+			banderaEvaluacion = true;
+		}
 
 		if (pregunta.getTipoPregunta().equals("simple")) {
 			for (OpcionEntity opcion : opciones) {
@@ -98,7 +121,7 @@ public class ModificarPreguntaBean {
 				pregunta.setTipoEncuesta("N");
 			}
 
-			modificacion = modificarPreguntaServicio.modificarPregunta(pregunta, opciones);
+			modificacion = modificarPreguntaServicio.modificarPregunta(pregunta, opciones, banderaPregunta, opcionesEliminar, banderaEvaluacion, evaluacion );
 
 			if (modificacion) {
 
@@ -203,5 +226,28 @@ public class ModificarPreguntaBean {
 		this.evaluacion = evaluacion;
 	}
 
+	public Boolean getBanderaPregunta() {
+		return banderaPregunta;
+	}
+
+	public void setBanderaPregunta(Boolean banderaPregunta) {
+		this.banderaPregunta = banderaPregunta;
+	}
+
+	public Boolean getBanderaEvaluacion() {
+		return banderaEvaluacion;
+	}
+
+	public void setBanderaEvaluacion(Boolean banderaEvaluacion) {
+		this.banderaEvaluacion = banderaEvaluacion;
+	}
+
+	public List<OpcionEntity> getOpcionesEliminar() {
+		return opcionesEliminar;
+	}
+
+	public void setOpcionesEliminar(List<OpcionEntity> opcionesEliminar) {
+		this.opcionesEliminar = opcionesEliminar;
+	}
 }
 

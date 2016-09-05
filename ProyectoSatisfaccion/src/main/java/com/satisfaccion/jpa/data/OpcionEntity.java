@@ -36,7 +36,6 @@ public class OpcionEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "FKPREGUNTA")
-	@Cascade(CascadeType.ALL)
 	private PreguntaEntity pregunta;
 
 	@OneToMany(mappedBy = "opcion", fetch = FetchType.LAZY)
