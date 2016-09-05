@@ -64,6 +64,7 @@ public class ModificarPreguntaBean {
 
 		//Referencia a tipo de pregunta antes de modificacion
 		tipoPregunta = pregunta.getTipoPregunta();
+
 	}
 
 	public void inicializarOpciones(){
