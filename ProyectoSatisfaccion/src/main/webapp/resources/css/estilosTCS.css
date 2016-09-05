@@ -109,10 +109,11 @@ body {
     text-indent: 50px;
 }
 
-.listaOpciones{
+.panelOpcionesDetalle{
 
-    font-size: 20px;
-    margin-left: 8%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2%;
 }
 
 .detalleDivIzquierdo{

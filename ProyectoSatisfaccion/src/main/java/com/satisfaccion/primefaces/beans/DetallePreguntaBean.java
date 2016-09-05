@@ -6,6 +6,7 @@ import com.satisfaccion.spring.service.DetallePreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -33,11 +34,19 @@ public class DetallePreguntaBean{
 
 	/*METODOS*/
 
+	@PostConstruct
 	public void cargarDetallePregunta() {
+
+		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+
+		pregunta.setId(Integer.parseInt(id));
 
 		pregunta = detallePreguntaServicio.consultarPregunta(pregunta.getId());
 		opciones = detallePreguntaServicio.consultarOpciones(pregunta.getId());
 		respuestas = detallePreguntaServicio.consultarNumRespuestas(pregunta.getId());
+
+		//Transformar escala de float a int para desplegar valoracion
+
 
 	}
 

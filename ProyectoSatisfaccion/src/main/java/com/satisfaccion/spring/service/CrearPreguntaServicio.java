@@ -140,10 +140,13 @@ public class CrearPreguntaServicio {
 			pregunta.setAyuda(pregunta.getAyuda().trim());
 			entityManager.persist(pregunta);
 
-			for (OpcionEntity opcion : opciones){
-				opcion.setPregunta(pregunta);
-				opcion.setTitulo(opcion.getTitulo().trim());
-				entityManager.persist(opcion);
+			if (pregunta.getTipoPregunta().equals("simple")) {
+
+				for (OpcionEntity opcion : opciones) {
+					opcion.setPregunta(pregunta);
+					opcion.setTitulo(opcion.getTitulo().trim());
+					entityManager.persist(opcion);
+				}
 			}
 
 			creacion = true;

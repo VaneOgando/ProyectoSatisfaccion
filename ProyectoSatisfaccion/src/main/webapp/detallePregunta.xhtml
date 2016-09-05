@@ -9,12 +9,6 @@
 
 	<ui:define name="cuerpo">
 
-		<f:metadata>
-			<f:viewParam name="id" value="#{detallePreguntaBean.pregunta.id}" required="true"/>
-			<f:event type="preRenderView" listener="#{detallePreguntaBean.cargarDetallePregunta}"/>
-		</f:metadata>
-
-
 		<h:form id="DetallePregunta">
 
 			<div class="contenedorDetalle">
@@ -88,26 +82,46 @@
 				<div class="detalleDivDerecho">
 
 					<div class="tituloPregunta">
-						<span>#{detallePreguntaBean.pregunta.titulo}</span>
+						<p:outputLabel value="#{detallePreguntaBean.pregunta.titulo}"/>
 					</div>
 
 					<br/>
 
 					<div class="ayudaPregunta">
-						<span>#{detallePreguntaBean.pregunta.ayuda}</span>
+						<p:outputLabel value="#{detallePreguntaBean.pregunta.ayuda}" />
 					</div>
 
 					<br/>
 
+					<p:panelGrid styleClass="panelInvisible panelOpcionesDetalle" rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'simple'}">
 
-					<ul class="listaOpciones">
+						<c:forEach items="#{detallePreguntaBean.opciones}"  var="opcion">
 
-						<ui:repeat value="#{detallePreguntaBean.opciones}" var="opcion">
-							<li style="margin-bottom: 2%">#{opcion.titulo}</li>
-						</ui:repeat>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{opcion.titulo}" />
+								</p:column>
 
-					</ul>
+								<p:column rendered="#{detallePreguntaBean.pregunta.tipoEncuesta == 'E'}">
+									<p:outputLabel value="#{opcion.valor}" />
+								</p:column>
 
+							</p:row>
+
+						</c:forEach>
+
+					</p:panelGrid>
+
+					<p:panelGrid styleClass="panelInvisible" rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'ranking'}">
+
+						<p:row>
+							<p:column>
+								<p:rating value="#{detallePreguntaBean.pregunta.escalaValoracion}" readonly="true" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
 
 				</div>
 

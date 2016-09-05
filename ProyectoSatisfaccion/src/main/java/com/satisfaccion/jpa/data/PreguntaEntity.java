@@ -46,6 +46,8 @@ public class PreguntaEntity {
 	private String tipoEncuesta;
 	@Column(name = "ESTADO")
 	private String estado;
+	@Column(name = "ESCALAVALORACION")
+	private Float escalaValoracion;
 	@Column(name = "USUARIOCREADOR")
 	private String usuarioCreador;
 	@Column(name = "FECHACREACION")
@@ -112,6 +114,14 @@ public class PreguntaEntity {
 		this.estado = estado;
 	}
 
+	public Float getEscalaValoracion() {
+		return escalaValoracion;
+	}
+
+	public void setEscalaValoracion(Float escalaValoracion) {
+		this.escalaValoracion = escalaValoracion;
+	}
+
 	public String getUsuarioCreador() {
 		return usuarioCreador;
 	}
@@ -151,4 +161,6 @@ public class PreguntaEntity {
 	public void setEncPre(List<EncPreEntity> encPre) {
 		this.encPre = encPre;
 	}
+
+
 }

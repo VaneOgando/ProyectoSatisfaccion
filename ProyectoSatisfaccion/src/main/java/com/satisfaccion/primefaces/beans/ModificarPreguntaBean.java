@@ -91,7 +91,7 @@ public class ModificarPreguntaBean {
 		opciones = new ArrayList<OpcionEntity>();
 		inicializarOpciones();
 
-		//Limpiar Variable de escala
+		pregunta.setEscalaValoracion(null);
 
 	}
 

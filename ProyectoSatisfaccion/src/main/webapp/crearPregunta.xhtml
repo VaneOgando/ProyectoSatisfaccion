@@ -79,7 +79,8 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<div id="PreguntaRanking">
-								<p:spinner stepFactor="1" min="3" max="10" size="2" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+								<p:spinner value="#{crearPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
+										   rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
 							</div>
 						</p:column>
 					</p:row>

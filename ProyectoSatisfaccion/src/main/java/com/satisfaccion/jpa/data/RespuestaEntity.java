@@ -24,7 +24,7 @@ public class RespuestaEntity {
 	@Column(name = "OBSERVACION")
 	private String observacion;
 	@Column(name = "VALORACION")
-	private float valoracion;
+	private int valoracion;
 	@Column(name = "USUARIOEVALUADO")
 	private String usuarioEvaluado;
 
@@ -63,7 +63,7 @@ public class RespuestaEntity {
 		return valoracion;
 	}
 
-	public void setValoracion(float valoracion) {
+	public void setValoracion(int valoracion) {
 		this.valoracion = valoracion;
 	}
 

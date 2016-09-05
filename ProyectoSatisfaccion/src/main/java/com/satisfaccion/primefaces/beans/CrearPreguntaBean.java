@@ -64,7 +64,8 @@ public class CrearPreguntaBean {
 		opciones = new ArrayList<OpcionEntity>();
 		inicializarOpciones();
 
-		//Limpiar Variable de escala
+		pregunta.setEscalaValoracion(null);
+
 	}
 
 	public void cambiarEvaluacion(){
