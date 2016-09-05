@@ -2,12 +2,12 @@
 
 /*PREGUNTA*/
 
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la calidad en la ENTREGA?', 'Por favor sea completamente objetivo', 'ranking', 'N', 'A', 'vanessa', '15/05/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la CALIDAD PERCIBIDA del producto?', 'Por favor sea completamente objetivo', 'simple', 'N', 'A', 'vanessa', '15/05/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el Nivel de Servicio para el Producto?', 'Por favor seleccione aquella opcion que posea mayor valor para usted', 'simple', 'N', 'A', 'vanessa', '18/05/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Ayudenos a mejorar, dejenos sus comentarios o sugerencias', null, 'abierta', 'N', 'A', 'vanessa', '18/05/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Como evalua el comportamiento de nuestros miembros del equipo en sus instalaiones', 'Seleccione la accion que mejor englobe su posicion', 'simple', 'N', 'I', 'maria', '28/01/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Describa el comportamiento de nuestros consultores', null, 'abierta', 'N', 'A', 'maria', '28/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la calidad en la ENTREGA?', 'Por favor sea completamente objetivo', 'ranking', 'N', 'A', 5, 'vanessa', '15/05/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la CALIDAD PERCIBIDA del producto?', 'Por favor sea completamente objetivo', 'simple', 'N', 'A', null, 'vanessa', '15/05/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el Nivel de Servicio para el Producto?', 'Por favor seleccione aquella opcion que posea mayor valor para usted', 'simple', 'N', 'A',null, 'vanessa', '18/05/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Ayudenos a mejorar, dejenos sus comentarios o sugerencias', null, 'abierta', 'N', 'A',null, 'vanessa', '18/05/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Como evalua el comportamiento de nuestros miembros del equipo en sus instalaiones', 'Seleccione la accion que mejor englobe su posicion', 'simple', 'N', 'I',null, 'maria', '28/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, 'Describa el comportamiento de nuestros consultores', null, 'abierta', 'N', 'A',null, 'maria', '28/01/2016');
 
 
 /*OPCION*/
@@ -112,8 +112,8 @@ INSERT INTO RESPUESTA VALUES (respuesta_seq.nextval, 'Muchas felicidades por sus
 
 /*PREGUNTA*/
 
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la PUNTUALIDAD del recurso?', 'Apoyarse en los registros de entrada y salida del PM', 'simple', 'E', 'A', 'Ricardo', '01/01/2016');
-INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el desempeño del recurso?', 'Tome en cuenta todos los aspectos valorados por la empresa', 'ranking', 'E', 'A', 'Ricardo', '01/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica la PUNTUALIDAD del recurso?', 'Apoyarse en los registros de entrada y salida del PM', 'simple', 'E', 'A',null, 'Ricardo', '01/01/2016');
+INSERT INTO PREGUNTA VALUES (pregunta_seq.nextval, '¿Cómo califica el desempeño del recurso?', 'Tome en cuenta todos los aspectos valorados por la empresa', 'ranking', 'E', 'A', 5, 'Ricardo', '01/01/2016');
 
 
 /*OPCION*/

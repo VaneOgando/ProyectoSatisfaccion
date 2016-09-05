@@ -47,6 +47,7 @@ CREATE TABLE PREGUNTA(
 	tipoPregunta		VARCHAR(50)  NOT NULL,
 	tipoEncuesta		CHAR(1)		 NOT NULL,
 	estado				CHAR(1) 	 NOT NULL,
+	escalaValoracion	FLOAT,
 	usuarioCreador		VARCHAR(50)  NOT NULL,
 	fechaCreacion		DATE		 NOT NULL,
 	
