@@ -54,6 +54,7 @@ public class ModificarPreguntaServicio {
 		boolean modificacion = false;
 
 		try {
+
 			//Se modifico tipo de pregunta, eliminar opciones anteriores
 			if (banderaPregunta){
 				eliminarOpciones(opcionesEliminar);
@@ -64,12 +65,16 @@ public class ModificarPreguntaServicio {
 				eliminarDeEncuesta(evaluacion, pregunta.getId());
 			}
 
+			//Eliminar espacios blanco al inicio
+			pregunta.setTitulo(pregunta.getTitulo().trim());
+			pregunta.setAyuda(pregunta.getAyuda().trim());
 			entityManager.merge(pregunta);
 
 			if (pregunta.getTipoPregunta().equals("simple")){
 
 				for (OpcionEntity opcion : opciones){
 					opcion.setPregunta(pregunta);
+					opcion.setTitulo(opcion.getTitulo().trim());
 					entityManager.merge(opcion);
 				}
 

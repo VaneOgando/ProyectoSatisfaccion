@@ -210,7 +210,6 @@
 			<version>1</version>
 		</dependency>
 
-
 		<!-- Dependencies for Eclipse JPA Persistence API -->
 		<!-- <dependency>
 			<groupId>org.eclipse.persistence</groupId>
