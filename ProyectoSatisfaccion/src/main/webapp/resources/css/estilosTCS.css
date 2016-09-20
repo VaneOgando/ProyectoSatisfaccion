@@ -98,15 +98,19 @@ body {
 .tituloPregunta{
 
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
     text-align: justify;
     margin-right: 5%;
 }
 
 .ayudaPregunta{
 
-    font-size: 15px;
+    font-size: 12px;
     text-indent: 50px;
+}
+
+.opcionPregunta{
+    font-size: 18px;
 }
 
 .panelOpcionesDetalle{

@@ -27,9 +27,9 @@ INSERT INTO OPCION VALUES (opcion_seq.nextval, 'Deficiente, incumplimiento de ho
 
 /*ENCUESTA*/
 
-INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'calidad', 'Calidad de los servicios ofrecidos por TCS', 'A continuacion se realizan una serie de premisas, por favor seleccione la opcion que mejor se acerque a su opinion', 'N', 'Vivian', '22/05/2016' );
-INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'servicio ofrecido', 'Encuesta satisfaccion de servicios ', null, 'N', 'Pablo', '04/06/2016' );
-INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'comportamiento', 'Encuesta del comportamiento de equipos de TCS en sus clientes', null, 'N', 'Maria', '01/06/2016' );
+INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'calidad', 'Calidad de los servicios ofrecidos por TCS', 'A continuacion se realizan una serie de premisas, por favor seleccione la opcion que mejor se acerque a su opinion', 'N', 'A', 'Vivian', '22/05/2016' );
+INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'servicio ofrecido', 'Encuesta satisfaccion de servicios ', null, 'N', 'A', 'Pablo', '04/06/2016' );
+INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'comportamiento', 'Encuesta del comportamiento de equipos de TCS en sus clientes', null, 'N', 'A', 'Maria', '01/06/2016' );
 
 
 /*ENC_PRE*/
@@ -126,7 +126,7 @@ INSERT INTO OPCION VALUES (opcion_seq.nextval, 'Deficiente', 1, 7 );
 
 /*ENCUESTA*/
 
-INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'evaluacion TCS', 'Evaluacion mensual a miembros del equipo de TCS', null, 'E', 'Ricardo', '01/01/2016' );
+INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'evaluacion TCS', 'Evaluacion mensual a miembros del equipo de TCS', null, 'E', 'A', 'Ricardo', '01/01/2016' );
 
 
 /*ENC_PRE*/

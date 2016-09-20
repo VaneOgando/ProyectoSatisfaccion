@@ -133,7 +133,7 @@
 				<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 					<p:row>
 						<p:column>
-							<p:commandButton id="crear" value="Crear" onclick="bloquear(this)" action="#{crearPreguntaBean.bt_crearPregunta}"/>
+							<p:commandButton id="crear" value="Crear" onclick="bloquear(this)" action="#{crearPreguntaBean.bt_crearPregunta}" update="CrearPregunta"/>
 						</p:column>
 						<p:column>
 							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="bloquear(this); if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false" action="#{crearPreguntaBean.limpiarPregunta}"

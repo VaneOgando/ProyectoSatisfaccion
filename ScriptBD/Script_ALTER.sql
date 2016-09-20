@@ -8,6 +8,8 @@ ALTER TABLE ENC_PRE	ADD CONSTRAINT ep_fkPregunta	FOREIGN KEY (fkPregunta)		REFER
 
 ALTER TABLE ENCUESTA ADD CONSTRAINT enc_tipoEncuesta_check
   CHECK (tipoEncuesta IN ('N', 'E'));
+ALTER TABLE ENCUESTA ADD CONSTRAINT enc_estado_check
+  CHECK (estado IN ('A', 'I'));
 
 
 ALTER TABLE ENVIO 	ADD fkEncuesta 		INT NOT NULL;

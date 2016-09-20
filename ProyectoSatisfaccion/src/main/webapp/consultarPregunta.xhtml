@@ -123,7 +123,10 @@
 						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
 					</p:commandButton>
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small" />
-					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" />
+					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarPreguntaBean.eliminarPregunta}"
+							update=":Datatable:TablaPregunta" ajax="false">
+						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
+					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>

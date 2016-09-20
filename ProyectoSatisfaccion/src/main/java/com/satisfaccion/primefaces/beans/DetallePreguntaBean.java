@@ -29,6 +29,7 @@ public class DetallePreguntaBean{
 	private PreguntaEntity pregunta = new PreguntaEntity();
 	private List<OpcionEntity> opciones = new ArrayList<OpcionEntity>();
 	private int respuestas = 0;
+	private int escala;
 
 	private boolean eliminar = false;
 
@@ -45,7 +46,10 @@ public class DetallePreguntaBean{
 		opciones = detallePreguntaServicio.consultarOpciones(pregunta.getId());
 		respuestas = detallePreguntaServicio.consultarNumRespuestas(pregunta.getId());
 
-		//Transformar escala de float a int para desplegar valoracion
+		if (pregunta.getTipoPregunta().equals("ranking")){
+
+			escala = Math.round(pregunta.getEscalaValoracion());
+		}
 
 
 	}
@@ -150,6 +154,11 @@ public class DetallePreguntaBean{
 		this.respuestas = respuestas;
 	}
 
+	public int getEscala() {
+		return escala;
+	}
 
-
+	public void setEscala(int escala) {
+		this.escala = escala;
+	}
 }

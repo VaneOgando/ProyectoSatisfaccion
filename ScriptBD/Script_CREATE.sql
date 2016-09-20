@@ -14,6 +14,7 @@ CREATE TABLE ENCUESTA(
 	titulo				VARCHAR(250),
 	descripcion			VARCHAR(500),
 	tipoEncuesta		CHAR(1)		NOT NULL,
+	estado				CHAR(1)		NOT NULL,
 	usuarioCreador		VARCHAR(50) NOT NULL,
 	fechaCreacion		DATE		NOT NULL,
 	

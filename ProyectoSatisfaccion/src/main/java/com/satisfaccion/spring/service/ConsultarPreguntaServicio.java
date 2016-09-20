@@ -47,6 +47,34 @@ public class ConsultarPreguntaServicio {
 
 	}
 
+	@Transactional
+	public boolean eliminarPregunta(boolean eliminar, PreguntaEntity pregunta) throws DataAccessException {
+
+		try{
+
+			if (eliminar){
+				//Remove solo funciona si se conoce la entidad, no se puede eliminar en una transaccion nueva
+				entityManager.remove(entityManager.contains(pregunta) ? pregunta : entityManager.merge(pregunta));
+			}else{
+				pregunta.setEstado("I");
+				entityManager.merge(pregunta);
+			}
+
+			eliminar = true;
+
+		}catch(Exception e){
+			eliminar = false;
+			throw e;
+
+		}finally {
+
+			entityManager.close();
+			return eliminar;
+
+		}
+
+	}
+
 
 	/*GET & SET*/
 

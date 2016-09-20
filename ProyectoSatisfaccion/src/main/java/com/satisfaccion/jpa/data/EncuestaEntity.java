@@ -32,6 +32,8 @@ public class EncuestaEntity {
 	private String descripcion;
 	@Column(name = "TIPOENCUESTA")
 	private String tipoEncuesta;
+	@Column(name = "ESTADO")
+	private String estado;
 	@Column(name = "USUARIOCREADOR")
 	private String usuarioCreador;
 	@Column(name = "FECHACREACION")
@@ -87,6 +89,14 @@ public class EncuestaEntity {
 
 	public void setTipoEncuesta(String tipoEncuesta) {
 		this.tipoEncuesta = tipoEncuesta;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public String getUsuarioCreador() {

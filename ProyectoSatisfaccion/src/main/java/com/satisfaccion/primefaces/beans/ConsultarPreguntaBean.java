@@ -21,7 +21,7 @@ public class ConsultarPreguntaBean {
 	@ManagedProperty("#{consultarPreguntaServicio}")
 	private ConsultarPreguntaServicio consultarPreguntaServicio;
 
-	@ManagedProperty(value="#{mensajesComun}")
+	@ManagedProperty(value = "#{mensajesComun}")
 	private MensajesComun mensajesComun;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
@@ -35,6 +35,7 @@ public class ConsultarPreguntaBean {
 	private String tipoEncuesta;
 
 	private int respuestas = 0;
+	private boolean eliminar = false;
 
 	private ArrayList<String> tiposPregunta = Constantes.tipoPreguntas;
 
@@ -56,7 +57,7 @@ public class ConsultarPreguntaBean {
 
 	}
 
-	public void inicialiazarItems(){
+	public void inicialiazarItems() {
 
 		items = null;
 		itemsBuscados = null;
@@ -83,9 +84,9 @@ public class ConsultarPreguntaBean {
 
 			respuestas = consultarPreguntaServicio.consultarNumRespuestas(itemSeleccionado.getId());
 
-			if (respuestas == 0){
+			if (respuestas == 0) {
 				return "modificarPregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
-			}else{
+			} else {
 
 				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);
 				return "";
@@ -94,6 +95,43 @@ public class ConsultarPreguntaBean {
 		}
 
 		return "";
+	}
+
+	public void eliminarPregunta(){
+
+		if (itemSeleccionado.getEstado().equals("A")){
+
+			respuestas = consultarPreguntaServicio.consultarNumRespuestas(itemSeleccionado.getId());
+
+			if (respuestas > 0){
+				//Desactivar pregunta
+
+				eliminar = consultarPreguntaServicio.eliminarPregunta(false, itemSeleccionado);
+
+				if (eliminar){
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_ELIMINAR_DESACTIVAR);
+				}else{
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ELIMINAR_DESACTIVAR);
+				}
+
+			}else{
+				//Eliminar pregunta
+
+				eliminar = consultarPreguntaServicio.eliminarPregunta(true, itemSeleccionado);
+
+				if (eliminar){
+					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_ELIMINAR_DEFINITIVO);
+					items.remove(itemSeleccionado);
+				}else{
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ELIMINAR_DEFINITIVO);
+				}
+
+			}
+
+		}else{
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_INACTIVA);
+		}
+
 	}
 
 	public String bt_crearPregunta(){
@@ -185,6 +223,14 @@ public class ConsultarPreguntaBean {
 
 	public void setRespuestas(int respuestas) {
 		this.respuestas = respuestas;
+	}
+
+	public boolean isEliminar() {
+		return eliminar;
+	}
+
+	public void setEliminar(boolean eliminar) {
+		this.eliminar = eliminar;
 	}
 
 	public ArrayList<String> getTiposPregunta() {

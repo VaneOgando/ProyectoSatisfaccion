@@ -98,12 +98,12 @@
 						<c:forEach items="#{detallePreguntaBean.opciones}"  var="opcion">
 
 							<p:row>
-								<p:column>
+								<p:column styleClass="opcionPregunta">
 									<p:outputLabel value="#{opcion.titulo}" />
 								</p:column>
 
-								<p:column rendered="#{detallePreguntaBean.pregunta.tipoEncuesta == 'E'}">
-									<p:outputLabel value="#{opcion.valor}" />
+								<p:column rendered="#{detallePreguntaBean.pregunta.tipoEncuesta == 'E'}" styleClass="opcionPregunta">
+									<p:outputLabel value="#{opcion.valor} puntos"  />
 								</p:column>
 
 							</p:row>
@@ -112,16 +112,8 @@
 
 					</p:panelGrid>
 
-					<p:panelGrid styleClass="panelInvisible" rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'ranking'}">
 
-						<p:row>
-							<p:column>
-								<p:rating value="#{detallePreguntaBean.pregunta.escalaValoracion}" readonly="true" />
-							</p:column>
-
-						</p:row>
-
-					</p:panelGrid>
+					<p:rating value="#{detallePreguntaBean.escala}" readonly="true" rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
 
 				</div>
 
