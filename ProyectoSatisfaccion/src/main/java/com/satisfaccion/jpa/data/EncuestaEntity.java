@@ -9,12 +9,11 @@ import java.util.List;
 
 @NamedQueries(value= {
 
-/*
-		@NamedQuery(name = "HQL_EQUIPO",
-				query = "SELECT e FROM EquipoEntity e JOIN e.estado es JOIN e.modelo mo JOIN mo.marca ma " +
-						"WHERE (:idEstado is null or :idEstado = '0' or es.id = :idEstado) AND (:idModelo is null or :idModelo = '0' or mo.id = :idModelo)" +
-						"AND (:idMarca is null or :idMarca = '0' or ma.id = :idMarca)"),
-*/
+		@NamedQuery(name = "HQL_ENCUESTA",
+				query = "SELECT e FROM EncuestaEntity e " +
+						"WHERE (:estado is null or :estado = '0' or e.estado = :estado) " +
+						"AND (:tipoEncuesta is null or :tipoEncuesta = '0' or e.tipoEncuesta = :tipoEncuesta) " +
+						"ORDER BY e.estado, e.fechaCreacion DESC ")
 
 })
 
@@ -41,10 +40,10 @@ public class EncuestaEntity {
 	private Date fechaCreacion;
 
 
-	@OneToMany(mappedBy = "encuesta", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "encuesta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<EncPreEntity> encPre;
 
-	@OneToMany(mappedBy = "encuesta", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "encuesta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<EnvioEntity> envios;
 
 

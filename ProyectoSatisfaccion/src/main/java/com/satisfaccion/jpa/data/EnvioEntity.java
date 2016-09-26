@@ -47,8 +47,7 @@ public class EnvioEntity {
 	private ProyectoEntity proyecto;
 
 
-	@OneToOne
-	@JoinColumn(name = "envio")
+	@OneToOne(mappedBy="envio", cascade=CascadeType.ALL)
 	private RespuestaEntity respuesta;
 
 

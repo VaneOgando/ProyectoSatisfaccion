@@ -112,8 +112,13 @@
 
 					</p:panelGrid>
 
+					<div class="contenedorRanking">
 
-					<p:rating value="#{detallePreguntaBean.escala}" readonly="true" rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
+						<c:forEach begin="1" end="#{detallePreguntaBean.escala}">
+							<h:graphicImage rendered="#{detallePreguntaBean.pregunta.tipoPregunta == 'ranking'}" name="star.png" library="img"
+										style="height: 50px"/>
+						</c:forEach>
+					</div>
 
 				</div>
 
@@ -125,15 +130,14 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" >
-									<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
-								</p:commandButton>
+								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" />
 							</p:column>
 							<p:column>
 								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this);"/>
 							</p:column>
 							<p:column>
-								<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" onclick="bloquear(this);" action="#{detallePreguntaBean.bt_eliminarPregunta}"  update=":DialogoMensajes DetallePregunta" />
+								<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" action="#{detallePreguntaBean.bt_eliminarPregunta}"
+												 update=":DialogoMensajes DetallePregunta" onclick="bloquear(this); if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

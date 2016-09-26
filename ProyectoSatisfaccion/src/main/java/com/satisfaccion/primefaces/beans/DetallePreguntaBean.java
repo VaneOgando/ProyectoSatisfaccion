@@ -100,7 +100,7 @@ public class DetallePreguntaBean{
 	public String bt_modificarPregunta() {
 
 		if (respuestas == 0){
-			return "Exito";
+			return "modificarPregunta.xhtml?faces-redirect=true&id=" + pregunta.getId();
 		}else{
 
 			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);

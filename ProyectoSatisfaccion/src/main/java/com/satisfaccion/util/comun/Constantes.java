@@ -37,13 +37,20 @@ public class Constantes {
     public static final String ERR_LOGIN_INVALIDO = "Usuario y/o contraseña invalida";
     public static final String ERR_INESPERADO = "Ha ocurrido un error inesperado, intentelo más tarde";
 
-    public static final String ERR_ELIMINAR_DEFINITIVO = "La pregunta no pudo ser eliminada, intentelo más tarde";
-    public static final String ERR_ELIMINAR_DESACTIVAR = "La pregunta no pudo ser desactivada, intentelo más tarde";
+    public static final String ERR_ELIMINAR_DEFINITIVO = "La pregunta/encuesta no pudo ser eliminada, intentelo más tarde";
+    public static final String ERR_ELIMINAR_DESACTIVAR = "La pregunta/encuesta no pudo ser desactivada, intentelo más tarde";
+
     public static final String ERR_CREAR_PREGUNTA = "La pregunta no pudo ser creada, intentelo más tarde";
     public static final String ERR_MODIFICAR_PREGUNTA = "La pregunta no pudo ser modificada, intentelo más tarde";
 
     public static final String ERR_PREGUNTA_INACTIVA = "Acción no permitida. Esta pregunta se encuentra inactiva.";
     public static final String ERR_PREGUNTA_RESPONDIDA = "Acción no permitida. Esta pregunta ya posee respuestas almacenadas.";
+
+    public static final String ERR_CREAR_ENCUESTA = "La encuesta no pudo ser creada, intentelo más tarde";
+    public static final String ERR_MODIFICAR_ENCUESTA = "La encuesta no pudo ser modificada, intentelo más tarde";
+
+    public static final String ERR_ENCUESTA_INACTIVA = "Acción no permitida. Esta encuesta se encuentra inactiva.";
+    public static final String ERR_ENCUESTA_RESPONDIDA = "Acción no permitida. Esta encuesta ya posee respuestas almacenadas.";
 
     public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un mínimo de opciones.";
 
@@ -58,11 +65,14 @@ public class Constantes {
 
 
     /*EXITO*/
-    public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta fue eliminada definitivamente exitosamente.";
-    public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta fue desactivada exitosamente, la misma no podra ser agregada ni respondida en ninguna encuesta.";
+    public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta/encuesta fue eliminada definitivamente exitosamente.";
+    public static final String EX_ELIMINAR_DESACTIVAR = "La pregunta/encuesta fue desactivada exitosamente.";
 
     public static final String EX_CREAR_PREGUNTA = "La pregunta fue creada exitosamente.";
     public static final String EX_MODIFICAR_PREGUNTA = "La pregunta fue modificada exitosamente.";
+
+    public static final String EX_CREAR_ENCUESTA = "La encuesta fue creada exitosamente.";
+    public static final String EX_MODIFICAR_ENCUESTA = "La encuesta fue modificada exitosamente.";
 
 
     public static final String EX_GESTION = "EXITO! El/los recurso(s) se gestionaron satisfactoriamente";

@@ -77,10 +77,11 @@
 
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="encabezadoCrearDer" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}">
 							<div id="PreguntaRanking">
 								<p:spinner value="#{crearPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
-										   rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+										    required="true" requiredMessage="Debe ingresar la escala de valoracion" />
+								<p:outputLabel value="*" styleClass="requerido" />
 							</div>
 						</p:column>
 					</p:row>

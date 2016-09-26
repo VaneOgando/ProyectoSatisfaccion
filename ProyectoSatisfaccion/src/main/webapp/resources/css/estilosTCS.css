@@ -122,7 +122,7 @@ body {
 
 .detalleDivIzquierdo{
 
-    position: absolute;
+/*     position: absolute;*/
     width: 35%;
     float: left;
     margin-bottom: 2%;
@@ -130,6 +130,10 @@ body {
     top: 0;
     bottom: 0;
     display: table-column;
+
+
+    position: relative;
+    overflow: hidden;
 }
 
 .panelColumnaIzq{
@@ -156,6 +160,14 @@ body {
     margin-top: 3%;
     border: none;
 }
+
+.contenedorRanking{
+
+    height: 50px;
+    text-align: center;
+    margin-right: 5%;
+}
+
 
 
 /*CREAR PREGUNTA*/

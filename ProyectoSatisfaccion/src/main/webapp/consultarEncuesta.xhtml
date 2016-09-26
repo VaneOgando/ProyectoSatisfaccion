@@ -18,24 +18,15 @@
 
 						<p:outputLabel value="Estado:" style="float: right;" />
 						<p:selectOneMenu id="estado"  style="width:150px"
-										 value="#{consultarPreguntaBean.estado}">
+										 value="#{consultarEncuestaBean.estado}">
 							<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 							<f:selectItem itemLabel="Activo" itemValue="A" />
 							<f:selectItem itemLabel="Inactivo" itemValue="I" />
 						</p:selectOneMenu>
 
-						<p:outputLabel value="Pregunta:" style="float: right;" />
-						<p:selectOneMenu id="tipoPregunta"  style="width:150px"
-										 value="#{consultarPreguntaBean.tipoPregunta}">
-							<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
-							<f:selectItems var ="pregunta" value="#{consultarPreguntaBean.tiposPregunta}"
-										   itemLabel="#{pregunta}"
-										   itemValue="#{pregunta}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel value="Encuesta:" style="float: right;" />
+						<p:outputLabel value="Tipo:" style="float: right;" />
 						<p:selectOneMenu id="tiporEncuesta"  style="width:150px"
-										 value="#{consultarPreguntaBean.tipoEncuesta}">
+										 value="#{consultarEncuestaBean.tipoEncuesta}">
 							<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 							<f:selectItem itemLabel="Normal" itemValue="N" />
 							<f:selectItem itemLabel="Evaluacion" itemValue="E" />
@@ -43,7 +34,7 @@
 
 					</h:panelGrid>
 
-					<p:commandButton value="Filtrar" actionListener="#{consultarPreguntaBean.filtrarPreguntas}" ajax="false"
+					<p:commandButton value="Filtrar" actionListener="#{consultarEncuestaBean.filtrarEncuestas}" ajax="false"
 									 style="height: 30px; font-size: small; margin-top: 20px; margin-left: 50%"
 									update="Datatable">
 					</p:commandButton>
@@ -57,11 +48,11 @@
 
 		<h:form id="Datatable">
 
-			<p:dataTable id="TablaPregunta" value="#{consultarPreguntaBean.items}" var="item" styleClass="datatable"
+			<p:dataTable id="TablaEncuesta" value="#{consultarEncuestaBean.items}" var="item" styleClass="datatable"
 						 rows="15" paginator="true" rowsPerPageTemplate="10,15,25,50,100"
 						 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						 widgetVar="itemTabla" emptyMessage="No se encontraron registros"
-						 filteredValue="#{consultarPreguntaBean.itemsBuscados}" tableStyle="table-layout: auto">
+						 widgetVar="itemTabla" emptyMessage="No se encontraron registros" selectionMode="single" selection="#{consultarEncuestaBean.itemSeleccionado}" rowKey="#{item.id}"
+						 filteredValue="#{consultarEncuestaBean.itemsBuscados}" tableStyle="table-layout: auto">
 
 				<f:facet name="header" >
 
@@ -69,8 +60,11 @@
 
 						<p:row>
 							<p:column>
-								<p:commandButton id="CrearPregunta" process="TablaPregunta" icon="ui-icon-plus" value="Crear"
-												 style="font-size: small" action="#{consultarPreguntaBean.bt_crearPregunta}" />
+								<p:commandButton id="CrearEncuesta" process="TablaEncuesta" icon="ui-icon-plus" value="Crear"
+												 style="font-size: small" action="#{consultarEncuestaBean.bt_crearEncuesta}" />
+
+								<p:commandButton id="EnviarEncuesta" process="TablaEncuesta" icon="ui-icon-mail" value="Enviar"
+												 style="font-size: small" action="#{consultarEncuestaBean.bt_enviarEncuesta}" />
 							</p:column>
 
 							<p:column>
@@ -87,15 +81,11 @@
 					<h:outputText value="#{item.id}"/>
 				</p:column>
 
-				<p:column headerText="Titulo" filterBy="#{item.titulo}" filterStyle="display:none" style="max-width: 650px">
-					<h:outputText value="#{item.titulo}" />
+				<p:column headerText="Nombre" filterBy="#{item.nombre}" filterStyle="display:none" style="max-width: 350px">
+					<h:outputText value="#{item.nombre}" />
 				</p:column>
 
-				<p:column headerText="Pregunta" filterBy="#{item.tipoPregunta}" filterStyle="display:none" style="text-align: center">
-					<h:outputText value="#{item.tipoPregunta}" />
-				</p:column>
-
-				<p:column headerText="Encuesta" filterBy="#{item.tipoEncuesta}" filterStyle="display:none" style="text-align: center">
+				<p:column headerText="Tipo" filterBy="#{item.tipoEncuesta}" filterStyle="display:none" style="text-align: center">
 
 					<h:outputText value="Normal" rendered="#{item.tipoEncuesta.equals('N')}" />
 
@@ -115,17 +105,23 @@
 					<h:outputText value="#{item.usuarioCreador}" />
 				</p:column>
 
+				<p:column headerText="Fecha creacion" filterBy="#{item.fechaCreacion}" filterStyle="display:none" style="text-align: center">
+					<h:outputText value="#{item.fechaCreacion}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="Acciones" style="text-align: center">
-					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarPreguntaBean.detallePregunta}">
-						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
+					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarEncuestaBean.detalleEncuesta}">
+						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
-					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarPreguntaBean.modificarPregunta}">
-						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
+					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarEncuestaBean.modificarEncuesta}">
+						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small" />
-					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarPreguntaBean.eliminarPregunta}"
-							update=":Datatable:TablaPregunta" ajax="false" onclick="bloquear(this); if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false">
-						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
+					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarEncuestaBean.eliminarEncuesta}"
+							update=":Datatable:TablaEncuesta" ajax="false" onclick="bloquear(this); if (! confirm('¿Seguro desea realizar esta acción? La encuesta será eliminada o desactivada definitivamente.')) return false">
+						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
 				</p:column>
 

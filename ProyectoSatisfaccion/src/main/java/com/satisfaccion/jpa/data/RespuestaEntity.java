@@ -11,7 +11,12 @@ import java.util.List;
 
 		@NamedQuery(name = "HQL_RESPUESTA_PREGUNTA_NUMERO",
 				query = "SELECT COUNT (r) FROM RespuestaEntity r " +
-						"WHERE r.pregunta.id = :idPregunta")
+						"WHERE r.pregunta.id = :idPregunta"),
+
+		@NamedQuery(name = "HQL_RESPUESTA_ENCUESTA_NUMERO",
+				query = "SELECT COUNT (r) FROM RespuestaEntity r JOIN r.envio e join e.encuesta enc " +
+						"WHERE enc.id = :idEncuesta")
+
 
 })
 
