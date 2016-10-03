@@ -34,14 +34,14 @@ INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'comportamiento', 'Encuesta d
 
 /*ENC_PRE*/
 
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 1, 1 );
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 1, 2 );
+INSERT INTO ENC_PRE VALUES (1, 1 );
+INSERT INTO ENC_PRE VALUES (1, 2 );
 
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 2, 3 );
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 2, 4 );
+INSERT INTO ENC_PRE VALUES ( 2, 3 );
+INSERT INTO ENC_PRE VALUES ( 2, 4 );
 
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 3, 5 );
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 3, 6 );
+INSERT INTO ENC_PRE VALUES (3, 5 );
+INSERT INTO ENC_PRE VALUES (3, 6 );
 
 
 /*PROYECTO*/
@@ -131,8 +131,8 @@ INSERT INTO ENCUESTA VALUES (encuesta_seq.nextval, 'evaluacion TCS', 'Evaluacion
 
 /*ENC_PRE*/
 
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 4, 7 );
-INSERT INTO ENC_PRE VALUES (enc_pre_seq.nextval, 4, 8 );
+INSERT INTO ENC_PRE VALUES ( 4, 7 );
+INSERT INTO ENC_PRE VALUES ( 4, 8 );
 
 
 /*ENVIO*/

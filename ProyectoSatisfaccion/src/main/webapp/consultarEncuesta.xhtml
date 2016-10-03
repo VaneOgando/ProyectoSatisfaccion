@@ -120,7 +120,7 @@
 					</p:commandButton>
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small" />
 					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarEncuestaBean.eliminarEncuesta}"
-							update=":Datatable:TablaEncuesta" ajax="false" onclick="bloquear(this); if (! confirm('¿Seguro desea realizar esta acción? La encuesta será eliminada o desactivada definitivamente.')) return false">
+							update=":Datatable:TablaEncuesta" ajax="false" onclick="if (! confirm('¿Seguro desea realizar esta acción? La encuesta será eliminada o desactivada definitivamente.')) return false">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
 				</p:column>

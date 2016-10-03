@@ -78,7 +78,7 @@ public class DetallePreguntaBean{
 
 				if (eliminar){
 
-					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.ERR_ELIMINAR_DEFINITIVO);
+					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_ELIMINAR_DEFINITIVO);
 					return "Exito";
 
 				}else{
@@ -108,8 +108,6 @@ public class DetallePreguntaBean{
 		}
 
 	}
-
-
 
 
 /* GET & SET */

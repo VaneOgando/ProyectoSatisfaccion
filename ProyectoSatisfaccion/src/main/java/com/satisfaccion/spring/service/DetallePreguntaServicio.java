@@ -85,6 +85,9 @@ public class DetallePreguntaServicio {
 				entityManager.remove(entityManager.contains(pregunta) ? pregunta : entityManager.merge(pregunta));
 			}else{
 				pregunta.setEstado("I");
+				//Eliminar la pregunta de las encuestas a las que estaba asignada
+				entityManager.find(PreguntaEntity.class, pregunta.getId()).getEncuestas().clear();
+
 				entityManager.merge(pregunta);
 			}
 

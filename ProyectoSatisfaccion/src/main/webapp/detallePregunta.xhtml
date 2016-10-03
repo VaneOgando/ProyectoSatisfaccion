@@ -130,14 +130,14 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" />
+								<p:commandButton id="modificar" value="Modificar" immediate="true" action="#{detallePreguntaBean.bt_modificarPregunta}" />
 							</p:column>
 							<p:column>
-								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this);"/>
+								<p:commandButton id="analizar" value="Analizar" immediate="true"/>
 							</p:column>
 							<p:column>
 								<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" action="#{detallePreguntaBean.bt_eliminarPregunta}"
-												 update=":DialogoMensajes DetallePregunta" onclick="bloquear(this); if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false" />
+												 update=":DialogoMensajes DetallePregunta" onclick="if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

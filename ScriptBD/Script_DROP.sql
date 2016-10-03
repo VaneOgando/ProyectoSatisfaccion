@@ -1,6 +1,5 @@
 /*DROP SECUENCIAS*/
 
-DROP SEQUENCE enc_pre_seq;
 DROP SEQUENCE encuesta_seq;
 DROP SEQUENCE envio_seq;
 DROP SEQUENCE opcion_seq;

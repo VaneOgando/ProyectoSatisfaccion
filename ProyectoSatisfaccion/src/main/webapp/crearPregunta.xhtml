@@ -9,7 +9,7 @@
 
 	<ui:define name="cuerpo">
 
-		<h:form id="CrearPregunta" prependId="true">
+		<h:form id="CrearPregunta" prependId="true" onsubmit="bloquear(this)">
 
 			<div id="tituloCrearPregunta">
 				<h1 style="text-align: center" > Crear Pregunta </h1>
@@ -134,15 +134,15 @@
 				<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 					<p:row>
 						<p:column>
-							<p:commandButton id="crear" value="Crear" onclick="bloquear(this)" action="#{crearPreguntaBean.bt_crearPregunta}" update="CrearPregunta"/>
+							<p:commandButton id="crear" value="Crear" action="#{crearPreguntaBean.bt_crearPregunta}" update="CrearPregunta"/>
 						</p:column>
 						<p:column>
-							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="bloquear(this); if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false" action="#{crearPreguntaBean.limpiarPregunta}"
+							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false" action="#{crearPreguntaBean.limpiarPregunta}"
 									update="CrearPregunta"/>
 						</p:column>
 						<p:column>
 							<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false"
-											 onclick="bloquear(this); if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
+											 onclick="if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
 											action="#{crearPreguntaBean.bt_cancelar}"/>
 						</p:column>
 					</p:row>

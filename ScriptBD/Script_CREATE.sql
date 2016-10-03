@@ -2,9 +2,10 @@
 
 CREATE TABLE ENC_PRE(
 
-	idEnc_Pre 			INT			NOT NULL,
+	idEncuesta			INT			NOT NULL,
+	idPregunta			INT			NOT NULL,
 	
-	CONSTRAINT enc_pre_pk PRIMARY KEY (idEnc_Pre)
+	CONSTRAINT enc_pre_pk PRIMARY KEY (idEncuesta, idPregunta)
 );
 
 CREATE TABLE ENCUESTA(

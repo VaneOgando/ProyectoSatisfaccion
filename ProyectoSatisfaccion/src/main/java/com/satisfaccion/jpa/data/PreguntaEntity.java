@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -54,14 +55,16 @@ public class PreguntaEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
-	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
+	@OneToMany(mappedBy = "pregunta")
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
 	private List<OpcionEntity> opciones;
 
-	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pregunta")
 	private List<RespuestaEntity> respuestas;
 
-	@OneToMany(mappedBy = "pregunta", fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
-	private List<EncPreEntity> encPre;
+	@ManyToMany(cascade = {javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST})
+	@JoinTable(name = "ENC_PRE", joinColumns = { @JoinColumn(name = "IDPREGUNTA")}, inverseJoinColumns = { @JoinColumn(name = "IDENCUESTA")})
+	private Set<EncuestaEntity> encuestas;
 
 
 	/*GET AND SET*/
@@ -154,13 +157,11 @@ public class PreguntaEntity {
 		this.respuestas = respuestas;
 	}
 
-	public List<EncPreEntity> getEncPre() {
-		return encPre;
+	public Set<EncuestaEntity> getEncuestas() {
+		return encuestas;
 	}
 
-	public void setEncPre(List<EncPreEntity> encPre) {
-		this.encPre = encPre;
+	public void setEncuestas(Set<EncuestaEntity> encuestas) {
+		this.encuestas = encuestas;
 	}
-
-
 }

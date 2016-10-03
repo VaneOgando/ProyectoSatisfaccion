@@ -1,15 +1,19 @@
 package com.satisfaccion.spring.service;
 
-import com.satisfaccion.jpa.data.EncPreEntity;
+//import com.satisfaccion.jpa.data.EncPreEntity;
+import com.satisfaccion.jpa.data.EncuestaEntity;
 import com.satisfaccion.jpa.data.OpcionEntity;
 import com.satisfaccion.jpa.data.PreguntaEntity;
+import org.hibernate.Hibernate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 //import javax.transaction.Transactional;
 
@@ -58,11 +62,17 @@ public class ModificarPreguntaServicio {
 			//Se modifico tipo de pregunta, eliminar opciones anteriores
 			if (banderaPregunta){
 				eliminarOpciones(opcionesEliminar);
+				/*for (OpcionEntity opcion : opcionesEliminar){
+
+					entityManager.remove(entityManager.contains(opcion) ? opcion : entityManager.merge(opcion));
+				}*/
 			}
 
 			//Modifico el tipo de evaluacion, eliminar de encuestas asignadas
 			if (banderaEvaluacion){
-				eliminarDeEncuesta(evaluacion, pregunta.getId());
+
+				entityManager.find(PreguntaEntity.class, pregunta.getId()).getEncuestas().clear();
+
 			}
 
 			//Eliminar espacios blanco al inicio
@@ -98,7 +108,6 @@ public class ModificarPreguntaServicio {
 	public void eliminarOpciones(List<OpcionEntity> opciones) throws Exception {
 
 		try{
-
 			for (OpcionEntity opcion : opciones){
 
 				entityManager.remove(entityManager.contains(opcion) ? opcion : entityManager.merge(opcion));
@@ -106,29 +115,6 @@ public class ModificarPreguntaServicio {
 
 		}catch(Exception e){
 			throw e;
-		}
-
-	}
-
-	@Transactional
-	public void eliminarDeEncuesta(boolean evaluacion, int idPregunta) throws Exception {
-
-		String tipoEncuesta;
-
-		if(evaluacion){
-			tipoEncuesta = "N";
-		}else{
-			tipoEncuesta = "E";
-		}
-
-		List<EncPreEntity> resultList = getEntityManager().createNamedQuery("HQL_ENC_PRE_POR_EVALUACION_PREGUNTA")
-				.setParameter("tipoEncuesta", tipoEncuesta)
-				.setParameter("idPregunta", idPregunta)
-				.getResultList();
-
-		for (EncPreEntity encpre : resultList){
-
-			entityManager.remove(entityManager.contains(encpre) ? encpre : entityManager.merge(encpre));
 		}
 
 	}
