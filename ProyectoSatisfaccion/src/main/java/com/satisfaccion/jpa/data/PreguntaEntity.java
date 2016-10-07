@@ -164,4 +164,6 @@ public class PreguntaEntity {
 	public void setEncuestas(Set<EncuestaEntity> encuestas) {
 		this.encuestas = encuestas;
 	}
+
+
 }

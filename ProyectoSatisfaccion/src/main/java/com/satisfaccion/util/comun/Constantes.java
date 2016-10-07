@@ -74,7 +74,6 @@ public class Constantes {
     public static final String EX_CREAR_ENCUESTA = "La encuesta fue creada exitosamente.";
     public static final String EX_MODIFICAR_ENCUESTA = "La encuesta fue modificada exitosamente.";
 
-
     public static final String EX_GESTION = "EXITO! El/los recurso(s) se gestionaron satisfactoriamente";
     public static final String EX_MODIFICAR = "EXITO! El recurso se modifico satisfactoriamente";
 

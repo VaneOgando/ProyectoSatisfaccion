@@ -21,7 +21,7 @@ public class ConsultarPreguntaBean {
 	@ManagedProperty("#{consultarPreguntaServicio}")
 	private ConsultarPreguntaServicio consultarPreguntaServicio;
 
-	@ManagedProperty(value = "#{mensajesComun}")
+	@ManagedProperty(value="#{mensajesComun}")
 	private MensajesComun mensajesComun;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
@@ -57,7 +57,7 @@ public class ConsultarPreguntaBean {
 
 	}
 
-	public void inicialiazarItems() {
+	public void inicialiazarItems(){
 
 		items = null;
 		itemsBuscados = null;
@@ -84,9 +84,9 @@ public class ConsultarPreguntaBean {
 
 			respuestas = consultarPreguntaServicio.consultarNumRespuestas(itemSeleccionado.getId());
 
-			if (respuestas == 0) {
+			if (respuestas == 0){
 				return "modificarPregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
-			} else {
+			}else{
 
 				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);
 				return "";

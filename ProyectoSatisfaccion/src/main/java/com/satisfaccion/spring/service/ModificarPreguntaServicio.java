@@ -62,10 +62,6 @@ public class ModificarPreguntaServicio {
 			//Se modifico tipo de pregunta, eliminar opciones anteriores
 			if (banderaPregunta){
 				eliminarOpciones(opcionesEliminar);
-				/*for (OpcionEntity opcion : opcionesEliminar){
-
-					entityManager.remove(entityManager.contains(opcion) ? opcion : entityManager.merge(opcion));
-				}*/
 			}
 
 			//Modifico el tipo de evaluacion, eliminar de encuestas asignadas
@@ -108,6 +104,7 @@ public class ModificarPreguntaServicio {
 	public void eliminarOpciones(List<OpcionEntity> opciones) throws Exception {
 
 		try{
+
 			for (OpcionEntity opcion : opciones){
 
 				entityManager.remove(entityManager.contains(opcion) ? opcion : entityManager.merge(opcion));

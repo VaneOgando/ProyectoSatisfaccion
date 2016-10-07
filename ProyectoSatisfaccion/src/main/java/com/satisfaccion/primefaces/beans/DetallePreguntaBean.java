@@ -100,6 +100,7 @@ public class DetallePreguntaBean{
 	public String bt_modificarPregunta() {
 
 		if (respuestas == 0){
+//			return "Exito";
 			return "modificarPregunta.xhtml?faces-redirect=true&id=" + pregunta.getId();
 		}else{
 
@@ -108,6 +109,8 @@ public class DetallePreguntaBean{
 		}
 
 	}
+
+
 
 
 /* GET & SET */

@@ -56,6 +56,7 @@ public class EncuestaEntity {
 	private List<EnvioEntity> envios;
 
 
+
 	/*GET AND SET*/
 
 	public int getId() {

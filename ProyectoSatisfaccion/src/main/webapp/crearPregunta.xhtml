@@ -9,7 +9,7 @@
 
 	<ui:define name="cuerpo">
 
-		<h:form id="CrearPregunta" prependId="true" onsubmit="bloquear(this)">
+		<h:form id="CrearPregunta" prependId="true">
 
 			<div id="tituloCrearPregunta">
 				<h1 style="text-align: center" > Crear Pregunta </h1>
@@ -48,10 +48,10 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<p:selectOneMenu id="tipoPregunta" style="width:150px" value="#{crearPreguntaBean.pregunta.tipoPregunta}">
-								<f:selectItem itemLabel="Simple" itemValue="simple"  />
+								<f:selectItem itemLabel="Simple" itemValue="simple" />
 								<f:selectItem itemLabel="Ranking" itemValue="ranking" />
 								<f:selectItem itemLabel="Abierta" itemValue="abierta" />
-								<p:ajax update="CrearPregunta" event="change" process="@this,titulo,ayuda,evaluacion" listener="#{crearPreguntaBean.cambiarTipoPregunta}"/>
+								<p:ajax update="groupLabel groupRanking groupOpcion" event="change" listener="#{crearPreguntaBean.cambiarTipoPregunta}"/>
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
@@ -61,7 +61,7 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<p:selectBooleanCheckbox id="evaluacion" value="#{crearPreguntaBean.evaluacion}">
-								<p:ajax update="CrearPregunta:opcionesPregunta" process="@this,titulo,ayuda,tipoPregunta,opcionesPregunta"
+								<p:ajax update="groupOpcion"
 										listener="#{crearPreguntaBean.cambiarEvaluacion}"/>
 							</p:selectBooleanCheckbox>
 
@@ -72,26 +72,29 @@
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
 
-							<p:outputLabel value ="Opciones" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
-							<p:outputLabel value ="Escala" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
-
+							<h:panelGroup id="groupLabel">
+								<p:outputLabel value ="Opciones" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
+								<p:outputLabel value ="Escala" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
+							</h:panelGroup>
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}">
-							<div id="PreguntaRanking">
-								<p:spinner value="#{crearPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
-										    required="true" requiredMessage="Debe ingresar la escala de valoracion" />
-								<p:outputLabel value="*" styleClass="requerido" />
-							</div>
+
+						<p:column styleClass="encabezadoCrearDer" >
+							<h:panelGroup id="groupRanking">
+								<p:spinner id="PreguntaRanking" value="#{crearPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
+											required="true" requiredMessage="Debe ingresar la escala de valoracion" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
+								<p:outputLabel value="*" styleClass="requerido" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+							</h:panelGroup>
 						</p:column>
+
 					</p:row>
 
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq"/>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<div id="PreguntaSimple">
 
+								<h:panelGroup id="groupOpcion">
 									<p:panelGrid id="opcionesPregunta" styleClass="panelInvisible" rendered="#{crearPreguntaBean.pregunta.tipoPregunta == 'simple'}">
 
 										<c:forEach items="#{crearPreguntaBean.opciones}" var="opcion">
@@ -117,8 +120,7 @@
 										</c:forEach>
 
 									</p:panelGrid>
-
-							</div>
+								</h:panelGroup>
 
 						</p:column>
 

@@ -1,4 +1,3 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 				xmlns:ui="http://java.sun.com/jsf/facelets"
 				xmlns:h="http://java.sun.com/jsf/html"
@@ -50,7 +49,7 @@
 								<f:selectItem itemLabel="Simple" itemValue="simple"  />
 								<f:selectItem itemLabel="Ranking" itemValue="ranking" />
 								<f:selectItem itemLabel="Abierta" itemValue="abierta" />
-								<p:ajax update="ModificarPregunta" event="change" process="@this,titulo,ayuda,evaluacion" listener="#{modificarPreguntaBean.cambiarTipoPregunta}"/>
+								<p:ajax update="groupLabel groupRanking groupOpcion" event="change" listener="#{modificarPreguntaBean.cambiarTipoPregunta}"/>
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
@@ -60,7 +59,7 @@
 
 						<p:column styleClass="encabezadoCrearDer">
 							<p:selectBooleanCheckbox id="evaluacion" value="#{modificarPreguntaBean.evaluacion}">
-								<p:ajax update="ModificarPregunta:opcionesPregunta" process="@this,titulo,ayuda,tipoPregunta,opcionesPregunta"
+								<p:ajax update="groupOpcion"
 										listener="#{modificarPreguntaBean.cambiarEvaluacion}"/>
 							</p:selectBooleanCheckbox>
 
@@ -71,16 +70,18 @@
 					<p:row>
 						<p:column styleClass="encabezadoCrearIzq">
 
-							<p:outputLabel value ="Opciones" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
-							<p:outputLabel value ="Escala" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
-
+							<h:panelGroup id="groupLabel">
+								<p:outputLabel value ="Opciones" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
+								<p:outputLabel value ="Escala" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}"/>
+							</h:panelGroup>
 						</p:column>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<div id="PreguntaRanking">
+							<h:panelGroup id="groupRanking">
 								<p:spinner value="#{modificarPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
-										   rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
-							</div>
+										   required="true" requiredMessage="Debe ingresar la escala de valoracion" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+								<p:outputLabel value="*" styleClass="requerido" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
+							</h:panelGroup>
 						</p:column>
 					</p:row>
 
@@ -88,8 +89,8 @@
 						<p:column styleClass="encabezadoCrearIzq"/>
 
 						<p:column styleClass="encabezadoCrearDer">
-							<div id="PreguntaSimple">
 
+								<h:panelGroup id="groupOpcion">
 									<p:panelGrid id="opcionesPregunta" styleClass="panelInvisible" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}">
 
 										<c:forEach items="#{modificarPreguntaBean.opciones}"  var="opcion">
@@ -114,8 +115,7 @@
 
 										</c:forEach>
 									</p:panelGrid>
-
-							</div>
+								</h:panelGroup>
 
 						</p:column>
 
@@ -131,12 +131,12 @@
 				<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 					<p:row>
 						<p:column>
-							<p:commandButton id="modificar" value="Modificar" action="#{modificarPreguntaBean.bt_modificarPregunta}"/>
+							<p:commandButton id="modificar" value="Modificar" onclick="bloquear(this)" action="#{modificarPreguntaBean.bt_modificarPregunta}"/>
 						</p:column>
 
 						<p:column>
 							<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false"
-											 onclick=" if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
+											 onclick="bloquear(this); if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
 											action="#{modificarPreguntaBean.bt_cancelar}"/>
 						</p:column>
 					</p:row>
