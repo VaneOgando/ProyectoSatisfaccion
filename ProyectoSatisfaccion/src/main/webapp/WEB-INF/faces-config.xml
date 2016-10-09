@@ -70,9 +70,15 @@
 		</navigation-case>
 	</navigation-rule>
 
-
-
-
+	<navigation-rule>
+		<from-view-id>/consultarEncuesta.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{consultarEncuestaBean.bt_crearEncuesta}</from-action>
+			<from-outcome>Crear</from-outcome>
+			<to-view-id>/crearEncuesta.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
 
 
 </faces-config>

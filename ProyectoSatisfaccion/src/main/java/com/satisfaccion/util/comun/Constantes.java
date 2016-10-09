@@ -22,6 +22,8 @@ public class Constantes {
 
     public static final int CANT_MINIMA_OPCIONES = 2;
 
+    public static final String NOMBRE_ENCUESTA_COPIA = "Copia de ";
+
 
     public static final String REPORTE_ASIGNACION = "cartaAsignacionRecurso.jasper";
     public static final String REPORTE_DEVOLUCION = "cartaDevolucionRecurso.jasper";

@@ -52,11 +52,15 @@ public class ConsultarEncuestaServicio {
 		try{
 
 			if (eliminar){
+				//Elimino las preguntas asociadas a la encuesta a eliminar
+				entityManager.find(EncuestaEntity.class, encuesta.getId()).getPreguntas().clear();
+
 				//Remove solo funciona si se conoce la entidad, no se puede eliminar en una transaccion nueva
 				entityManager.remove(entityManager.contains(encuesta) ? encuesta : entityManager.merge(encuesta));
 			}else{
 				encuesta.setEstado("I");
 				entityManager.merge(encuesta);
+
 			}
 
 			eliminar = true;

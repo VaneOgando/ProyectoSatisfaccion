@@ -199,208 +199,40 @@ body {
 
 
 
+/*CREAR ENCUESTA*/
 
+.acordeonCrearEncuesta{
 
-
- /*CREAR RECURSO*/
-
-.contenedorCreacion{
-
-    overflow: hidden;
-    margin: 2% auto;
-    display: table;
-    width: 100%;
-}
-
-.mensajeCreacion{
     margin: 0 auto;
-    width: 75%;
-    text-align: center;
-}
-
-.detalleCreacion{
-
-    position: relative;
-    margin: 3% auto;
-
-}
-
-.anchoCompCreacion{
-    width: 203px; !important;
-}
-
-.crearBotonesGestion{
-    display: table-row;
-    margin-top: 3%;
-    border: none;
-}
-
-.colIzqCreacion{
-    width: 200px;
-    text-align: right;
-    font-weight: bold;
-}
-
-.colDerCreacion {
-    width: 250px;
-    font-size: medium;
-}
-
-.autoPrimeCreacion .ui-autocomplete-input{
-    width: 203px; !important;
-}
-
-.autoPrimeCreacion .ui-autocomplete-dropdown {
-    font-size: small; !important;
-}
-
-.calPrimeCreacion .ui-inputfield{
-   width: 203px; !important;
-}
-
-.calPrimeCreacion .ui-datepicker-trigger{
-    font-size: small; !important;
-}
-
-
-
-
-/*MODIFICAR RECURSO*/
-
-.contenedorModificacion{
-
-    overflow: hidden;
-    margin: 2% auto;
-    display: table;
-    width: 100%;
-}
-
-.mensajeModificacion{
-    margin: 0 auto;
-    width: 75%;
-    text-align: center;
-}
-
-.detalleModificacion{
-
-    position: relative;
-    margin: 3% auto;
-
-}
-
-.anchoCompModificacion{
-    width: 203px; !important;
-}
-
-.modificarBotonesGestion{
-    display: table-row;
-    margin-top: 3%;
-    border: none;
-}
-
-.colIzqModificacion{
-    width: 200px;
-    text-align: right;
-    font-weight: bold;
-}
-
-.colDerModificacion{
-    width: 250px;
-    font-size: medium;
-}
-
-.autoPrimeModificacion .ui-autocomplete-input{
-    width: 203px; !important;
-}
-
-.autoPrimeModificacion .ui-autocomplete-dropdown {
-    font-size: small; !important;
-}
-
-.calPrimeModificacion .ui-inputfield{
-    width: 203px; !important;
-}
-
-.calPrimeModificacion .ui-datepicker-trigger{
-    font-size: small; !important;
-}
-
-
-
-
-
-/*GESTION RECURSO*/
-.contenedorGestion{
-
-    overflow: hidden;
-    margin: 2% auto;
-    display: table;
-    width: 100%;
-}
-
-.mensajeGestion{
-    margin: 0 auto;
-    width: 75%;
-    text-align: center;
-}
-
-.mensajeDialogoGestion{
-    margin: 0 auto;
-    width: 100%;
-    text-align: center;
-}
-
-
-.detalleGestion{
-    position: relative;
-    margin: 3% auto;
-}
-
-.anchoCompGestion{
-    width: 220px; !important;
-}
-
-.anchoCompManyMenu{
-    width: 215px; !important;
-    height: 90px;
-    float: left;
-}
-
-.botonGestionMas{
     margin-top: 5%;
-    margin-bottom: 2.5%;
+    width: 70%;
 }
 
-.botonGestionMenos{;
-    margin-top: 2.5%;
-    margin-bottom: 6%;
+.panelAcordeon{
+    float: right;
 }
 
-.botonesGestionRecurso{
-    display: table-row;
-    margin-top: 3%;
-    border: none;
-}
+.botonPreCreacion{
 
-.colIzqGestion{
-    width: 80px;
-    text-align: right;
-    font-weight: bold;
-}
-
-.colDerGestion{
-    width: 280px;
-    font-size: medium;
-}
-
-.btDialgAceptar{
-    text-align: right;
     font-size: small;
-    width: 50%;
+    text-align: center;
+    padding-top: 15px;
 }
 
-.btDialgCancelar{
-    text-align: left;
-    font-size: small;
-    width: 50%;
+.colIzqCrearEncuesta{
+    width: 25%;
+
 }
+
+.colDerCrearEncuesta{
+    width: 100%;
+}
+
+.colDerCrearEncuesta .ui-inputtext{
+    width: 90%;
+}
+
+
+
+
+
