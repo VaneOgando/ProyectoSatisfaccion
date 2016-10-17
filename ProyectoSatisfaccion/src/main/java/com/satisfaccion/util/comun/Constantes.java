@@ -59,6 +59,7 @@ public class Constantes {
 
     public static final String ERR_OPCION_VACIA = "Por favor ingrese una descripcion para cada una de las opciones.";
     public static final String ERR_NOMBRE_ENCUESTA = "Ya existe una encuesta con este nombre, por favor ingrese otro.";
+    public static final String ERR_SIN_PREGUNTAS = "No existen preguntas activas para seleccionar";
 
 
 

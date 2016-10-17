@@ -8,16 +8,14 @@ import com.satisfaccion.util.comun.MensajesComun;
 import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @ManagedBean
 @ViewScoped
@@ -88,8 +86,17 @@ public class CrearEncuestaBean implements Converter {
 			tipoEncuesta = "N";
 		}
 
+		/*Carga de preguntas disponibles para el tipo seleccionado*/
 		preguntasDisponibles = crearEncuestaServicio.cargarPreguntasActivas(tipoEncuesta);
+
+		//Elimina de las preguntas disponibles las ya seleccionadas
+		eliminarDisponiblesYaSeleccionadas();
+
+		//Armar el picklist final para la encusta copiada
 		preguntasPickList = new DualListModel<PreguntaEntity>(preguntasDisponibles, preguntasSelecconadas);
+
+		validarPickList();
+
 	}
 
 	/*Accion cuando se selecciona una encuesta a copiar, agrega el string "Copia de" al nombre existente*/
@@ -109,6 +116,18 @@ public class CrearEncuestaBean implements Converter {
 		return valido;
 	}
 
+	/*Validacion de picklist que no se encuentre vacio en ambas listas,
+	generar mensaje de error dependiendo del tab seleccionado*/
+	public void validarPickList() {
+
+		if (preguntasPickList.getSource().size() == 0 && preguntasPickList.getTarget().size() == 0){
+
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_SIN_PREGUNTAS);
+		}
+
+	}
+
+
 	public void bt_continuar(){
 
 		if(validarNombre()) {
@@ -121,17 +140,11 @@ public class CrearEncuestaBean implements Converter {
 					evaluacion = true;
 				}
 
-				//Cargar todas las preguntas disponibles
-				cargarPreguntasTipoEncuesta();
-
 				//Cargar preguntas de la encuesta seleccionada
 				preguntasSelecconadas = new ArrayList<PreguntaEntity>(crearEncuestaServicio.buscarPreguntasPorEncuesta(encuesta.getId()));
 
-				//Elimina de las preguntas disponibles las ya seleccionadas
-				eliminarDisponiblesYaSeleccionadas();
-
-				//Armar el picklist final para la encusta copiada
-				preguntasPickList = new DualListModel<PreguntaEntity>(preguntasDisponibles, preguntasSelecconadas);
+				//Cargar todas las preguntas disponibles y crea el picklist
+				cargarPreguntasTipoEncuesta();
 
 			}
 		}else {
