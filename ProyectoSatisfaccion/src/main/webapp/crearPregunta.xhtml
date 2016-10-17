@@ -62,10 +62,10 @@
 						<p:column styleClass="encabezadoCrearDer">
 							<p:selectBooleanCheckbox id="evaluacion" value="#{crearPreguntaBean.evaluacion}">
 								<p:ajax update="groupOpcion"
-										listener="#{crearPreguntaBean.cambiarEvaluacion}"/>
+										listener="#{crearPreguntaBean.cambiarEvaluacion}" />
 							</p:selectBooleanCheckbox>
 
-							<h:outputLabel value="Encuesta" style="margin-left: 10px" />
+							<h:outputLabel value="Evaluacion" style="margin-left: 10px" />
 						</p:column>
 					</p:row>
 
@@ -139,8 +139,10 @@
 							<p:commandButton id="crear" value="Crear" action="#{crearPreguntaBean.bt_crearPregunta}" update="CrearPregunta"/>
 						</p:column>
 						<p:column>
-							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false" action="#{crearPreguntaBean.limpiarPregunta}"
-									update="CrearPregunta"/>
+							<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false"
+											 action="#{crearPreguntaBean.limpiarPregunta}" update="CrearPregunta" immediate="true">
+								<p:resetInput target="CrearPregunta" />
+							</p:commandButton>
 						</p:column>
 						<p:column>
 							<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false"

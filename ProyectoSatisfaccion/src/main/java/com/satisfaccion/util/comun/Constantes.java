@@ -55,15 +55,11 @@ public class Constantes {
     public static final String ERR_ENCUESTA_RESPONDIDA = "Acción no permitida. Esta encuesta ya posee respuestas almacenadas.";
 
     public static final String ERR_CANT_MINIMA_OPCIONES = "La pregunta debe tener un mínimo de opciones.";
+    public static final String ERR_CANT_MINIMA_PREGUNTAS = "La encuesta debe tener al menos una pregunta asociada.";
 
     public static final String ERR_OPCION_VACIA = "Por favor ingrese una descripcion para cada una de las opciones.";
+    public static final String ERR_NOMBRE_ENCUESTA = "Ya existe una encuesta con este nombre, por favor ingrese otro.";
 
-
-    public static final String ERR_CAMBIO_ESTADO = "ERROR! El estado no se pudo cambiar";
-    public static final String ERR_SELECCION_ITEM = "ERROR! Seleccione un item";
-    public static final String ERR_SELECCION_RECURSO = "ERROR! Por favor seleccione un recurso a gestionar";
-    public static final String ERR_GESTION = "ERROR! No se pudo gestionar el/los recurso(s)";
-    public static final String ERR_MODIFICAR = "ERROR! No se pudo modificar el recurso";
 
 
     /*EXITO*/

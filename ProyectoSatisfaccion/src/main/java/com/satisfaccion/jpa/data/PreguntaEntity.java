@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ import java.util.Set;
 
 })
 
-public class PreguntaEntity {
+public class PreguntaEntity implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PREGUNTA_SEQ")
 	@SequenceGenerator(name="PREGUNTA_SEQ", sequenceName="PREGUNTA_SEQ", allocationSize = 1)
@@ -65,6 +66,16 @@ public class PreguntaEntity {
 	@ManyToMany(cascade = {javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST})
 	@JoinTable(name = "ENC_PRE", joinColumns = { @JoinColumn(name = "IDPREGUNTA")}, inverseJoinColumns = { @JoinColumn(name = "IDENCUESTA")})
 	private Set<EncuestaEntity> encuestas;
+
+/*Constructor de titulo*/
+
+	public PreguntaEntity() {
+	}
+
+
+	public PreguntaEntity(int id) {
+		this.setId(id);
+	}
 
 
 	/*GET AND SET*/

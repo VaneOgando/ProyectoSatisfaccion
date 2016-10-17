@@ -208,6 +208,13 @@ body {
     width: 70%;
 }
 
+.panelCrearEncuesta{
+
+    margin: 0 auto;
+    margin-top: 3%;
+    width: 80%;
+}
+
 .panelAcordeon{
     float: right;
 }
@@ -232,7 +239,45 @@ body {
     width: 90%;
 }
 
+.ui-picklist .ui-button, .ui-picklist .ui-picklist-target-controls{
+    font-size: small;
+}
+
+/*Estilos listado preguntas*/
+.pickListPregunta{
+    width: 90%;
+    margin-top: 5%;
+}
+/*contenedor de la pregunta*/
+.pickListPregunta .ui-picklist-list{
+    width: 295px; !important;
+    margin-left: 5px;
+}
+
+/*Barra con titulo de contenedores*/
+.pickListPregunta .ui-picklist-caption{
+    width: 275px;
+    font-size: small;
+    margin-left: 5px;
+    margin-top: 25px; /*igualar el espacio que ocupa el filtro en el contenedor derecho*/
+}
+/*Solo para el contenedor izq, eliminar el espacio anteriormente dado*/
+.ui-picklist-filter-container + .ui-picklist-caption{
+    margin-top: 0px;
+}
 
 
+/*barra busqueda*/
+.pickListPregunta .ui-picklist-filter-container{
+    margin-left: 5px;
+    width: 300px;
+    font-size: small;
+}
 
-
+/*Estilos propios para cambiar estilo de la busqueda*/
+.ui-picklist-filter-container .ui-inputtext{
+    width: 297px;
+}
+.ui-picklist-filter-container .ui-icon{
+    padding-right: 5px;
+}

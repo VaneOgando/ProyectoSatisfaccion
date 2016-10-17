@@ -16,6 +16,7 @@
 	<!-- Scan for all of Spring components such as Spring Service -->
 	<context:component-scan base-package="com.satisfaccion.spring.service"></context:component-scan>
 
+
 	<!-- Conexion a Base de Datos -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />

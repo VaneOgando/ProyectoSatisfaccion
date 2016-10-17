@@ -21,7 +21,11 @@ import java.util.Set;
 				query = "SELECT e FROM EncuestaEntity e " +
 						"WHERE (:estado is null or :estado = '0' or e.estado = :estado) " +
 						"AND (:tipoEncuesta is null or :tipoEncuesta = '0' or e.tipoEncuesta = :tipoEncuesta) " +
-						"ORDER BY e.estado, e.fechaCreacion DESC ")
+						"ORDER BY e.estado, e.fechaCreacion DESC "),
+
+		@NamedQuery(name = "HQL_ENCUESTA_POR_NOMBRE",
+				query = "SELECT e.nombre FROM EncuestaEntity e " +
+						"WHERE (e.nombre = :nombreEncuesta)")
 
 })
 
@@ -47,7 +51,7 @@ public class EncuestaEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinTable(name = "ENC_PRE", joinColumns = { @JoinColumn(name = "IDENCUESTA")}, inverseJoinColumns = { @JoinColumn(name = "IDPREGUNTA")})
 	private Set<PreguntaEntity> preguntas;
 

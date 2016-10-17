@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 //import javax.transaction.Transactional;
 
@@ -35,128 +36,71 @@ public class CrearEncuestaServicio {
 	}
 
 	@Transactional
+	public List<PreguntaEntity> cargarPreguntasActivas(String tipoEncuesta) throws DataAccessException {
+
+		//Busqueda de encuestas activas, tanto evaluacion como normales
+		List<PreguntaEntity> resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA")
+				.setParameter("estado", "A")
+				.setParameter("tipoPregunta", null)
+				.setParameter("tipoEncuesta", tipoEncuesta)
+				.getResultList();
+
+		return resultList;
+	}
+
+	@Transactional
 	public EncuestaEntity buscarEncuestaCopia(int idEncuestaCopia) throws DataAccessException {
 
 		return entityManager.find(EncuestaEntity.class, idEncuestaCopia);
 	}
 
-/*
 	@Transactional
-	public List<ProyectoEntity> cargarMarcas() throws DataAccessException {
+	public boolean buscarEncuestaPorNombre(String nombreEncuesta) throws DataAccessException {
 
-		List<ProyectoEntity> resultList = getEntityManager().createNamedQuery("HQL_MARCA")
-										.getResultList();
-
-		return resultList;
-	}
-
-	@Transactional
-	public ProyectoEntity obtenerMarcaPorNombre(String nombreMarca) throws DataAccessException {
-
-		List<ProyectoEntity> resultList = getEntityManager().createNamedQuery("HQL_MARCA_POR_NOMBRE")
-				.setParameter("nombreMarca", nombreMarca)
+		List<String> resultList = getEntityManager().createNamedQuery("HQL_ENCUESTA_POR_NOMBRE")
+				.setParameter("nombreEncuesta",nombreEncuesta)
 				.getResultList();
 
-		if (resultList.size() < 1 ){
-			return null;
+		if (resultList.size() > 0){
+			return false;
 		}else{
-			return resultList.get(0);
+			return true;
 		}
 
 	}
 
+
 	@Transactional
-	public List<RespuestaEntity> cargarModelos(ProyectoEntity marca) throws DataAccessException {
+	public Set<PreguntaEntity> buscarPreguntasPorEncuesta(int idEncuesta) throws DataAccessException {
 
-		List<RespuestaEntity> resultList = getEntityManager().createNamedQuery("HQL_MODELO_POR_MARCA")
-				.setParameter("idMarca", marca.getId())
-				.getResultList();
+		Set<PreguntaEntity> preguntas = entityManager.find(EncuestaEntity.class, idEncuesta).getPreguntas();
 
-		return resultList;
+		return preguntas;
 	}
 
+
 	@Transactional
-	public EncPreEntity obtenerEstado(int idEstadoDefecto) throws DataAccessException {
+	public PreguntaEntity buscarPreguntaPorID(String idPregunta) throws DataAccessException {
 
-		List<EncPreEntity> resultList = getEntityManager().createNamedQuery("HQL_ESTADO_POR_ID")
-										.setParameter("idEstado", idEstadoDefecto)
-										.getResultList();
+		PreguntaEntity pregunta = entityManager.find(PreguntaEntity.class, Integer.parseInt(idPregunta));
 
-		if(resultList.size() < 1){
-			return null;
-		}else{
-			return resultList.get(0);
-		}
+		return pregunta;
 
 	}
 
 	@Transactional
-	public OpcionEntity obtenerCategoriaHistorial(int idCategoriaDefecto) throws DataAccessException {
-
-		List<OpcionEntity> resultList = getEntityManager().createNamedQuery("HQL_CATEGORIA_POR_ID")
-				.setParameter("idCategoria", idCategoriaDefecto)
-				.getResultList();
-
-		if(resultList.size() < 1){
-			return null;
-		}else{
-			return resultList.get(0);
-		}
-
-	}
-
-	@Transactional
-	public RespuestaEntity obtenerModeloPorNombre(String nombreModelo, int idMarca) throws DataAccessException {
-
-		List<RespuestaEntity> resultList = getEntityManager().createNamedQuery("HQL_MODELO_POR_NOMBRE")
-				.setParameter("nombreModelo", nombreModelo)
-				.setParameter("idMarca", idMarca)
-				.getResultList();
-
-		if (resultList.size() < 1 ){
-			return null;
-		}else{
-			return resultList.get(0);
-		}
-
-	}
-
-	@Transactional
-	public OpcionEntity obtenerCategoriaPorNombre(String nombreCategoria, String tipoCategoria) throws DataAccessException {
-
-		List<OpcionEntity> resultList = getEntityManager().createNamedQuery("HQL_CATEGORIA_POR_NOMBRE_Y_TIPO")
-				.setParameter("nombreCategoria", nombreCategoria)
-				.setParameter("tipoCategoria", tipoCategoria)
-				.getResultList();
-
-		if (resultList.size() < 1 ){
-			return null;
-		}else{
-			return resultList.get(0);
-		}
-
-	}
-*/
-	@Transactional
-	public boolean crearPregunta(PreguntaEntity pregunta, List<OpcionEntity> opciones) throws DataAccessException{
+	public boolean crearEncuestas(EncuestaEntity encuesta) throws DataAccessException{
 
 		boolean creacion = false;
 
 		try {
 
 			//Eliminar espcios blancos ingresados al inicio
-			pregunta.setTitulo(pregunta.getTitulo().trim());
-			pregunta.setAyuda(pregunta.getAyuda().trim());
-			entityManager.persist(pregunta);
+			encuesta.setNombre(encuesta.getNombre().trim());
+			encuesta.setTitulo(encuesta.getTitulo().trim());
+			encuesta.setDescripcion(encuesta.getDescripcion().trim());
 
-			if (pregunta.getTipoPregunta().equals("simple")) {
-
-				for (OpcionEntity opcion : opciones) {
-					opcion.setPregunta(pregunta);
-					opcion.setTitulo(opcion.getTitulo().trim());
-					entityManager.persist(opcion);
-				}
-			}
+			entityManager.merge(encuesta);
 
 			creacion = true;
 

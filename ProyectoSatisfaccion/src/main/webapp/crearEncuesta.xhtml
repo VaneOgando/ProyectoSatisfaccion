@@ -27,7 +27,7 @@
 							</p:column>
 
 							<p:column styleClass="colDerCrearEncuesta">
-								<p:inputText id="titulo" value="#{crearEncuestaBean.encuesta.nombre}" maxlength="50" required="true"
+								<p:inputText id="nombre" value="#{crearEncuestaBean.encuesta.nombre}" maxlength="50" required="true"
 											 requiredMessage="Debe ingresar un nombre para la encuesta">
 								</p:inputText>
 								<h:outputLabel value="*" styleClass="requerido"/>
@@ -36,7 +36,7 @@
 
 						<p:row>
 							<p:column colspan="2" styleClass="botonPreCreacion">
-								<p:commandButton id="continuar" value="Continuar" process="@this titulo"
+								<p:commandButton id="continuar" value="Continuar" process="@this nombre"
 										action="#{crearEncuestaBean.bt_continuar}" update="@form :CrearEncuesta"/>
 							</p:column>
 						</p:row>
@@ -75,7 +75,7 @@
 
 								<p:column styleClass="colDerCrearEncuesta">
 									<h:panelGroup id="inputCopiaGroup">
-										<p:inputText id="tituloCopia" value="#{crearEncuestaBean.encuesta.nombre}" maxlength="50" required="true"
+										<p:inputText id="nombreCopia" value="#{crearEncuestaBean.encuesta.nombre}" maxlength="50" required="true"
 													 requiredMessage="Debe ingresar un nombre para la encuesta" rendered="#{crearEncuestaBean.encuesta.id != 0}">
 										</p:inputText>
 										<h:outputLabel value="*" styleClass="requerido" rendered="#{crearEncuestaBean.encuesta.id != 0}" />
@@ -87,7 +87,7 @@
 						<p:row>
 							<p:column colspan="2" styleClass="botonPreCreacion">
 								<p:commandButton id="continuarCopia" value="Continuar" update="@form :CrearEncuesta"
-												 action="#{crearEncuestaBean.bt_continuar}" process="@this copiaEncuesta tituloCopia"/>
+												 action="#{crearEncuestaBean.bt_continuar}" process="@this copiaEncuesta nombreCopia"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -99,7 +99,95 @@
 		<h:form id="CrearEncuesta">
 
 			<h:panelGroup id="crearEncuestaGroup" rendered="#{!crearEncuestaBean.preCreacion}">
-					HOLAAA PRUEBA DE OTRO FORMULARIOO
+				<p:panelGrid styleClass="panelInvisible panelCrearEncuesta">
+
+					<p:row>
+						<p:column styleClass="colIzqCrearEncuesta">
+							<h:outputLabel value="Titulo"/>
+						</p:column>
+
+						<p:column styleClass="colDerCrearEncuesta">
+							<p:inputText id="titulo" maxlength="250" required="true" value="#{crearEncuestaBean.encuesta.titulo}"
+										 requiredMessage="Debe ingresar un titulo para la encuesta" >
+							</p:inputText>
+							<h:outputLabel value="*" styleClass="requerido" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="colIzqCrearEncuesta">
+							<h:outputLabel value="Descripcion"/>
+						</p:column>
+
+						<p:column styleClass="colDerCrearEncuesta">
+							<p:inputTextarea rows="4" cols="76" autoResize="false" value="#{crearEncuestaBean.encuesta.descripcion}"
+											 counter="desc_encuesta" maxlength="500" counterTemplate="{0} caracteres restantes."
+											 style="margin-right: 80px" />
+							<p:outputLabel id="desc_encuesta" style="font-size: x-small"/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="encabezadoCrearIzq"/>
+
+						<p:column styleClass="encabezadoCrearDer">
+							<p:selectBooleanCheckbox id="evaluacion" value="#{crearEncuestaBean.evaluacion}">
+								<p:ajax update="listaPreguntas"
+										listener="#{crearEncuestaBean.cambiarEvaluacion}" resetValues="true"/>
+							</p:selectBooleanCheckbox>
+
+							<h:outputLabel value="Evaluacion" style="margin-left: 10px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="encabezadoCrearIzq">
+							<h:outputLabel value="Preguntas"/>
+						</p:column>
+
+						<p:column styleClass="encabezadoCrearDer">
+
+								<p:pickList id="listaPreguntas" value="#{crearEncuestaBean.preguntasPickList}" var="pregunta" itemValue="#{pregunta.id}" itemLabel="#{pregunta.tipoPregunta} #{pregunta.titulo}"
+										showTargetControls="true" responsive="true" showSourceFilter="true" filterMatchMode="contains" converter="#{crearEncuestaBean}"
+									styleClass="pickListPregunta" >
+
+									<f:facet name="sourceCaption">Disponibles</f:facet>
+									<f:facet name="targetCaption">Seleccionadas</f:facet>
+
+									<p:column>
+										<h:outputText value="#{pregunta.tipoPregunta} | #{pregunta.titulo}" />
+									</p:column>
+
+								</p:pickList>
+
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+				<div id="BotonesCreacion" class="crearBotones">
+
+					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
+						<p:row>
+							<p:column>
+								<p:commandButton id="crear" value="Crear" update="CrearEncuesta" action="#{crearEncuestaBean.bt_crearEncuesta}"/>
+							</p:column>
+							<p:column>
+								<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false"
+												 action="#{crearEncuestaBean.limpiarEncuesta}" update="CrearEncuesta" immediate="true">
+									<p:resetInput target="CrearEncuesta" />
+								</p:commandButton>
+							</p:column>
+							<p:column>
+								<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false" action="#{crearEncuestaBean.bt_cancelar}"
+												 onclick="if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
+										/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+				</div>
+
 			</h:panelGroup>
 
 		</h:form>

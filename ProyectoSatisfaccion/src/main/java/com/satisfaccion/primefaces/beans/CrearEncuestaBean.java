@@ -3,23 +3,25 @@ package com.satisfaccion.primefaces.beans;
 import com.satisfaccion.jpa.data.EncuestaEntity;
 import com.satisfaccion.jpa.data.PreguntaEntity;
 import com.satisfaccion.spring.service.CrearEncuestaServicio;
-import com.satisfaccion.spring.service.CrearPreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
-import org.primefaces.component.tabview.TabView;
-import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @ManagedBean
 @ViewScoped
-public class CrearEncuestaBean {
+public class CrearEncuestaBean implements Converter {
 
 	/*ATRIBUTOS*/
 	@ManagedProperty("#{crearEncuestaServicio}")
@@ -34,13 +36,17 @@ public class CrearEncuestaBean {
 	/*Encuestas existentes para copiar*/
 	private List<EncuestaEntity> encuestasCopia = new ArrayList<EncuestaEntity>();
 
-	private List<PreguntaEntity> listaPreguntas = new ArrayList<PreguntaEntity>();
-	private PreguntaEntity preguntaSeleccionada = new PreguntaEntity();
-	private List<PreguntaEntity> preguntas = new ArrayList<PreguntaEntity>();
+	/*Listas para el picklist*/
+	private DualListModel<PreguntaEntity> preguntasPickList;
+
+	private List<PreguntaEntity> preguntasDisponibles = new ArrayList<PreguntaEntity>();
+	private List<PreguntaEntity> preguntasSelecconadas = new ArrayList<PreguntaEntity>();
+
 
 	/*Usadas en el manejo de los formularios*/
 	private boolean preCreacion = true;
 	private int tabActiva = 0;
+	private Boolean evaluacion = false;
 
 	/*Usadas en la creacion de la encuesta*/
 	private Date fechaActual = new Date();
@@ -49,90 +55,192 @@ public class CrearEncuestaBean {
 	private Boolean creacion = false;
 
 
+
 /*METODOS*/
 
 	@PostConstruct
 	public void init(){
 
 		encuestasCopia = crearEncuestaServicio.cargarEncuestasActivas();
+
+		cargarPreguntasTipoEncuesta();
+		preguntasPickList = new DualListModel<PreguntaEntity>(preguntasDisponibles, preguntasSelecconadas);
+
+
 	}
 
+	public void cambiarEvaluacion(){
+
+		preguntasDisponibles = new ArrayList<PreguntaEntity>();
+		preguntasSelecconadas = new ArrayList<PreguntaEntity>();
+
+		cargarPreguntasTipoEncuesta();
+
+	}
+
+	public void cargarPreguntasTipoEncuesta(){
+
+		String tipoEncuesta;
+
+		if (evaluacion){
+			tipoEncuesta = "E";
+		}else{
+			tipoEncuesta = "N";
+		}
+
+		preguntasDisponibles = crearEncuestaServicio.cargarPreguntasActivas(tipoEncuesta);
+		preguntasPickList = new DualListModel<PreguntaEntity>(preguntasDisponibles, preguntasSelecconadas);
+	}
+
+	/*Accion cuando se selecciona una encuesta a copiar, agrega el string "Copia de" al nombre existente*/
 	public void seleccionEncuestaCopia(){
 
 		encuesta = crearEncuestaServicio.buscarEncuestaCopia(encuesta.getId());
 		encuesta.setNombre(Constantes.NOMBRE_ENCUESTA_COPIA + encuesta.getNombre() );
 	}
 
+	/*Metodo para validar que el nombre de la encuesta no exista, evitando malentendidos*/
+	public boolean validarNombre(){
+
+		boolean valido;
+
+		valido = crearEncuestaServicio.buscarEncuestaPorNombre(encuesta.getNombre().trim());
+
+		return valido;
+	}
+
 	public void bt_continuar(){
 
-		preCreacion = false;
+		if(validarNombre()) {
 
-		if(encuesta.getId() != 0){
-			//Encuesta Copia, cargas las preguntas
-		}else{
-			//Encuesta nueva
+			preCreacion = false;
+
+			if (encuesta.getId() != 0) {   //Encuesta copia, cargar sus datos
+
+				if (encuesta.getTipoEncuesta().equals("E")) {
+					evaluacion = true;
+				}
+
+				//Cargar todas las preguntas disponibles
+				cargarPreguntasTipoEncuesta();
+
+				//Cargar preguntas de la encuesta seleccionada
+				preguntasSelecconadas = new ArrayList<PreguntaEntity>(crearEncuestaServicio.buscarPreguntasPorEncuesta(encuesta.getId()));
+
+				//Elimina de las preguntas disponibles las ya seleccionadas
+				eliminarDisponiblesYaSeleccionadas();
+
+				//Armar el picklist final para la encusta copiada
+				preguntasPickList = new DualListModel<PreguntaEntity>(preguntasDisponibles, preguntasSelecconadas);
+
+			}
+		}else {
+
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_NOMBRE_ENCUESTA);
+			encuesta.setNombre(null);
 		}
-
 
 	}
 
 
-/*
+	public void eliminarDisponiblesYaSeleccionadas(){
+
+		int i = 0;
+		while ( i < preguntasSelecconadas.size()){
+
+			//Eliminar preguntas inactivas
+			if (preguntasSelecconadas.get(i).getEstado().equals("I")){
+				preguntasSelecconadas.remove(i);
+
+				i--;
+			}else{
+
+				int j = 0;
+				while (j < preguntasDisponibles.size()){
+
+					//Pregunta ya seleccionada, eliminar de las disponibles
+					if(preguntasSelecconadas.get(i).getId() == preguntasDisponibles.get(j).getId()){
+
+						preguntasDisponibles.remove(j);
+						j = preguntasDisponibles.size();
+					}
+					j++;
+				}
+
+			}
+
+			i++;
+		}
+
+	}
+
+
 	public String bt_crearEncuesta(){
 
 		try {
 
-			//Validacion de envio de opciones vacias en tipo "simple", true si esta vacio
-			if (validarOpcionesVacias()){
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_OPCION_VACIA);
-				return "";
+			//Eliminar ID si es una copia, evitar modificar el actual
+			if(encuesta.getId() != 0){
+				encuesta.setId(0);
 			}
 
-			pregunta.setEstado("A");
-			pregunta.setFechaCreacion(fechaActual);
+			//Validacion de al menos 1 pregunta seleccionada
+			if (preguntasPickList.getTarget().size() > 0){
 
-			//Obtener usuario conectado
-			//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			//pregunta.setUsuarioCreador(auth.getName);
+				encuesta.setEstado("A");
+				encuesta.setFechaCreacion(fechaActual);
 
-			pregunta.setUsuarioCreador("vanessa.rodriguez");
+				//Obtener usuario conectado
+				//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				//encuesta.setUsuarioCreador(auth.getName);
 
-			if (evaluacion) {
-				pregunta.setTipoEncuesta("E");
+				encuesta.setUsuarioCreador("vanessa.rodriguez");
+
+				if (evaluacion) {
+					encuesta.setTipoEncuesta("E");
+				}else{
+					encuesta.setTipoEncuesta("N");
+				}
+
+				encuesta.setPreguntas( new HashSet<PreguntaEntity>(preguntasPickList.getTarget()));
+
+				creacion = crearEncuestaServicio.crearEncuestas(encuesta);
+
+				if (creacion) {
+
+					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_CREAR_ENCUESTA);
+					return "Exito";
+
+				}else {
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_ENCUESTA);
+
+					limpiarEncuesta();
+					return "";
+
+				}
+
 			}else{
-				pregunta.setTipoEncuesta("N");
-			}
-
-			creacion = crearPreguntaServicio.crearPregunta(pregunta, opciones);
-
-			if (creacion) {
-
-				mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_CREAR_PREGUNTA);
-				return "Exito";
-
-			}else {
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_PREGUNTA);
-
-				limpiarPregunta();
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CANT_MINIMA_PREGUNTAS);
 				return "";
-
 			}
 
 		}catch (Exception e){
-			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_PREGUNTA);
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_ENCUESTA);
 
-			limpiarPregunta();
+			limpiarEncuesta();
 			return "";
 
 		}
 
 	}
-*/
+
 
 	public void limpiarEncuesta(){
 
 		encuesta = new EncuestaEntity();
+		evaluacion = false;
 
+		cambiarEvaluacion();
 
 	}
 
@@ -141,7 +249,22 @@ public class CrearEncuestaBean {
 		return "Cancelar";
 	}
 
-/*GET & SET*/
+	/*METODOS DEL CONVERTER*/
+
+	@Override
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+
+		PreguntaEntity pregunta = crearEncuestaServicio.buscarPreguntaPorID(value);
+
+		return pregunta;
+	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		return value.toString();
+	}
+
+	/*GET & SET*/
 
 	public CrearEncuestaServicio getCrearEncuestaServicio() {
 		return crearEncuestaServicio;
@@ -175,28 +298,28 @@ public class CrearEncuestaBean {
 		this.encuestasCopia = encuestasCopia;
 	}
 
-	public List<PreguntaEntity> getListaPreguntas() {
-		return listaPreguntas;
+	public DualListModel<PreguntaEntity> getPreguntasPickList() {
+		return preguntasPickList;
 	}
 
-	public void setListaPreguntas(List<PreguntaEntity> listaPreguntas) {
-		this.listaPreguntas = listaPreguntas;
+	public void setPreguntasPickList(DualListModel<PreguntaEntity> preguntasPickList) {
+		this.preguntasPickList = preguntasPickList;
 	}
 
-	public PreguntaEntity getPreguntaSeleccionada() {
-		return preguntaSeleccionada;
+	public List<PreguntaEntity> getPreguntasDisponibles() {
+		return preguntasDisponibles;
 	}
 
-	public void setPreguntaSeleccionada(PreguntaEntity preguntaSeleccionada) {
-		this.preguntaSeleccionada = preguntaSeleccionada;
+	public void setPreguntasDisponibles(List<PreguntaEntity> preguntasDisponibles) {
+		this.preguntasDisponibles = preguntasDisponibles;
 	}
 
-	public List<PreguntaEntity> getPreguntas() {
-		return preguntas;
+	public List<PreguntaEntity> getPreguntasSelecconadas() {
+		return preguntasSelecconadas;
 	}
 
-	public void setPreguntas(List<PreguntaEntity> preguntas) {
-		this.preguntas = preguntas;
+	public void setPreguntasSelecconadas(List<PreguntaEntity> preguntasSelecconadas) {
+		this.preguntasSelecconadas = preguntasSelecconadas;
 	}
 
 	public boolean isPreCreacion() {
@@ -213,6 +336,14 @@ public class CrearEncuestaBean {
 
 	public void setTabActiva(int tabActiva) {
 		this.tabActiva = tabActiva;
+	}
+
+	public Boolean getEvaluacion() {
+		return evaluacion;
+	}
+
+	public void setEvaluacion(Boolean evaluacion) {
+		this.evaluacion = evaluacion;
 	}
 
 	public Date getFechaActual() {

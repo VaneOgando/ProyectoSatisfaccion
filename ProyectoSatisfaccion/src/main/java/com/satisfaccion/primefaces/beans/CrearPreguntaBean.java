@@ -68,7 +68,7 @@ public class CrearPreguntaBean {
 
 	}
 
-	public void cambiarEvaluacion(){
+		public void cambiarEvaluacion(){
 
 		if (pregunta.getTipoPregunta().equals("simple")) {
 			for (OpcionEntity opcion : opciones) {
