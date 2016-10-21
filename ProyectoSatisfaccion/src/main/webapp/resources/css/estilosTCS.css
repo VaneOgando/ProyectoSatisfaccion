@@ -67,6 +67,15 @@ body {
     text-align: center;
 }
 
+.columnaIzq{
+    width: 25%;
+}
+
+.columnaDer{
+    width: 100%;
+
+}
+
 
 
 /*CONSULTA PREGUNTA*/
@@ -243,6 +252,9 @@ body {
     font-size: small;
 }
 
+
+/*PICK LIST PREGUNTAS*/
+
 /*Estilos listado preguntas*/
 .pickListPregunta{
     width: 90%;
@@ -266,7 +278,6 @@ body {
     margin-top: 0px;
 }
 
-
 /*barra busqueda*/
 .pickListPregunta .ui-picklist-filter-container{
     margin-left: 5px;
@@ -281,3 +292,19 @@ body {
 .ui-picklist-filter-container .ui-icon{
     padding-right: 5px;
 }
+
+
+
+/*MODIFICAR ENCUESTA*/
+
+.panelModificarEncuesta{
+
+    margin: 0 auto;
+    margin-top: 3%;
+    width: 80%;
+}
+
+.inputTamanio .ui-inputtext{
+    width: 90%;
+}
+

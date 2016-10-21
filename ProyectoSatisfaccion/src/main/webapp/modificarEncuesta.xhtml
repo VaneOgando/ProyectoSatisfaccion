@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="plantilla/plantilla.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<div id="tituloModificarEncuesta">
+			<h1 style="text-align: center" > Modificar Encuesta </h1>
+		</div>
+
+
+		<h:form id="ModificarEncuesta">
+
+				<p:panelGrid styleClass="panelInvisible panelModificarEncuesta">
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:outputLabel value="Nombre"/>
+						</p:column>
+
+						<p:column styleClass="columnaDer inputTamanio">
+							<p:inputText id="nombre" maxlength="250" required="true" value="#{modificarEncuestaBean.encuesta.nombre}"
+										 requiredMessage="Debe ingresar un nombre para la encuesta" >
+							</p:inputText>
+							<h:outputLabel value="*" styleClass="requerido" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:outputLabel value="Titulo"/>
+						</p:column>
+
+						<p:column styleClass="columnaDer inputTamanio">
+							<p:inputText id="titulo" maxlength="250" required="true" value="#{modificarEncuestaBean.encuesta.titulo}"
+										 requiredMessage="Debe ingresar un titulo para la encuesta" >
+							</p:inputText>
+							<h:outputLabel value="*" styleClass="requerido" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:outputLabel value="Descripcion"/>
+						</p:column>
+
+						<p:column styleClass="columnaDer">
+							<p:inputTextarea rows="4" cols="76" autoResize="false" value="#{modificarEncuestaBean.encuesta.descripcion}"
+											 counter="desc_encuesta" maxlength="500" counterTemplate="{0} caracteres restantes."
+											 style="margin-right: 80px" />
+							<p:outputLabel id="desc_encuesta" style="font-size: x-small"/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq"/>
+
+						<p:column styleClass="columnaDer">
+							<p:selectBooleanCheckbox id="evaluacion" value="#{modificarEncuestaBean.evaluacion}">
+								<p:ajax update="listaPreguntas"
+										listener="#{modificarEncuestaBean.cambiarEvaluacion}" resetValues="true"/>
+							</p:selectBooleanCheckbox>
+
+							<h:outputLabel value="Evaluacion" style="margin-left: 10px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:outputLabel value="Preguntas"/>
+						</p:column>
+
+						<p:column styleClass="columnaDer">
+
+								<p:pickList id="listaPreguntas" value="#{modificarEncuestaBean.preguntasPickList}" var="pregunta" itemValue="#{pregunta.id}" itemLabel="#{pregunta.tipoPregunta} #{pregunta.titulo}"
+										showTargetControls="true" responsive="true" showSourceFilter="true" filterMatchMode="contains" converter="#{modificarEncuestaBean}"
+									styleClass="pickListPregunta" >
+
+									<f:facet name="sourceCaption">Disponibles</f:facet>
+									<f:facet name="targetCaption">Seleccionadas</f:facet>
+
+									<p:column>
+										<h:outputText value="#{pregunta.tipoPregunta} | #{pregunta.titulo}" />
+									</p:column>
+
+								</p:pickList>
+
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+				<div id="BotonesModificacion" class="crearBotones">
+
+					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
+						<p:row>
+							<p:column>
+								<p:commandButton id="modificar" value="Modificar" update="ModificarEncuesta" action="#{modificarEncuestaBean.bt_modificarEncuesta}"/>
+							</p:column>
+							<p:column>
+								<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false" action="#{modificarEncuestaBean.bt_cancelar}"
+												 onclick="if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"
+										/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+				</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

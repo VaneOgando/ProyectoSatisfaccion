@@ -49,7 +49,7 @@ CREATE TABLE PREGUNTA(
 	tipoPregunta		VARCHAR(50)  NOT NULL,
 	tipoEncuesta		CHAR(1)		 NOT NULL,
 	estado				CHAR(1) 	 NOT NULL,
-	escalaValoracion	FLOAT,
+	escalaValoracion	NUMBER(2),
 	usuarioCreador		VARCHAR(50)  NOT NULL,
 	fechaCreacion		DATE		 NOT NULL,
 	
@@ -68,7 +68,7 @@ CREATE TABLE RESPUESTA(
 
 	idRespuesta			INT 		 NOT NULL,
 	observacion			VARCHAR(500),
-	valoracion			FLOAT,
+	valoracion			NUMBER(2),
 	usuarioEvaluado 	VARCHAR(50),
 			
 	CONSTRAINT respuesta_pk PRIMARY KEY (idRespuesta)
@@ -78,7 +78,6 @@ CREATE TABLE RESPUESTA(
 
 /*CREAR SECUENCIAS*/
 
-CREATE SEQUENCE enc_pre_seq   	INCREMENT BY 1 START WITH 1 NOCYCLE;
 CREATE SEQUENCE encuesta_seq  	INCREMENT BY 1 START WITH 1 NOCYCLE;
 CREATE SEQUENCE envio_seq     	INCREMENT BY 1 START WITH 1 NOCYCLE;
 CREATE SEQUENCE opcion_seq   	INCREMENT BY 1 START WITH 1 NOCYCLE;

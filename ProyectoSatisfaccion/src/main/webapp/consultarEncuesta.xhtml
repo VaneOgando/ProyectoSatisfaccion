@@ -11,6 +11,18 @@
 
 		<br/>
 
+		<script>
+			function confirmarModificacion(estado) {
+
+				if (estado == 'I') {
+					return confirm("Esta encuesta no puede ser modificada ya que se encuentra inactiva, ¿desea activarla ahora?")
+				}
+
+				return true;
+			}
+		</script>
+
+
 		<h:form id="Filtro">
 			<div>
 				<p:fieldset widgetVar="filtro" legend="Filtros" toggleable="true" collapsed="true" toggleSpeed="500" style="font-size: small">
@@ -46,7 +58,7 @@
 
 		<br/>
 
-		<h:form id="Datatable">
+		<h:form id="Datatable" prependId="true">
 
 			<p:dataTable id="TablaEncuesta" value="#{consultarEncuestaBean.items}" var="item" styleClass="datatable"
 						 rows="15" paginator="true" rowsPerPageTemplate="10,15,25,50,100"
@@ -115,12 +127,14 @@
 				</p:column>
 
 				<p:column headerText="Acciones" style="text-align: center">
-					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarEncuestaBean.detalleEncuesta}">
+					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" >
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
-					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarEncuestaBean.modificarEncuesta}">
+					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarEncuestaBean.bt_modificarEncuesta}"
+							onclick="if (!confirmarModificacion('#{item.estado}')) return false;">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
+					<h:inputHidden id="EstadoItem" value="#{item.estado}" />
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
@@ -132,6 +146,8 @@
 
 			</p:dataTable>
 		</h:form>
+
+
 
 	</ui:define>
 

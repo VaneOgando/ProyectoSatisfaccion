@@ -139,6 +139,19 @@ public class ConsultarEncuestaBean {
 		return "Crear";
 	}
 
+	public String bt_modificarEncuesta() {
+
+		if (itemSeleccionado != null) {
+
+			//Verificar el estado de la encuesta, si esta inactiva confirmar su activacion y continuar
+
+			return "modificarEncuesta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+
+		}
+
+		return "";
+	}
+
 	public String bt_enviarEncuesta(){
 
 		return "";
