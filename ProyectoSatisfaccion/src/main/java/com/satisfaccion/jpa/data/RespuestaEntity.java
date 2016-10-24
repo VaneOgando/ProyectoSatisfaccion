@@ -41,7 +41,7 @@ public class RespuestaEntity {
 	@JoinColumn(name = "FKOPCION")
 	private OpcionEntity opcion;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "FKENVIO")
 	private EnvioEntity envio;
 

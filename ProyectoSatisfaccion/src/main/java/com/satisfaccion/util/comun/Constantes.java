@@ -24,15 +24,8 @@ public class Constantes {
 
     public static final String NOMBRE_ENCUESTA_COPIA = "Copia de ";
 
-
-    public static final String REPORTE_ASIGNACION = "cartaAsignacionRecurso.jasper";
-    public static final String REPORTE_DEVOLUCION = "cartaDevolucionRecurso.jasper";
-    public static final String REPORTE_RESUMEN_RECURSOS = "resumenRecursos.jasper";
-
-    public static final String URL_LOGO = "resources/img/logo.png";
-
-    public static final String NOMBRE_ARCHIVO_ENTREGA = "CartaEntrega_";
-    public static final String NOMBRE_ARCHIVO_DEVOLUCION = "CartaDevolucion_";
+    public static final String FORMATO_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
     /*ERRORES*/
@@ -59,8 +52,8 @@ public class Constantes {
 
     public static final String ERR_OPCION_VACIA = "Por favor ingrese una descripcion para cada una de las opciones.";
     public static final String ERR_NOMBRE_ENCUESTA = "Ya existe una encuesta con este nombre, por favor ingrese otro.";
-    public static final String ERR_SIN_PREGUNTAS = "No existen preguntas activas para seleccionar";
-
+    public static final String ERR_SIN_PREGUNTAS = "No existen preguntas activas para seleccionar.";
+    public static final String ERR_ENCUESTA_ENVIO_INVALIDO = "Esta encuesta no puede ser enviada ya que no posee preguntas activas.";
 
 
     /*EXITO*/

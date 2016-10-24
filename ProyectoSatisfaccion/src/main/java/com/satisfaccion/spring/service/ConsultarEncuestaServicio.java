@@ -47,6 +47,16 @@ public class ConsultarEncuestaServicio {
 	}
 
 	@Transactional
+	public Object cantidadPreguntasActivas(int idEncuesta) throws DataAccessException {
+
+		Object resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_CANT_ACTIVA")
+				.setParameter("idEncuesta", idEncuesta)
+				.getSingleResult();
+
+		return resultList;
+	}
+
+	@Transactional
 	public boolean eliminarEncuesta(boolean eliminar, EncuestaEntity encuesta) throws DataAccessException {
 
 		try{

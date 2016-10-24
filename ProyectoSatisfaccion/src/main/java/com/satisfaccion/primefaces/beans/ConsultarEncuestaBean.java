@@ -154,6 +154,29 @@ public class ConsultarEncuestaBean {
 
 	public String bt_enviarEncuesta(){
 
+		int cantPreguntas;
+
+		if(itemSeleccionado != null) {
+
+			if(itemSeleccionado.getEstado().equals("A")) {
+				cantPreguntas = ((Long) consultarEncuestaServicio.cantidadPreguntasActivas(itemSeleccionado.getId())).intValue();
+
+				if (cantPreguntas > 0) {
+					return "enviarEncuesta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+				} else {
+
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ENCUESTA_ENVIO_INVALIDO);
+					return "";
+				}
+
+			}else{
+
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ENCUESTA_INACTIVA);
+				return "";
+			}
+
+		}
+
 		return "";
 	}
 

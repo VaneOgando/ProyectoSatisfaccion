@@ -1,7 +1,10 @@
 package com.satisfaccion.jpa.data;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -33,8 +36,10 @@ public class EnvioEntity {
 	@Column(name = "FECHAENVIO")
 	@Temporal(TemporalType.DATE)
 	private Date fechaEnvio;
-	@Column(name = "USUARIO")
-	private String usuario;
+	@Column(name = "USUARIOCREADOR")
+	private String usuarioCreador;
+	@Column(name = "DESTINATARIO")
+	private String destinatario;
 	@Column(name = "ESTADO")
 	private String estado;
 
@@ -46,9 +51,9 @@ public class EnvioEntity {
 	@JoinColumn(name = "FKPROYECTO")
 	private ProyectoEntity proyecto;
 
-
-	@OneToOne(mappedBy="envio", cascade=CascadeType.ALL)
-	private RespuestaEntity respuesta;
+	@OneToMany(mappedBy = "envio", fetch = FetchType.LAZY)
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
+	private List<RespuestaEntity> respuestas;
 
 
 	/*GET AND SET*/
@@ -69,12 +74,20 @@ public class EnvioEntity {
 		this.fechaEnvio = fechaEnvio;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUsuarioCreador() {
+		return usuarioCreador;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsuarioCreador(String usuarioCreador) {
+		this.usuarioCreador = usuarioCreador;
+	}
+
+	public String getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
 	}
 
 	public String getEstado() {
@@ -101,11 +114,11 @@ public class EnvioEntity {
 		this.proyecto = proyecto;
 	}
 
-	public RespuestaEntity getRespuesta() {
-		return respuesta;
+	public List<RespuestaEntity> getRespuestas() {
+		return respuestas;
 	}
 
-	public void setRespuesta(RespuestaEntity respuesta) {
-		this.respuesta = respuesta;
+	public void setRespuestas(List<RespuestaEntity> respuestas) {
+		this.respuestas = respuestas;
 	}
 }

@@ -26,7 +26,8 @@ CREATE TABLE ENVIO(
 
 	idEnvio 			INT 		NOT NULL,
 	fechaEnvio			DATE 		NOT NULL,
-	usuario				VARCHAR(50) NOT NULL,
+	usuarioCreador		VARCHAR(50) NOT NULL,
+	destinatario		VARCHAR(100)NOT NULL,
 	estado				CHAR(1)		NOT NULL,
 	
 	CONSTRAINT envio_pk PRIMARY KEY (idEnvio)

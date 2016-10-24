@@ -76,6 +76,22 @@ body {
 
 }
 
+.panelFormulario{
+
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 80%;
+}
+
+.inputTamanio .ui-inputtext{
+    width: 90%;
+}
+
+.botonFormulario{
+    margin-top: 3%;
+    border: none;
+}
+
 
 
 /*CONSULTA PREGUNTA*/
@@ -187,24 +203,6 @@ body {
     margin-top: 5%;
 }
 
-.encabezadoCrearIzq{
-    width: 25%;
-}
-
-.encabezadoCrearDer{
-    width: 100%;
-
-}
-
-.encabezadoCrearDer .ui-inputtext{
-    width: 90%;
-}
-
-.crearBotones{
-    margin-top: 3%;
-    border: none;
-}
-
 
 
 
@@ -215,13 +213,6 @@ body {
     margin: 0 auto;
     margin-top: 5%;
     width: 70%;
-}
-
-.panelCrearEncuesta{
-
-    margin: 0 auto;
-    margin-top: 3%;
-    width: 80%;
 }
 
 .panelAcordeon{
@@ -235,25 +226,14 @@ body {
     padding-top: 15px;
 }
 
-.colIzqCrearEncuesta{
-    width: 25%;
-
-}
-
-.colDerCrearEncuesta{
-    width: 100%;
-}
-
-.colDerCrearEncuesta .ui-inputtext{
-    width: 90%;
-}
-
-.ui-picklist .ui-button, .ui-picklist .ui-picklist-target-controls{
-    font-size: small;
-}
 
 
 /*PICK LIST PREGUNTAS*/
+
+/*Botones pequeños*/
+.ui-picklist .ui-button, .ui-picklist .ui-picklist-target-controls{
+    font-size: small;
+}
 
 /*Estilos listado preguntas*/
 .pickListPregunta{
@@ -292,19 +272,3 @@ body {
 .ui-picklist-filter-container .ui-icon{
     padding-right: 5px;
 }
-
-
-
-/*MODIFICAR ENCUESTA*/
-
-.panelModificarEncuesta{
-
-    margin: 0 auto;
-    margin-top: 3%;
-    width: 80%;
-}
-
-.inputTamanio .ui-inputtext{
-    width: 90%;
-}
-

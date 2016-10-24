@@ -28,7 +28,12 @@ import java.util.Set;
 
 		@NamedQuery(name = "HQL_PREGUNTA_POR_ID",
 				query = "SELECT p FROM PreguntaEntity p " +
-						"WHERE p.id = :idPregunta")
+						"WHERE p.id = :idPregunta"),
+
+		@NamedQuery(name = "HQL_PREGUNTA_CANT_ACTIVA",
+				query = "SELECT COUNT(p) FROM PreguntaEntity p join p.encuestas e " +
+						"WHERE p.estado = 'A' and e.id = :idEncuesta")
+
 
 })
 

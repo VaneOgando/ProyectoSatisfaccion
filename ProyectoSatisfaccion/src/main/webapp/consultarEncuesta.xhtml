@@ -134,7 +134,6 @@
 							onclick="if (!confirmarModificacion('#{item.estado}')) return false;">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
-					<h:inputHidden id="EstadoItem" value="#{item.estado}" />
 					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small">
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>

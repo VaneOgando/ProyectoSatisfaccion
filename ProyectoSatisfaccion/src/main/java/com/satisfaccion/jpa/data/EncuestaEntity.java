@@ -25,7 +25,14 @@ import java.util.Set;
 
 		@NamedQuery(name = "HQL_ENCUESTA_POR_NOMBRE",
 				query = "SELECT e.nombre FROM EncuestaEntity e " +
-						"WHERE (e.nombre = :nombreEncuesta)")
+						"WHERE (e.nombre = :nombreEncuesta)"),
+
+		@NamedQuery(name = "HQL_ENCUESTA_ENVIO_VALIDO",
+				query = "SELECT e.id FROM EncuestaEntity e join e.preguntas p " +
+						"WHERE e.estado = 'A' AND p.estado = 'A' " +
+						"AND e.tipoEncuesta = :tipoEncuesta " +
+						"GROUP BY e.id")
+
 
 })
 

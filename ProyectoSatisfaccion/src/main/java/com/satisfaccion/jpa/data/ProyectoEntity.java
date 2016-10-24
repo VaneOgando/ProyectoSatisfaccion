@@ -9,6 +9,13 @@ import java.util.List;
 
 @NamedQueries(value={
 
+		@NamedQuery(name = "HQL_PROYECTO",
+				query = "SELECT p FROM ProyectoEntity p "),
+
+		@NamedQuery(name = "HQL_PROYECTO_POR_NOMBRE",
+				query = "SELECT p FROM ProyectoEntity p " +
+						"WHERE upper(p.nombre) = upper(:nombreProyecto)")
+
 })
 
 public class ProyectoEntity {

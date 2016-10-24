@@ -14,15 +14,15 @@
 				<h1 style="text-align: center" > Modificar Pregunta </h1>
 			</div>
 
-			<div id="DetallePregunta" class="encabezadoCrear">
+			<div id="DetallePregunta" class="panelFormulario">
 				<p:panelGrid styleClass="panelInvisible" style="width: 100%" >
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq">
+						<p:column styleClass="columnaIzq">
 							<h:outputLabel value="Titulo"/>
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer inputTamanio">
 							<p:inputText id="titulo" value="#{modificarPreguntaBean.pregunta.titulo}" maxlength="250" required="true"
 									requiredMessage="Debe ingresar un titulo para la pregunta"/>
 							<h:outputLabel value="*" styleClass="requerido"/>
@@ -30,21 +30,21 @@
 					</p:row>
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq">
+						<p:column styleClass="columnaIzq">
 							<h:outputLabel value="Texto de ayuda"/>
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer inputTamanio">
 							<p:inputText id="ayuda" value="#{modificarPreguntaBean.pregunta.ayuda}" maxlength="250" />
 						</p:column>
 					</p:row>
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq">
+						<p:column styleClass="columnaIzq">
 							<h:outputLabel value="Tipo pregunta"/>
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer">
 							<p:selectOneMenu id="tipoPregunta" style="width:150px" value="#{modificarPreguntaBean.pregunta.tipoPregunta}">
 								<f:selectItem itemLabel="Simple" itemValue="simple"  />
 								<f:selectItem itemLabel="Ranking" itemValue="ranking" />
@@ -55,9 +55,9 @@
 					</p:row>
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq"/>
+						<p:column styleClass="columnaIzq"/>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer">
 							<p:selectBooleanCheckbox id="evaluacion" value="#{modificarPreguntaBean.evaluacion}">
 								<p:ajax update="groupOpcion"
 										listener="#{modificarPreguntaBean.cambiarEvaluacion}"/>
@@ -68,7 +68,7 @@
 					</p:row>
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq">
+						<p:column styleClass="columnaIzq">
 
 							<h:panelGroup id="groupLabel">
 								<p:outputLabel value ="Opciones" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}" />
@@ -76,7 +76,7 @@
 							</h:panelGroup>
 						</p:column>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer">
 							<h:panelGroup id="groupRanking">
 								<p:spinner value="#{modificarPreguntaBean.pregunta.escalaValoracion}" stepFactor="1" min="3" max="10" size="2"
 										   required="true" requiredMessage="Debe ingresar la escala de valoracion" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'ranking'}" />
@@ -86,9 +86,9 @@
 					</p:row>
 
 					<p:row>
-						<p:column styleClass="encabezadoCrearIzq"/>
+						<p:column styleClass="columnaIzq"/>
 
-						<p:column styleClass="encabezadoCrearDer">
+						<p:column styleClass="columnaDer">
 
 								<h:panelGroup id="groupOpcion">
 									<p:panelGrid id="opcionesPregunta" styleClass="panelInvisible" rendered="#{modificarPreguntaBean.pregunta.tipoPregunta == 'simple'}">
@@ -126,7 +126,7 @@
 
 
 
-			<div id="BotonesCreacion" class="crearBotones">
+			<div id="BotonesCreacion" class="botonFormulario">
 
 				<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 					<p:row>

@@ -112,4 +112,14 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/enviarEncuesta.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{enviarEncuestaBean.bt_cancelar}</from-action>
+			<from-outcome>Cancelar</from-outcome>
+			<to-view-id>/consultarEncuesta.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>

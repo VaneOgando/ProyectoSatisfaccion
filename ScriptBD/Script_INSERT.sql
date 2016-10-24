@@ -53,21 +53,21 @@ INSERT INTO PROYECTO VALUES (proyecto_seq.nextval, 'Banesco');
 
 /*ENVIO*/
 
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/06/2016', 'pedro.jose@hotmail.com', 'R', 1, 1);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '06/06/2016', 'maria.delgado@hotmail.com', 'R', 1, 1);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'alberto.figueroa@hotmail.com', 'R', 1, 3);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'pedro.jose@hotmail.com', 'R', 1, 1);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/07/2016', 'maria.delgado@hotmail.com', 'P', 1, 3);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/06/2016', 'vanessa.rodriguez', 'pedro.jose@hotmail.com', 'R', 1, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '06/06/2016', 'vanessa.rodriguez', 'maria.delgado@hotmail.com', 'R', 1, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'vanessa.rodriguez', 'alberto.figueroa@hotmail.com', 'R', 1, 3);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'vanessa.rodriguez', 'pedro.jose@hotmail.com', 'R', 1, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/07/2016', 'vanessa.rodriguez',  'maria.delgado@hotmail.com', 'P', 1, 3);
 
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '10/07/2016', 'genesis.machado@gmail.com', 'P', 2, 3);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '10/07/2016', 'carolina.perez@gmail.com', 'R', 2, 3);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '25/07/2016', 'julia.serrano@gmail.com', 'R', 2, 2);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '28/07/2016', 'maria.delgado@hotmail.com', 'R', 2, 1);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/08/2016', 'pedro.jose@hotmail.com', 'R', 2, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '10/07/2016', 'vanessa.rodriguez',  'genesis.machado@gmail.com', 'P', 2, 3);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '10/07/2016', 'vanessa.rodriguez',  'carolina.perez@gmail.com', 'R', 2, 3);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '25/07/2016', 'vanessa.rodriguez',  'julia.serrano@gmail.com', 'R', 2, 2);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '28/07/2016', 'vanessa.rodriguez',  'maria.delgado@hotmail.com', 'R', 2, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/08/2016', 'vanessa.rodriguez',  'pedro.jose@hotmail.com', 'R', 2, 1);
 
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'julio.chacon@hotmail.com', 'R', 3, 1);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'miranda.palacios@hotmail.com', 'R', 3, 2);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'victoria.knight@hotmail.com', 'R', 3, 3);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'vanessa.rodriguez',  'julio.chacon@hotmail.com', 'R', 3, 1);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'vanessa.rodriguez',  'miranda.palacios@hotmail.com', 'R', 3, 2);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '03/02/2016', 'vanessa.rodriguez',  'victoria.knight@hotmail.com', 'R', 3, 3);
 
 
 /*RESPUESTA*/
@@ -137,8 +137,8 @@ INSERT INTO ENC_PRE VALUES ( 4, 8 );
 
 /*ENVIO*/
 
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/01/2016', 'lideres@hotmail.com', 'R', 4, null);
-INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'lideres@hotmail.com', 'R', 4, null);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/01/2016', 'vanessa.rodriguez',  'lideres@hotmail.com', 'R', 4, null);
+INSERT INTO ENVIO VALUES (envio_seq.nextval, '01/07/2016', 'vanessa.rodriguez',  'lideres@hotmail.com', 'R', 4, null);
 
 
 /*RESPUESTA*/
