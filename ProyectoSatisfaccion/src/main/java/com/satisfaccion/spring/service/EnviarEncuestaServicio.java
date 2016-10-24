@@ -80,9 +80,11 @@ public class EnviarEncuestaServicio {
 
 		try {
 
-			//Creacion de proyecto
-			if( envio.getProyecto().getId() == 0 ){
-				entityManager.persist(envio.getProyecto());
+			if(envio.getProyecto() != null) {
+				//Creacion de proyecto
+				if (envio.getProyecto().getId() == 0) {
+					entityManager.persist(envio.getProyecto());
+				}
 			}
 
 			entityManager.persist(envio);

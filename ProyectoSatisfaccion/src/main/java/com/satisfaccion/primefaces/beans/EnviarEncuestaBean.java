@@ -148,7 +148,7 @@ public class EnviarEncuestaBean{
 							envio.setProyecto(proyectoSelect);
 						}
 					} else {
-						envio.setProyecto(new ProyectoEntity());
+						envio.setProyecto(null);
 					}
 
 					resultadoEnvio = enviarEncuestaServicio.crearEnvioEncuesta(envio);
