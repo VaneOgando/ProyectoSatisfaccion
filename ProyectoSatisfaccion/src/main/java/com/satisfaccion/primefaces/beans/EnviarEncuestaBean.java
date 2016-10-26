@@ -7,14 +7,16 @@ import com.satisfaccion.jpa.data.ProyectoEntity;
 import com.satisfaccion.spring.service.CrearEncuestaServicio;
 import com.satisfaccion.spring.service.EnviarEncuestaServicio;
 import com.satisfaccion.util.comun.Constantes;
+import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.xml.soap.SAAJResult;
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,9 @@ public class EnviarEncuestaBean{
 
 	@ManagedProperty(value="#{mensajesComun}")
 	private MensajesComun mensajesComun;
+
+	@ManagedProperty(value="#{encriptacion}")
+	private Encriptacion encriptacion;
 
 	/*Envio a realizar*/
 	private EnvioEntity envio = new EnvioEntity();
@@ -57,7 +62,7 @@ public class EnviarEncuestaBean{
 	private String usuarioCreador = "";
 
 	private Boolean resultadoEnvio = false;
-
+	private String linkEncriptado;
 
 
 /*METODOS*/
@@ -154,9 +159,13 @@ public class EnviarEncuestaBean{
 					resultadoEnvio = enviarEncuestaServicio.crearEnvioEncuesta(envio);
 
 					if (resultadoEnvio) {
-						//envio en este punto ya posee ID, crear su link unico. Encriptar informacion al aparecer en el URL
+						//Crear link unico. Encriptar informacion a enviar
+						String unico = envio.getId() + ";" + envio.getDestinatario();
+						linkEncriptado = encriptacion.encriptarEnvio(unico, true);
+
 						//ENVIAR EL CORREO
-						llenarResumen(destino.trim(),true);
+
+						llenarResumen(destino.trim(), true);
 					} else {
 						llenarResumen(destino.trim(), false);
 					}
@@ -216,6 +225,14 @@ public class EnviarEncuestaBean{
 
 	public void setMensajesComun(MensajesComun mensajesComun) {
 		this.mensajesComun = mensajesComun;
+	}
+
+	public Encriptacion getEncriptacion() {
+		return encriptacion;
+	}
+
+	public void setEncriptacion(Encriptacion encriptacion) {
+		this.encriptacion = encriptacion;
 	}
 
 	public EnvioEntity getEnvio() {
