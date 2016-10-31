@@ -20,11 +20,12 @@ import java.security.MessageDigest;
 public class Encriptacion {
 
 	/*ATRIBUTOS*/
-	byte[] sharedvector = {
+	private  byte[] sharedvector = {
 			0x01, 0x02, 0x03, 0x05, 0x07, 0x0B, 0x0D, 0x11
 	};
 
-	byte[] keyArray = new byte[24];
+	private byte[] keyArray = new byte[24];
+
 
 	/*METODOS*/
 
@@ -99,5 +100,6 @@ public class Encriptacion {
 	public void setKeyArray(byte[] keyArray) {
 		this.keyArray = keyArray;
 	}
+
 }
 

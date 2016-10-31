@@ -2,21 +2,18 @@ package com.satisfaccion.primefaces.beans;
 
 import com.satisfaccion.jpa.data.EncuestaEntity;
 import com.satisfaccion.jpa.data.EnvioEntity;
-import com.satisfaccion.jpa.data.PreguntaEntity;
 import com.satisfaccion.jpa.data.ProyectoEntity;
-import com.satisfaccion.spring.service.CrearEncuestaServicio;
 import com.satisfaccion.spring.service.EnviarEncuestaServicio;
 import com.satisfaccion.util.comun.Constantes;
+import com.satisfaccion.spring.service.EmailServicio;
 import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
-import org.apache.commons.codec.binary.Base64;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +33,9 @@ public class EnviarEncuestaBean{
 
 	@ManagedProperty(value="#{encriptacion}")
 	private Encriptacion encriptacion;
+
+	@ManagedProperty(value="#{emailServicio}")
+	private EmailServicio emailServicio;
 
 	/*Envio a realizar*/
 	private EnvioEntity envio = new EnvioEntity();
@@ -61,7 +61,7 @@ public class EnviarEncuestaBean{
 	private Date fechaActual = new Date();
 	private String usuarioCreador = "";
 
-	private Boolean resultadoEnvio = false;
+	private Boolean creacionEnvio = false;
 	private String linkEncriptado;
 
 
@@ -106,14 +106,7 @@ public class EnviarEncuestaBean{
 		encuestas = enviarEncuestaServicio.cargarEncuestasValidas(encuestaSelect.getTipoEncuesta());
 	}
 
-	public boolean validarEmail(String email) {
 
-		Pattern pattern = Pattern.compile(Constantes.FORMATO_EMAIL);
-
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-
-	}
 
 
 
@@ -125,12 +118,16 @@ public class EnviarEncuestaBean{
 
 		for (String destino : listaDestinatario){
 
-			try{
+			try {
 
 				//Email con sintaxis correcta
-				Boolean emailValido = validarEmail(destino.trim());
+				Boolean emailValido = emailServicio.validarSintaxisEmail(destino.trim());
 
-				if(emailValido) {
+				//Servidor de correo existente
+				String[] servidorCorreo = destino.split("@");
+				Boolean servidorValido = emailServicio.validarExistenciaServidor(servidorCorreo[1]);
+
+				if(emailValido && servidorValido) {
 
 					envio = new EnvioEntity();
 
@@ -156,16 +153,19 @@ public class EnviarEncuestaBean{
 						envio.setProyecto(null);
 					}
 
-					resultadoEnvio = enviarEncuestaServicio.crearEnvioEncuesta(envio);
+					//Crear en BD el envio
+					creacionEnvio = enviarEncuestaServicio.crearEnvioEncuesta(envio);
 
-					if (resultadoEnvio) {
+					if (creacionEnvio) {
+
 						//Crear link unico. Encriptar informacion a enviar
-						String unico = envio.getId() + ";" + envio.getDestinatario();
-						linkEncriptado = encriptacion.encriptarEnvio(unico, true);
+						linkEncriptado = encriptacion.encriptarEnvio(envio.getId() + ";" + envio.getDestinatario(), true);
 
-						//ENVIAR EL CORREO
+						//Envio del correo electronico
+						Boolean envioExitoso = emailServicio.enviarCorreo(envio.getDestinatario(), linkEncriptado, evaluacion);
 
-						llenarResumen(destino.trim(), true);
+						llenarResumen(destino.trim(), envioExitoso);
+
 					} else {
 						llenarResumen(destino.trim(), false);
 					}
@@ -235,6 +235,14 @@ public class EnviarEncuestaBean{
 		this.encriptacion = encriptacion;
 	}
 
+	public EmailServicio getEmailServicio() {
+		return emailServicio;
+	}
+
+	public void setEmailServicio(EmailServicio emailServicio) {
+		this.emailServicio = emailServicio;
+	}
+
 	public EnvioEntity getEnvio() {
 		return envio;
 	}
@@ -243,12 +251,12 @@ public class EnviarEncuestaBean{
 		this.envio = envio;
 	}
 
-	public Boolean getResultadoEnvio() {
-		return resultadoEnvio;
+	public Boolean getCreacionEnvio() {
+		return creacionEnvio;
 	}
 
-	public void setResultadoEnvio(Boolean resultadoEnvio) {
-		this.resultadoEnvio = resultadoEnvio;
+	public void setCreacionEnvio(Boolean creacionEnvio) {
+		this.creacionEnvio = creacionEnvio;
 	}
 
 	public List<EncuestaEntity> getEncuestas() {
