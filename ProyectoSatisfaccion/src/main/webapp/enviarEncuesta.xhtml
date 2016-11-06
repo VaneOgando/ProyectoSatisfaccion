@@ -103,7 +103,10 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="enviar" value="Enviar" update=":envioEncuestaGroup" action="#{enviarEncuestaBean.bt_enviarEncuesta}" />
+								<p:commandButton id="enviar" value="Enviar" update=":envioEncuestaGroup" action="#{enviarEncuestaBean.bt_enviarEncuesta}"
+										onstart="PF('cargando').show()">
+								</p:commandButton>
+
 							</p:column>
 							<p:column>
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false" action="#{enviarEncuestaBean.bt_cancelar}"
@@ -150,7 +153,25 @@
 
 			</h:form>
 
+			<p:dialog modal="true" widgetVar="cargando" draggable="false" closable="false" resizable="false">
+				<p:graphicImage value="resources/img/enviando.gif" />
+			</p:dialog>
+
 		</h:panelGroup>
+
+		<script>
+
+			function monitor(data){
+
+				var loading = document.getElementById("image");
+
+				if(data.status == "begin"){
+					loading.style.display = "block";
+				}else if(data.status == "success"){
+					loading.style.display = "none";
+				}
+			}
+		</script>
 	</ui:define>
 
 </ui:composition>

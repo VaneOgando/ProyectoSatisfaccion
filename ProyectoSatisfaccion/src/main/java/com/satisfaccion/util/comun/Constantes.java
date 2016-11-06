@@ -28,11 +28,11 @@ public class Constantes {
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public static final String KEY_ENCRIPT = "TechnoConsulSoluti78";
-    public static final String CORREO_FROM = "nessaogando@gmail.com";
+    public static final String CORREO_FROM = "no-reply@tcs.com.ve";
+    public static final String NOMBRE_CORREO_FROM = "Equipo TCS";
 
-    public static final String ENVIO_ASUNTO_EVALUACION = "Evaluacion";
-    public static final String ENVIO_ASUNTO_ENCUESTA = "Encuesta";
-
+    public static final String ENVIO_ASUNTO_EVALUACION = "Invitacion a realizar evaluacion de TCS";
+    public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";
 
 
     /*ERRORES*/

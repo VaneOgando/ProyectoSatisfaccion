@@ -1,0 +1,39 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<body>
+
+<div>
+
+    <p>Estimado Cliente:</p>
+
+    <p>Estamos realizando una encuesta para seguir mejorando cada dia y ofrecerle el mejor servicio posible.</p>
+
+    <br/>
+
+    <p>Su opinion es muy importante para nosotros y sabemos que tiene poco tiempo, pero si lograra dedicarnos 5 minutos para completar la siguiente encuesta le estaríamos muy agradecidos.</p>
+
+    <p>Su respuesta sera completamente anónima.</p>
+
+    <br/>
+
+    <a href="${linkEncuesta}" style="text-align: center"> Responder Encuesta</a>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <p>Muchas gracias por su colaboración,</p>
+    <p>Equipo de Technology Consulting Solution, C.A</p>
+
+    <!--
+    <div style="text-align: left">
+        <img src="cdi:logoTCS" alt="LogoTCS"/>
+    </div>
+-->
+</div>
+
+
+</body>
+
+</html>

@@ -64,6 +64,8 @@ public class EnviarEncuestaBean{
 	private Boolean creacionEnvio = false;
 	private String linkEncriptado;
 
+	private Integer progress;
+
 
 /*METODOS*/
 
@@ -200,6 +202,20 @@ public class EnviarEncuestaBean{
 			}
 		}
 
+	}
+
+	public Integer getProgress() {
+		if(progress == null) {
+			progress = 0;
+		}
+		else {
+			progress = progress + (int)(Math.random() * 35);
+
+			if(progress > 100)
+				progress = 100;
+		}
+
+		return progress;
 	}
 
 
@@ -354,5 +370,6 @@ public class EnviarEncuestaBean{
 	public void setDestinosInvalidos(String destinosInvalidos) {
 		this.destinosInvalidos = destinosInvalidos;
 	}
+
 }
 
