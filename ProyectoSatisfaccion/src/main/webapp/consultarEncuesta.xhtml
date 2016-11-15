@@ -127,7 +127,7 @@
 				</p:column>
 
 				<p:column headerText="Acciones" style="text-align: center">
-					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" >
+					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarEncuestaBean.bt_detalleEncuesta}" >
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
 					</p:commandButton>
 					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarEncuestaBean.bt_modificarEncuesta}"

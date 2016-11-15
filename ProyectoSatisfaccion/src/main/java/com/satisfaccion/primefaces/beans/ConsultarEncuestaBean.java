@@ -4,6 +4,7 @@ import com.satisfaccion.jpa.data.EncuestaEntity;
 import com.satisfaccion.spring.service.ConsultarEncuestaServicio;
 
 import com.satisfaccion.util.comun.Constantes;
+import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
 import org.primefaces.context.RequestContext;
 
@@ -12,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,10 @@ public class ConsultarEncuestaBean {
 
 	@ManagedProperty(value = "#{mensajesComun}")
 	private MensajesComun mensajesComun;
+
+	@ManagedProperty(value="#{encriptacion}")
+	private Encriptacion encriptacion;
+
 
 	private FacesContext context = FacesContext.getCurrentInstance();
 
@@ -66,34 +72,33 @@ public class ConsultarEncuestaBean {
 	}
 
 
-	public String detalleEncuesta() {
+	public String bt_detalleEncuesta() {
 
-		if (itemSeleccionado != null) {
+		int cantPreguntas;
 
-//			return "detallePregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+		if(itemSeleccionado != null) {
 
-			return "";
-		}
+			cantPreguntas = ((Long) consultarEncuestaServicio.cantidadPreguntasActivas(itemSeleccionado.getId())).intValue();
 
-		return "";
-	}
+			if (cantPreguntas > 0) {
+				try{
+					//Crear link unico. Encriptar informacion a enviar
+					String linkEncriptado = encriptacion.encriptarEnvio( itemSeleccionado.getId()+";true;null" , true);
 
-	public String modificarEncuesta() {
-/*
-		if (itemSeleccionado != null) {
+					return "detalleEncuesta.xhtml?faces-redirect=true&e=" + URLEncoder.encode(linkEncriptado, "UTF-8");
 
-			respuestas = consultarEncuestaServicio.consultarNumRespuestas(itemSeleccionado.getId());
+				}catch (Exception e){
 
-			if (respuestas == 0) {
-				return "modificarPregunta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId();
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_INESPERADO);
+				}
 			} else {
 
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTA_RESPONDIDA);
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ENCUESTA_ENVIO_INVALIDO);
 				return "";
 			}
 
 		}
-*/
+
 		return "";
 	}
 
@@ -191,6 +196,14 @@ public class ConsultarEncuestaBean {
 
 	public void setConsultarEncuestaServicio(ConsultarEncuestaServicio consultarEncuestaServicio) {
 		this.consultarEncuestaServicio = consultarEncuestaServicio;
+	}
+
+	public Encriptacion getEncriptacion() {
+		return encriptacion;
+	}
+
+	public void setEncriptacion(Encriptacion encriptacion) {
+		this.encriptacion = encriptacion;
 	}
 
 	public boolean isEliminar() {

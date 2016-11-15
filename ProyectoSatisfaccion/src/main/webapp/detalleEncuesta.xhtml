@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="plantilla/plantillaRespuesta.xhtml">
+
+
+	<ui:define name="cuerpo">
+
+		<h:form id="detalleEncuesta" styleClass="fuenteLetra" rendered="#{!detalleEncuestaBean.errorEncuesta}">
+
+			<div id="tituloEncuesta" class="tituloEncuesta">
+				<p:outputLabel value="#{detalleEncuestaBean.encuesta.titulo}"/>
+			</div>
+
+			<div id="ayudaEncuesta" class="ayudaEncuesta">
+				<p:outputLabel value="#{detalleEncuestaBean.encuesta.descripcion}" rendered="#{detalleEncuestaBean.encuesta.descripcion != null}" />
+			</div>
+
+			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true" />
+
+			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta && detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
+				<div  class="detallePregunta">
+
+					<p:outputLabel styleClass="tituloPreg" value="Seleccione usuario a evaluar"/>
+
+					<p:selectOneMenu style="width:150px" >
+						<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />
+						<f:selectItem itemLabel="Gustavo Acuña" itemValue="gustavo.acuna" />
+						<f:selectItem itemLabel="Dexy Guerrero" itemValue="dexy.guerrero" />
+					</p:selectOneMenu>
+				</div>
+			</h:panelGroup>
+
+			<ui:repeat value="#{detalleEncuestaBean.preguntas}" var="pregunta">
+
+				<div class="detallePregunta">
+
+					<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}"/>
+
+					<p:outputLabel styleClass="ayudaPreg" value="#{pregunta.ayuda}" rendered="#{!pregunta.ayuda.equals('')}" />
+
+					<div class="tipoPreg">
+
+						<p:selectOneRadio layout="grid" columns="1" styleClass="simplePreg" rendered="#{pregunta.tipoPregunta.equals('simple')}">
+							<f:selectItems value="#{pregunta.opciones}" var="opcion" itemValue="#{opcion.id}" itemLabel="#{opcion.titulo}">
+							</f:selectItems>
+						</p:selectOneRadio>
+
+						<p:rating styleClass="rankingPreg" stars="#{pregunta.escalaValoracion}" cancel="false" rendered="#{pregunta.tipoPregunta.equals('ranking')}" />
+
+						<div class="abiertaPreg">
+							<p:inputTextarea rows="4" autoResize="false" rendered="#{pregunta.tipoPregunta.equals('abierta')}"
+											 counter="respuesta" maxlength="500" counterTemplate="{0} caracteres restantes."/>
+							<p:outputLabel id="respuesta" style="font-size: x-small; padding: 0" rendered="#{pregunta.tipoPregunta.equals('abierta')}"/>
+						</div>
+					</div>
+
+				</div>
+			</ui:repeat>
+
+		</h:form>
+
+	</ui:define>
+
+	<ui:define name="errorEncuesta">
+
+		<h:panelGroup rendered="#{detalleEncuestaBean.errorEncuesta}">
+			<ui:include src="/plantilla/errorEncuesta.xhtml"/>
+		</h:panelGroup>
+
+	</ui:define>
+
+	<ui:define name="footer">
+
+		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
+			<p:row>
+				<p:column>
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

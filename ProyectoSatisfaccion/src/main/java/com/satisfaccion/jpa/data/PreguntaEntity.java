@@ -61,7 +61,7 @@ public class PreguntaEntity implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
-	@OneToMany(mappedBy = "pregunta")
+	@OneToMany(mappedBy = "pregunta", fetch = FetchType.EAGER)
 	@Cascade({org.hibernate.annotations.CascadeType.ALL})
 	private List<OpcionEntity> opciones;
 

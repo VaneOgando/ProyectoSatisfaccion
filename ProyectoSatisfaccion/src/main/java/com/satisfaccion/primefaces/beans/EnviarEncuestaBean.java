@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,11 +109,6 @@ public class EnviarEncuestaBean{
 		encuestas = enviarEncuestaServicio.cargarEncuestasValidas(encuestaSelect.getTipoEncuesta());
 	}
 
-
-
-
-
-
 	public void bt_enviarEncuesta(){
 
 		//Obtener los destinatarios ingresados
@@ -161,10 +157,12 @@ public class EnviarEncuestaBean{
 					if (creacionEnvio) {
 
 						//Crear link unico. Encriptar informacion a enviar
-						linkEncriptado = encriptacion.encriptarEnvio(envio.getId() + ";" + envio.getDestinatario(), true);
+						linkEncriptado = encriptacion.encriptarEnvio(envio.getId() + ";false;" + envio.getDestinatario(), true);
+
+						String url = Constantes.URL_ENCUESTA + "detalleEncuesta.xhtml?e=" + URLEncoder.encode(linkEncriptado, "UTF-8");
 
 						//Envio del correo electronico
-						Boolean envioExitoso = emailServicio.enviarCorreo(envio.getDestinatario(), linkEncriptado, evaluacion);
+						Boolean envioExitoso = emailServicio.enviarCorreo(envio.getDestinatario(), url, evaluacion);
 
 						llenarResumen(destino.trim(), envioExitoso);
 
@@ -202,20 +200,6 @@ public class EnviarEncuestaBean{
 			}
 		}
 
-	}
-
-	public Integer getProgress() {
-		if(progress == null) {
-			progress = 0;
-		}
-		else {
-			progress = progress + (int)(Math.random() * 35);
-
-			if(progress > 100)
-				progress = 100;
-		}
-
-		return progress;
 	}
 
 

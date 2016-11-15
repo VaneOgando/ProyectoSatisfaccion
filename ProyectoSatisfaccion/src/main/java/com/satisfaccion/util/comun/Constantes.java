@@ -17,6 +17,16 @@ public class Constantes {
 
     /*CONSTANTES*/
 
+    public static final String URL_ENCUESTA = "http://localhost:8000/encuesta/";
+
+    public static final String ENVIO_ASUNTO_EVALUACION = "Invitacion a realizar evaluacion de TCS";
+    public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";
+
+    public static final String KEY_ENCRIPT = "TechnoConsulSoluti78";
+    public static final String CORREO_FROM = "no-reply@tcs.com.ve";
+    public static final String NOMBRE_CORREO_FROM = "Equipo TCS";
+
+
     public static final String MENSAJE_TIPO_EXITO  = "Éxito!";
     public static final String MENSAJE_TIPO_ERROR  = "Error!";
 
@@ -26,13 +36,6 @@ public class Constantes {
 
     public static final String FORMATO_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-    public static final String KEY_ENCRIPT = "TechnoConsulSoluti78";
-    public static final String CORREO_FROM = "no-reply@tcs.com.ve";
-    public static final String NOMBRE_CORREO_FROM = "Equipo TCS";
-
-    public static final String ENVIO_ASUNTO_EVALUACION = "Invitacion a realizar evaluacion de TCS";
-    public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";
 
 
     /*ERRORES*/
@@ -60,7 +63,7 @@ public class Constantes {
     public static final String ERR_OPCION_VACIA = "Por favor ingrese una descripcion para cada una de las opciones.";
     public static final String ERR_NOMBRE_ENCUESTA = "Ya existe una encuesta con este nombre, por favor ingrese otro.";
     public static final String ERR_SIN_PREGUNTAS = "No existen preguntas activas para seleccionar.";
-    public static final String ERR_ENCUESTA_ENVIO_INVALIDO = "Esta encuesta no puede ser enviada ya que no posee preguntas activas.";
+    public static final String ERR_ENCUESTA_ENVIO_INVALIDO = "Esta encuesta no puede ser vista/enviada ya que no posee preguntas activas.";
 
 
     /*EXITO*/
@@ -73,10 +76,6 @@ public class Constantes {
     public static final String EX_CREAR_ENCUESTA = "La encuesta fue creada exitosamente.";
     public static final String EX_MODIFICAR_ENCUESTA = "La encuesta fue modificada exitosamente.";
 
-    public static final String EX_GESTION = "EXITO! El/los recurso(s) se gestionaron satisfactoriamente";
-    public static final String EX_MODIFICAR = "EXITO! El recurso se modifico satisfactoriamente";
-
-    public static final String EX_GESTION_ERR_REPORTE = "El/los recurso(s) se gestionaron satisfactoriamente, mas no se genero el reporte PDF. Por favor realizarlo manual";
 
 
 }
