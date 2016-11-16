@@ -21,16 +21,17 @@
 
 			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true" />
 
-			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta && detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
+			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta and detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
 				<div  class="detallePregunta">
-
 					<p:outputLabel styleClass="tituloPreg" value="Seleccione usuario a evaluar"/>
 
-					<p:selectOneMenu style="width:150px" >
-						<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />
-						<f:selectItem itemLabel="Gustavo Acuña" itemValue="gustavo.acuna" />
-						<f:selectItem itemLabel="Dexy Guerrero" itemValue="dexy.guerrero" />
-					</p:selectOneMenu>
+					<div class="tipoPreg">
+						<p:selectOneMenu styleClass="selectUsuario" required="true" requiredMessage="Seleccione un usuario evaluar">
+							<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />
+							<f:selectItem itemLabel="Gustavo Acuña" itemValue="gustavo.acuna" />
+							<f:selectItem itemLabel="Dexy Guerrero" itemValue="dexy.guerrero" />
+						</p:selectOneMenu>
+					</div>
 				</div>
 			</h:panelGroup>
 

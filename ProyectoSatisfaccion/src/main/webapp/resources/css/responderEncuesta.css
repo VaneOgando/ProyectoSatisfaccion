@@ -130,6 +130,11 @@ body {
     width: 100%;
 }
 
+.selectUsuario{
+    padding: 0; !important;
+    width: 200px;
+}
+
 .botonDetalle{
     margin: 2% auto;
 }
