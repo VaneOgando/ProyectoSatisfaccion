@@ -17,7 +17,7 @@ public class Constantes {
 
     /*CONSTANTES*/
 
-    public static final String URL_ENCUESTA = "http://localhost:8000/encuesta/";
+    public static final String URL_ENCUESTA = "http://localhost:8081/encuesta/";
 
     public static final String ENVIO_ASUNTO_EVALUACION = "Invitacion a realizar evaluacion de TCS";
     public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";

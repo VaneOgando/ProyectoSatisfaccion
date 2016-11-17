@@ -6,7 +6,6 @@
 				xmlns:c="http://java.sun.com/jsp/jstl/core"
 				template="plantilla/plantillaRespuesta.xhtml">
 
-
 	<ui:define name="cuerpo">
 
 		<h:form id="detalleEncuesta" styleClass="fuenteLetra" rendered="#{!detalleEncuestaBean.errorEncuesta}">
@@ -19,14 +18,16 @@
 				<p:outputLabel value="#{detalleEncuestaBean.encuesta.descripcion}" rendered="#{detalleEncuestaBean.encuesta.descripcion != null}" />
 			</div>
 
-			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true" />
+			<p:messages id="MensajeValidacion" autoUpdate="true" closable="true"/>
 
 			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta and detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
+
 				<div  class="detallePregunta">
 					<p:outputLabel styleClass="tituloPreg" value="Seleccione usuario a evaluar"/>
 
 					<div class="tipoPreg">
-						<p:selectOneMenu styleClass="selectUsuario" required="true" requiredMessage="Seleccione un usuario evaluar">
+						<p:selectOneMenu value="#{detalleEncuestaBean.usuarioEvaluado}" styleClass="selectUsuario">
+							<f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
 							<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />
 							<f:selectItem itemLabel="Gustavo Acuña" itemValue="gustavo.acuna" />
 							<f:selectItem itemLabel="Dexy Guerrero" itemValue="dexy.guerrero" />
@@ -35,34 +36,40 @@
 				</div>
 			</h:panelGroup>
 
-			<ui:repeat value="#{detalleEncuestaBean.preguntas}" var="pregunta">
+			<ui:repeat value="#{detalleEncuestaBean.respuestas}" var="respuesta">
 
 				<div class="detallePregunta">
 
-					<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}"/>
+					<p:outputLabel styleClass="tituloPreg" value="#{respuesta.pregunta.titulo}"/>
 
-					<p:outputLabel styleClass="ayudaPreg" value="#{pregunta.ayuda}" rendered="#{!pregunta.ayuda.equals('')}" />
+					<p:outputLabel styleClass="ayudaPreg" value="#{respuesta.pregunta.ayuda}" rendered="#{!respuesta.pregunta.ayuda.equals('')}" />
 
 					<div class="tipoPreg">
 
-						<p:selectOneRadio layout="grid" columns="1" styleClass="simplePreg" rendered="#{pregunta.tipoPregunta.equals('simple')}">
-							<f:selectItems value="#{pregunta.opciones}" var="opcion" itemValue="#{opcion.id}" itemLabel="#{opcion.titulo}">
-							</f:selectItems>
+						<p:selectOneRadio value="#{respuesta.opcion.id}" layout="grid" columns="1" styleClass="simplePreg"
+										  rendered="#{respuesta.pregunta.tipoPregunta.equals('simple')}">
+							<f:selectItems value="#{respuesta.pregunta.opciones}" var="opcion" itemValue="#{opcion.id}" itemLabel="#{opcion.titulo}"/>
 						</p:selectOneRadio>
 
-						<p:rating styleClass="rankingPreg" stars="#{pregunta.escalaValoracion}" cancel="false" rendered="#{pregunta.tipoPregunta.equals('ranking')}" />
+						<p:rating value="#{respuesta.valoracion}" styleClass="rankingPreg" stars="#{respuesta.pregunta.escalaValoracion}" cancel="false"
+								  rendered="#{respuesta.pregunta.tipoPregunta.equals('ranking')}" />
 
 						<div class="abiertaPreg">
-							<p:inputTextarea rows="4" autoResize="false" rendered="#{pregunta.tipoPregunta.equals('abierta')}"
-											 counter="respuesta" maxlength="500" counterTemplate="{0} caracteres restantes."/>
-							<p:outputLabel id="respuesta" style="font-size: x-small; padding: 0" rendered="#{pregunta.tipoPregunta.equals('abierta')}"/>
+							<p:inputTextarea value="#{respuesta.observacion}" rows="4" autoResize="false" counter="respuesta" maxlength="500" counterTemplate="{0} caracteres restantes."
+											 rendered="#{respuesta.pregunta.tipoPregunta.equals('abierta')}" />
+							<p:outputLabel id="respuesta" style="font-size: x-small; padding: 0" rendered="#{respuesta.pregunta.tipoPregunta.equals('abierta')}"/>
 						</div>
+
 					</div>
 
 				</div>
 			</ui:repeat>
 
 		</h:form>
+
+		<p:dialog modal="true" widgetVar="cargando" draggable="false" closable="false" resizable="false">
+			<p:graphicImage value="resources/img/enviandoDatos.gif"/>
+		</p:dialog>
 
 	</ui:define>
 
@@ -79,7 +86,7 @@
 		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
 			<p:row>
 				<p:column>
-					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}"/>
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onstart="PF('cargando').show()"/>
 				</p:column>
 			</p:row>
 		</p:panelGrid>

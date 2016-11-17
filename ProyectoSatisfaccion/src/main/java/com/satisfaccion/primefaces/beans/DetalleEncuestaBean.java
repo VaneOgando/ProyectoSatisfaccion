@@ -43,17 +43,15 @@ public class DetalleEncuestaBean {
 	private EncuestaEntity encuesta = new EncuestaEntity();
 	private List<PreguntaEntity> preguntas = new ArrayList<PreguntaEntity>();
 
-	/*Lista para almacenar las respuestas*/
+	/*Lista para almacenar y desplegar las respuestas*/
 	private List<RespuestaEntity> respuestas = new ArrayList<RespuestaEntity>();
 
 	/*Usadas en el manejo del formulario*/
 	private boolean detalleEncuesta = false;
 	private boolean errorEncuesta = false;
+	private String usuarioEvaluado;
 
 	/*Usadas en la creacion de la respuesta*/
-	private Date fechaActual = new Date();
-	private String usuarioCreador = "";
-
 	private Boolean respuesta = false;
 
 
@@ -80,15 +78,15 @@ public class DetalleEncuestaBean {
 			if (variables[1].equals("true")) {
 				detalleEncuesta = true;
 				encuesta = detalleEncuestaServicio.buscarEncuesta(Integer.parseInt(variables[0]));
-				preguntas = new ArrayList<PreguntaEntity>(encuesta.getPreguntas());
 
-				validarPreguntasActivas();
+				cargarDetalleEnvio();
 
 			} else { //Mostrar envio de encuesta
 				detalleEncuesta = false;
 				envio = detalleEncuestaServicio.buscarEnvio(Integer.parseInt(variables[0]));
 
 				if(envio.getDestinatario().equals(variables[2]) && envio.getEstado().equals("P")){
+					encuesta = envio.getEncuesta();
 					cargarDetalleEnvio();
 
 				}else {
@@ -106,40 +104,39 @@ public class DetalleEncuestaBean {
 
 	public void cargarDetalleEnvio() {
 
-		encuesta = envio.getEncuesta();
 		preguntas = new ArrayList<PreguntaEntity>(encuesta.getPreguntas());
 
-		if (encuesta.getEstado().equals("A")){
-			validarPreguntasActivas();
-
-		}else {
-			errorEncuesta = true;
-		}
-
-	}
-
-	public void validarPreguntasActivas() {
-
 		int i = 0;
+		while (i < preguntas.size()){
 
-		while (i < preguntas.size()) {
+			RespuestaEntity respuesta = new RespuestaEntity();
 
-			//Eliminar preguntas inactivas
-			if (preguntas.get(i).getEstado().equals("I")) {
-				preguntas.remove(i);
-				i--;
+			if(preguntas.get(i).getEstado().equals("A")){
+
+				respuesta.setPregunta(preguntas.get(i));
+
+				//Para preguntas simples inicializar las opciones
+				if(preguntas.get(i).getTipoPregunta().equals("simple")){
+					respuesta.setOpcion( new OpcionEntity());
+				}
+
+				//Almacenar envio cuando aplique
+				if(!detalleEncuesta){
+					respuesta.setEnvio(envio);
+				}
+
+				respuestas.add(respuesta);
+
 			}
+
 			i++;
 		}
 
-		if (!detalleEncuesta) {
-
-			if (preguntas.size() < 1) {
-
-				errorEncuesta = true;
-			}
-
+		//En envio, si encuesta esta inactiva o no tiene preguntas activas es error
+		if(!detalleEncuesta && ( encuesta.getEstado().equals("I") || respuestas.size() < 1 )){
+			errorEncuesta = true;
 		}
+
 	}
 
 	public String bt_crearEncuesta() {
@@ -210,12 +207,27 @@ public class DetalleEncuestaBean {
 			return "consultarEncuesta.xhtml?faces-redirect=true";
 		}else{
 
-			//guardar las respuestas dadas
+			boolean fallo = false;
+
+			for (RespuestaEntity respuesta : respuestas){
+				
+				if(respuesta.getPregunta().getTipoEncuesta().equals("simple") && respuesta.getOpcion().getId() != 0){
+					fallo = false;
+					break;
+				}
+
+
+
+			}
+
+			//Validar preguntas respondidas
+			//Almacenar en BD
 
 			return "";
 		}
 
 	}
+
 
 
 
@@ -293,20 +305,12 @@ public class DetalleEncuestaBean {
 		this.errorEncuesta = errorEncuesta;
 	}
 
-	public Date getFechaActual() {
-		return fechaActual;
+	public String getUsuarioEvaluado() {
+		return usuarioEvaluado;
 	}
 
-	public void setFechaActual(Date fechaActual) {
-		this.fechaActual = fechaActual;
-	}
-
-	public String getUsuarioCreador() {
-		return usuarioCreador;
-	}
-
-	public void setUsuarioCreador(String usuarioCreador) {
-		this.usuarioCreador = usuarioCreador;
+	public void setUsuarioEvaluado(String usuarioEvaluado) {
+		this.usuarioEvaluado = usuarioEvaluado;
 	}
 
 	public Boolean getRespuesta() {
