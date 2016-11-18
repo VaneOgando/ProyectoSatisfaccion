@@ -17,7 +17,7 @@ public class Constantes {
 
     /*CONSTANTES*/
 
-    public static final String URL_ENCUESTA = "http://localhost:8081/encuesta/";
+    public static final String URL_ENCUESTA = "http://localhost:8000/encuesta/";
 
     public static final String ENVIO_ASUNTO_EVALUACION = "Invitacion a realizar evaluacion de TCS";
     public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";
@@ -65,6 +65,7 @@ public class Constantes {
     public static final String ERR_SIN_PREGUNTAS = "No existen preguntas activas para seleccionar.";
     public static final String ERR_ENCUESTA_ENVIO_INVALIDO = "Esta encuesta no puede ser vista/enviada ya que no posee preguntas activas.";
 
+    public static final String ERR_PREGUNTAS_VACIAS = "Por favor no deje preguntas sin responder.";
 
     /*EXITO*/
     public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta/encuesta fue eliminada definitivamente exitosamente.";

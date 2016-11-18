@@ -138,3 +138,23 @@ body {
 .botonDetalle{
     margin: 2% auto;
 }
+
+.dialogoCarga{
+    background-color: gray;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    min-height: 100%;
+    opacity: 0.3;
+    left: 0;
+}
+
+.imagenCarga{
+    position: absolute;
+    z-index: 2000;
+    width: 100%;
+    text-align: center;
+    top: 0;
+
+}

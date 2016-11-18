@@ -18,7 +18,7 @@
 				<p:outputLabel value="#{detalleEncuestaBean.encuesta.descripcion}" rendered="#{detalleEncuestaBean.encuesta.descripcion != null}" />
 			</div>
 
-			<p:messages id="MensajeValidacion" autoUpdate="true" closable="true"/>
+			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true"/>
 
 			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta and detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
 
@@ -86,7 +86,7 @@
 		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
 			<p:row>
 				<p:column>
-					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onstart="PF('cargando').show()"/>
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()"/>
 				</p:column>
 			</p:row>
 		</p:panelGrid>

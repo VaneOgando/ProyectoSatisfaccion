@@ -203,30 +203,36 @@ public class DetalleEncuestaBean {
 	public String bt_listoEncuesta(){
 
 		if(detalleEncuesta){
-
 			return "consultarEncuesta.xhtml?faces-redirect=true";
-		}else{
 
+		}else{
 			boolean fallo = false;
 
+			//Validar preguntas respondidas
 			for (RespuestaEntity respuesta : respuestas){
 				
-				if(respuesta.getPregunta().getTipoEncuesta().equals("simple") && respuesta.getOpcion().getId() != 0){
-					fallo = false;
+				if( (respuesta.getPregunta().getTipoPregunta().equals("simple") && respuesta.getOpcion().getId() == 0) ||
+						(respuesta.getPregunta().getTipoPregunta().equals("ranking") && respuesta.getValoracion() == 0) ||
+						(respuesta.getPregunta().getTipoPregunta().equals("abierta") && respuesta.getObservacion() == "") ){
+					fallo = true;
 					break;
 				}
-
-
-
 			}
 
-			//Validar preguntas respondidas
-			//Almacenar en BD
+			if(fallo){
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTAS_VACIAS);
+			}else {
+
+				//Almaceno en BD
+
+			}
 
 			return "";
 		}
 
 	}
+
+
 
 
 
