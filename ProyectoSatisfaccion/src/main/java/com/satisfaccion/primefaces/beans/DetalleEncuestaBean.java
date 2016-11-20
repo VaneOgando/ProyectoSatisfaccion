@@ -7,6 +7,7 @@ import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
 import com.sun.deploy.net.URLEncoder;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
@@ -139,66 +140,6 @@ public class DetalleEncuestaBean {
 
 	}
 
-	public String bt_crearEncuesta() {
-/*
-
-		try {
-
-			//Eliminar ID si es una copia, evitar modificar el actual
-			if(encuesta.getId() != 0){
-				encuesta.setId(0);
-			}
-
-			//Validacion de al menos 1 pregunta seleccionada
-			if (preguntasPickList.getTarget().size() > 0){
-
-				encuesta.setEstado("A");
-				encuesta.setFechaCreacion(fechaActual);
-
-				//Obtener usuario conectado
-				//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				//encuesta.setUsuarioCreador(auth.getName);
-
-				encuesta.setUsuarioCreador("vanessa.rodriguez");
-
-				if (evaluacion) {
-					encuesta.setTipoEncuesta("E");
-				}else{
-					encuesta.setTipoEncuesta("N");
-				}
-
-				encuesta.setPreguntas( new HashSet<PreguntaEntity>(preguntasPickList.getTarget()));
-
-				creacion = crearEncuestaServicio.crearEncuestas(encuesta);
-
-				if (creacion) {
-
-					mensajesComun.guardarMensaje(true, Constantes.MENSAJE_TIPO_EXITO, Constantes.EX_CREAR_ENCUESTA);
-					return "Exito";
-
-				}else {
-					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_ENCUESTA);
-
-					limpiarEncuesta();
-					return "";
-
-				}
-
-			}else{
-				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CANT_MINIMA_PREGUNTAS);
-				return "";
-			}
-
-		}catch (Exception e){
-			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_ENCUESTA);
-
-			limpiarEncuesta();
-			return "";
-
-		}
-*/
-		return "";
-	}
 
 	public String bt_listoEncuesta(){
 
@@ -210,10 +151,10 @@ public class DetalleEncuestaBean {
 
 			//Validar preguntas respondidas
 			for (RespuestaEntity respuesta : respuestas){
-				
-				if( (respuesta.getPregunta().getTipoPregunta().equals("simple") && respuesta.getOpcion().getId() == 0) ||
-						(respuesta.getPregunta().getTipoPregunta().equals("ranking") && respuesta.getValoracion() == 0) ||
-						(respuesta.getPregunta().getTipoPregunta().equals("abierta") && respuesta.getObservacion() == "") ){
+
+				if( (respuesta.getPregunta().getTipoPregunta().equals("ranking") && respuesta.getValoracion() == null) ||
+						(respuesta.getPregunta().getTipoPregunta().equals("abierta") && respuesta.getObservacion() == null) ||
+						(respuesta.getPregunta().getTipoPregunta().equals("simple") && respuesta.getOpcion().getId() == 0)) {
 					fallo = true;
 					break;
 				}
@@ -221,15 +162,34 @@ public class DetalleEncuestaBean {
 
 			if(fallo){
 				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_PREGUNTAS_VACIAS);
+				RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
+
+				return "";
 			}else {
 
-				//Almaceno en BD
+				//Validar seleccion de usuario a evaluar
+				if(encuesta.getTipoEncuesta().equals("E") && usuarioEvaluado.equals("")){
+					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_USUARIO_EVALUADO);
+					RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
 
+					return "";
+				}else {
+
+					respuesta = detalleEncuestaServicio.almacenarRespuestas(envio, respuestas, usuarioEvaluado);
+
+					if(!respuesta){
+						mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_CREAR_RESPUESTA);
+						RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
+
+						return "";
+					}else {
+
+						return "exitoEncuesta.xhtml";
+					}
+				}
 			}
 
-			return "";
 		}
-
 	}
 
 

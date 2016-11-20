@@ -122,4 +122,15 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/detalleEncuesta.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{detalleEncuestaBean.bt_listoEncuesta}</from-action>
+			<from-outcome>Exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+
 </faces-config>

@@ -18,7 +18,7 @@
 				<p:outputLabel value="#{detalleEncuestaBean.encuesta.descripcion}" rendered="#{detalleEncuestaBean.encuesta.descripcion != null}" />
 			</div>
 
-			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true"/>
+			<p:messages id="MensajeValidacion" showDetail="true" autoUpdate="true" closable="true" />
 
 			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta and detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
 
