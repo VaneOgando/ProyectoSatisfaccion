@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="plantilla/plantilla.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<br/>
+
+		<h:form id="Filtro">
+			<div>
+				<p:fieldset widgetVar="filtro" legend="Filtros" toggleable="true" collapsed="true" toggleSpeed="500" style="font-size: small">
+
+					<h:panelGrid columns="6" width="100%" styleClass="panelFiltro">
+
+
+							<p:outputLabel value="Tipo:" style="float: right;" />
+							<p:selectOneMenu id="tipoPregunta"  style="width:150px" value="#{analisisEncuestaBean.tipoPregunta}">
+								<f:selectItem itemLabel="Normal" itemValue="N" />
+								<f:selectItem itemLabel="Evaluacion" itemValue="E" />
+								<p:ajax listener="#{analisisEncuestaBean.recargarFiltos}" update="encuesta proyecto usuarioLabelGroup usuarioSelectGroup" />
+							</p:selectOneMenu>
+
+
+							<p:outputLabel value="Estado:" style="float: right;" />
+							<p:selectOneMenu id="estado"  style="width:150px" value="#{analisisEncuestaBean.estado}">
+								<f:selectItem itemLabel="Activo" itemValue="A" />
+								<f:selectItem itemLabel="Inactivo" itemValue="I" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Encuesta:" style="float: right;" />
+							<p:selectOneMenu id="encuesta"  style="width:150px" value="#{analisisEncuestaBean.encuestaSelect.id}">
+								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
+								<f:selectItems value="#{analisisEncuestaBean.encuestas}" var="encuesta"
+											   itemLabel="#{encuesta.nombre}" itemValue="#{encuesta.id}"/>
+								<p:ajax listener="#{analisisEncuestaBean.cargarProyectoFiltro}" update="proyecto" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Proyecto:" style="float: right;" />
+							<p:selectOneMenu id="proyecto"  style="width:150px" value="#{analisisEncuestaBean.proyectoSelect.id}">
+								<f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+								<f:selectItems value="#{analisisEncuestaBean.proyectos}" var="proyecto"
+											   itemLabel="#{proyecto.nombre}" itemValue="#{proyecto.id}"/>
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Fecha envio:" style="float: right;" />
+						<h:panelGroup>
+							<p:calendar id="fechaInicio" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaInicio}"/>
+							-
+							<p:calendar id="fechaFin" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaFin}"/>
+						</h:panelGroup>
+
+						<h:panelGroup id="usuarioLabelGroup">
+							<p:outputLabel value="Usuario:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}"/>
+						</h:panelGroup>
+						<h:panelGroup id="usuarioSelectGroup">
+								<p:selectOneMenu id="ususario"  style="width:150px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
+								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
+								<f:selectItems value="#{analisisEncuestaBean.usuarios}" var="usuario">
+									<f:selectItem itemLabel="#{usuario.usuario}" itemValue="#{usuario.usuario}"/>
+								</f:selectItems>
+							</p:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGrid>
+
+
+					<p:commandButton value="Filtrar" ajax="false" action="#{analisisEncuestaBean.filtrarPreguntas}" update=":analisisEncuestas"
+									 style="height: 30px; font-size: small; margin-top: 20px; margin-left: 50%">
+					</p:commandButton>
+
+				</p:fieldset>
+
+			</div>
+		</h:form>
+
+		<br/>
+
+		<h:form id="analisisEncuestas" styleClass="fuenteLetra">
+
+			<ui:repeat value="#{analisisEncuestaBean.respuestas}" var="respuesta">
+
+				<div class="detallePregunta">
+
+					<p:outputLabel styleClass="tituloPreg" value="#{respuesta.pregunta.titulo}" />
+
+					<div class="tipoPreg">
+
+						<p:panelGrid id="simplePreg" styleClass="simplePreg" rendered="false">
+
+							<c:forEach begin="1" end="2">
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Esra es la opcion a la pregunta con un titulo muy extenso"/>
+									</p:column>
+
+									<p:column>
+										<p:outputLabel value="relativo"/>
+									</p:column>
+
+									<p:column>
+										<p:outputLabel value="absoluto"/>
+									</p:column>
+								</p:row>
+							</c:forEach>
+
+							<p:row>
+								<p:column>
+									<p:outputLabel id="total" value="TOTAL"/>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="relativaTotal"/>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="absolutaTotal"/>
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+
+
+						<h:panelGroup id="rankingPreg" styleClass="rankingPreg" rendered="true">
+							<c:forEach begin="1" end="10">
+								<h:graphicImage name="star.png" library="img"
+												style="height: 50px"/>
+							</c:forEach>
+						</h:panelGroup>
+					</div>
+
+				</div>
+			</ui:repeat>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

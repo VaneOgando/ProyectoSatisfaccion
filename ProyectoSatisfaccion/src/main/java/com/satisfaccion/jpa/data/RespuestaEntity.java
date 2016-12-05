@@ -15,10 +15,20 @@ import java.util.List;
 
 		@NamedQuery(name = "HQL_RESPUESTA_ENCUESTA_NUMERO",
 				query = "SELECT COUNT (r) FROM RespuestaEntity r JOIN r.envio e join e.encuesta enc " +
-						"WHERE enc.id = :idEncuesta")
+						"WHERE enc.id = :idEncuesta"),
 
+		@NamedQuery(name = "HQL_RESPUESTA",
+				query = "SELECT r FROM RespuestaEntity r JOIN r.pregunta p JOIN r.envio e join e.encuesta enc JOIN e.proyecto pro " +
+						"WHERE p.tipoPregunta in ('simple', 'ranking') and (p.estado = :estado) and (p.tipoPregunta = :tipoPregunta)" +
+						"and e.estado = 'R' "),
 
-})
+		@NamedQuery(name = "HQL_RESPUESTA_PRUEBA",
+				query = "SELECT r FROM RespuestaEntity r JOIN r.pregunta p join  r.envio en left join en.encuesta e left outer join en.proyecto pro " +
+						"where p.tipoPregunta in ('simple', 'ranking') and (:estado is null or p.estado = :estado) " +
+						"and (:tipoEncuesta is null or p.tipoEncuesta = :tipoEncuesta) and (:encuesta is null or :encuesta = 0 or e.id = :encuesta)" +
+						"and ( :proyecto = 0 or p.id = :proyecto ) ")
+
+		})
 
 public class RespuestaEntity {
 	@Id

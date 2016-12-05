@@ -14,8 +14,11 @@ import java.util.List;
 
 		@NamedQuery(name = "HQL_PROYECTO_POR_NOMBRE",
 				query = "SELECT p FROM ProyectoEntity p " +
-						"WHERE upper(p.nombre) = upper(:nombreProyecto)")
+						"WHERE upper(p.nombre) = upper(:nombreProyecto)"),
 
+		@NamedQuery(name = "HQL_PROYECTO_ENCUESTA",
+				query = "SELECT distinct p FROM ProyectoEntity p join p.envios en join en.encuesta e " +
+						"WHERE e.id in :encuestaList"),
 })
 
 public class ProyectoEntity {
