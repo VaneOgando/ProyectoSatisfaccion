@@ -70,6 +70,8 @@ public class Constantes {
 
     public static final String ERR_CREAR_RESPUESTA = "Ha ocurrido un error al almacenar sus respuestas, por favor intentelo más tarde";
 
+    public static final String ERR_FECHA_INVALIDA = "Por favor seleccione una fecha valida";
+
 
     /*EXITO*/
     public static final String EX_ELIMINAR_DEFINITIVO = "La pregunta/encuesta fue eliminada definitivamente exitosamente.";

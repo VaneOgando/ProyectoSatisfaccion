@@ -48,9 +48,9 @@
 
 							<p:outputLabel value="Fecha envio:" style="float: right;" />
 						<h:panelGroup>
-							<p:calendar id="fechaInicio" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaInicio}"/>
+							<p:calendar id="fechaInicio" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaInicio}" maxdate="#{analisisEncuestaBean.hoy}"/>
 							-
-							<p:calendar id="fechaFin" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaFin}"/>
+							<p:calendar id="fechaFin" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaFin}" maxdate="#{analisisEncuestaBean.hoy}"/>
 						</h:panelGroup>
 
 						<h:panelGroup id="usuarioLabelGroup">
@@ -59,6 +59,7 @@
 						<h:panelGroup id="usuarioSelectGroup">
 								<p:selectOneMenu id="ususario"  style="width:150px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
 								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
+									<f:selectItem itemLabel="Estefania.fernandez" itemValue="estefania.fernandez"/>
 								<f:selectItems value="#{analisisEncuestaBean.usuarios}" var="usuario">
 									<f:selectItem itemLabel="#{usuario.usuario}" itemValue="#{usuario.usuario}"/>
 								</f:selectItems>

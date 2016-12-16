@@ -2,15 +2,14 @@ package com.satisfaccion.primefaces.beans;
 
 import com.satisfaccion.jpa.data.*;
 import com.satisfaccion.spring.service.AnalisisEncuestaServicio;
+import com.satisfaccion.util.comun.Constantes;
+import com.satisfaccion.util.comun.MensajesComun;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @ManagedBean
 @ViewScoped
@@ -20,6 +19,10 @@ public class AnalisisEncuestaBean {
 	@ManagedProperty("#{analisisEncuestaServicio}")
 	private AnalisisEncuestaServicio analisisEncuestaServicio;
 
+	@ManagedProperty(value = "#{mensajesComun}")
+	private MensajesComun mensajesComun;
+
+
 	private List<RespuestaEntity> respuestas = new ArrayList<RespuestaEntity>();
 
 	/*Manejo de filtro*/
@@ -28,9 +31,12 @@ public class AnalisisEncuestaBean {
 	private EncuestaEntity encuestaSelect = new EncuestaEntity();
 	private ProyectoEntity proyectoSelect = new ProyectoEntity();
 	private UsuarioEntity usuarioSelect = new UsuarioEntity();
-	private Date fechaInicio;
-	private Date fechaFin = new Date();
 	private String usuario;
+
+	/*Fecha*/
+	private Date fechaInicio;
+	private Date fechaFin;
+	private Date hoy = new Date();
 
 	/*Listas de Filtros*/
 	private List<EncuestaEntity> encuestas;
@@ -55,6 +61,8 @@ public class AnalisisEncuestaBean {
 
 		encuestaSelect = new EncuestaEntity();
 		proyectoSelect = new ProyectoEntity();
+		fechaInicio = fechaFin = null;
+		usuario = null;
 
 		cargarEncuestaFiltro();
 		cargarProyectoFiltro();
@@ -90,9 +98,17 @@ public class AnalisisEncuestaBean {
 
 	public void filtrarPreguntas() {
 
-		inicialiazarItems();
+		Boolean fechaValida = fechasValidas();
 
-		respuestas = analisisEncuestaServicio.filtrarEncuestas(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, usuario);
+		if(fechaValida){
+			inicialiazarItems();
+
+			List<Object[]> respuestas = new ArrayList<Object[]>();
+			respuestas = analisisEncuestaServicio.filtrarEncuestas(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, usuario);
+
+		}else{
+			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_FECHA_INVALIDA);
+		}
 
 	}
 
@@ -100,6 +116,29 @@ public class AnalisisEncuestaBean {
 
 		respuestas = new ArrayList<RespuestaEntity>();
 		totalRelativo = 0;
+	}
+
+	public Boolean fechasValidas(){
+
+		Boolean fechaValida = true;
+
+		try {
+
+			if( (fechaInicio != null && fechaFin ==  null) || (fechaInicio == null && fechaFin != null) ){
+                fechaValida = false;
+
+            }else if( fechaInicio != null && fechaFin != null){
+
+                if(fechaInicio.after(fechaFin)){
+                    fechaValida = false;
+                }
+            }
+
+		} catch (Exception e) {
+			fechaValida = false;
+		}
+
+		return fechaValida;
 	}
 
 
@@ -113,6 +152,14 @@ public class AnalisisEncuestaBean {
 
 	public void setAnalisisEncuestaServicio(AnalisisEncuestaServicio analisisEncuestaServicio) {
 		this.analisisEncuestaServicio = analisisEncuestaServicio;
+	}
+
+	public MensajesComun getMensajesComun() {
+		return mensajesComun;
+	}
+
+	public void setMensajesComun(MensajesComun mensajesComun) {
+		this.mensajesComun = mensajesComun;
 	}
 
 	public List<RespuestaEntity> getRespuestas() {
@@ -178,6 +225,14 @@ public class AnalisisEncuestaBean {
 
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public Date getHoy() {
+		return hoy;
+	}
+
+	public void setHoy(Date hoy) {
+		this.hoy = hoy;
 	}
 
 	public String getUsuario() {
