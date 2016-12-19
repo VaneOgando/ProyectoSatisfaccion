@@ -24,6 +24,7 @@ import java.util.List;
 
 })
 
+
 public class RespuestaEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESPUESTA_SEQ")

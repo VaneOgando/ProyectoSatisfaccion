@@ -1,6 +1,10 @@
 package com.satisfaccion.jpa.data;
 
+import org.springframework.dao.DataAccessException;
+
+import javax.faces.context.FacesContext;
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -8,9 +12,17 @@ import javax.persistence.*;
 
 @NamedQueries(value={
 
-		@NamedQuery(name = "HQL_RESPUESTA_ENCUESTA_VISTA",
-				query = "SELECT rv " +
-						"FROM RespuestaEncuestaVista rv")
+		@NamedQuery(name = "HQL_RESPUESTA_VISTA_TOTAL_OPCION",
+				query = "Select count(rv) from RespuestaEncuestaVista rv " +
+						"where rv.tipoPregunta in ('simple') and rv.tipoEncuestaPreg = :tipoEncuesta and rv.estadoPreg = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto) " +
+						"and rv.idpregunta = :pregunta and rv.idopcion = :opcion"),
+
+		@NamedQuery(name = "HQL_RESPUESTA_VISTA_TOTAL_RANKING",
+				query = "Select AVG(rv.valoracion) from RespuestaEncuestaVista rv " +
+						"where rv.tipoPregunta in ('ranking') and rv.tipoEncuestaPreg = :tipoEncuesta and rv.estadoPreg = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto) " +
+						"and rv.idpregunta = :pregunta")
 
 })
 
@@ -18,15 +30,15 @@ public class RespuestaEncuestaVista {
 
 	@Id
 	@Column(name = "IDRESPUESTA")
-	private String idrespuesta;
+	private int idrespuesta;
 	@Column(name = "OBSERVACION")
 	private String observacion;
 	@Column(name = "VALORACION")
-	private String valoracion;
+	private Float valoracion;
 	@Column(name = "USUARIOEVALUADO")
 	private String usuarioEvaluado;
 	@Column(name = "IDPREGUNTA")
-	private String idpregunta;
+	private int idpregunta;
 	@Column(name = "TITULO")
 	private String titulo;
 	@Column(name = "TIPOPREGUNTA")
@@ -36,25 +48,25 @@ public class RespuestaEncuestaVista {
 	@Column(name = "ESTADOPREG")
 	private String estadoPreg;
 	@Column(name = "ESCALAVALORACION")
-	private String escalaValoracion;
+	private Float escalaValoracion;
 	@Column(name = "IDOPCION")
-	private String idopcion;
+	private int idopcion;
 	@Column(name = "OPCION")
 	private String opcion;
 	@Column(name = "VALOR")
-	private String valor;
+	private Float valor;
 	@Column(name = "FECHAENVIO")
-	private String fechaEnvio;
+	private Date fechaEnvio;
 	@Column(name = "IDENVIO")
-	private String idEnvio;
+	private int idEnvio;
 	@Column(name = "USUARIOCREADOR")
 	private String usuarioCreador;
 	@Column(name = "IDPROYECTO")
-	private String idproyecto;
+	private int idproyecto;
 	@Column(name = "PROYECTO")
 	private String proyecto;
 	@Column(name = "IDENCUESTA")
-	private String idEncuesta;
+	private int idEncuesta;
 	@Column(name = "ENCUESTA")
 	private String encuesta;
 	@Column(name = "TIPOENCUESTAENC")
@@ -62,17 +74,15 @@ public class RespuestaEncuestaVista {
 	@Column(name = "ESTADOENC")
 	private String estadoEnc;
 
-	/*private int totalOpcion;
-	private Float totalRanking;
-*/
+
 
 	/*GET AND SET*/
 
-	public String getIdrespuesta() {
+	public int getIdrespuesta() {
 		return idrespuesta;
 	}
 
-	public void setIdrespuesta(String idrespuesta) {
+	public void setIdrespuesta(int idrespuesta) {
 		this.idrespuesta = idrespuesta;
 	}
 
@@ -84,11 +94,11 @@ public class RespuestaEncuestaVista {
 		this.observacion = observacion;
 	}
 
-	public String getValoracion() {
+	public Float getValoracion() {
 		return valoracion;
 	}
 
-	public void setValoracion(String valoracion) {
+	public void setValoracion(Float valoracion) {
 		this.valoracion = valoracion;
 	}
 
@@ -100,11 +110,11 @@ public class RespuestaEncuestaVista {
 		this.usuarioEvaluado = usuarioEvaluado;
 	}
 
-	public String getIdpregunta() {
+	public int getIdpregunta() {
 		return idpregunta;
 	}
 
-	public void setIdpregunta(String idpregunta) {
+	public void setIdpregunta(int idpregunta) {
 		this.idpregunta = idpregunta;
 	}
 
@@ -140,19 +150,19 @@ public class RespuestaEncuestaVista {
 		this.estadoPreg = estadoPreg;
 	}
 
-	public String getEscalaValoracion() {
+	public Float getEscalaValoracion() {
 		return escalaValoracion;
 	}
 
-	public void setEscalaValoracion(String escalaValoracion) {
+	public void setEscalaValoracion(Float escalaValoracion) {
 		this.escalaValoracion = escalaValoracion;
 	}
 
-	public String getIdopcion() {
+	public int getIdopcion() {
 		return idopcion;
 	}
 
-	public void setIdopcion(String idopcion) {
+	public void setIdopcion(int idopcion) {
 		this.idopcion = idopcion;
 	}
 
@@ -164,27 +174,27 @@ public class RespuestaEncuestaVista {
 		this.opcion = opcion;
 	}
 
-	public String getValor() {
+	public Float getValor() {
 		return valor;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(Float valor) {
 		this.valor = valor;
 	}
 
-	public String getFechaEnvio() {
+	public Date getFechaEnvio() {
 		return fechaEnvio;
 	}
 
-	public void setFechaEnvio(String fechaEnvio) {
+	public void setFechaEnvio(Date fechaEnvio) {
 		this.fechaEnvio = fechaEnvio;
 	}
 
-	public String getIdEnvio() {
+	public int getIdEnvio() {
 		return idEnvio;
 	}
 
-	public void setIdEnvio(String idEnvio) {
+	public void setIdEnvio(int idEnvio) {
 		this.idEnvio = idEnvio;
 	}
 
@@ -196,11 +206,11 @@ public class RespuestaEncuestaVista {
 		this.usuarioCreador = usuarioCreador;
 	}
 
-	public String getIdproyecto() {
+	public int getIdproyecto() {
 		return idproyecto;
 	}
 
-	public void setIdproyecto(String idproyecto) {
+	public void setIdproyecto(int idproyecto) {
 		this.idproyecto = idproyecto;
 	}
 
@@ -212,11 +222,11 @@ public class RespuestaEncuestaVista {
 		this.proyecto = proyecto;
 	}
 
-	public String getIdEncuesta() {
+	public int getIdEncuesta() {
 		return idEncuesta;
 	}
 
-	public void setIdEncuesta(String idEncuesta) {
+	public void setIdEncuesta(int idEncuesta) {
 		this.idEncuesta = idEncuesta;
 	}
 
@@ -243,20 +253,4 @@ public class RespuestaEncuestaVista {
 	public void setEstadoEnc(String estadoEnc) {
 		this.estadoEnc = estadoEnc;
 	}
-
-	/*	public int getTotalOpcion() {
-		return totalOpcion;
-	}
-
-	public void setTotalOpcion(int totalOpcion) {
-		this.totalOpcion = totalOpcion;
-	}
-
-	public Float getTotalRanking() {
-		return totalRanking;
-	}
-
-	public void setTotalRanking(Float totalRanking) {
-		this.totalRanking = totalRanking;
-	}*/
 }

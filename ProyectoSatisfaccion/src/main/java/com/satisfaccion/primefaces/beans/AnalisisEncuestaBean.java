@@ -23,7 +23,7 @@ public class AnalisisEncuestaBean {
 	private MensajesComun mensajesComun;
 
 
-	private List<RespuestaEntity> respuestas = new ArrayList<RespuestaEntity>();
+	private List<PreguntaAnalisis> preguntas = new ArrayList<PreguntaAnalisis>();
 
 	/*Manejo de filtro*/
 	private String tipoPregunta = "N";
@@ -103,8 +103,48 @@ public class AnalisisEncuestaBean {
 		if(fechaValida){
 			inicialiazarItems();
 
-			List<Object[]> respuestas = new ArrayList<Object[]>();
-			respuestas = analisisEncuestaServicio.filtrarEncuestas(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, usuario);
+			/*Preguntas respondidas dado el filtro*/
+			List<PreguntaEntity> preguntas = analisisEncuestaServicio.buscarPreguntasAnalisis(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, usuario);
+
+			for(PreguntaEntity pregunta : preguntas){
+				PreguntaAnalisis preguntaAnalisis = new PreguntaAnalisis();
+
+				preguntaAnalisis.setIdpregunta(pregunta.getId());
+				preguntaAnalisis.setTitulo(pregunta.getTitulo());
+				preguntaAnalisis.setTipoPregunta(pregunta.getTipoPregunta());
+
+				if("simple".equals(pregunta.getTipoPregunta())){  //Posee opciones
+
+					List<OpcionAnalisis> listaOpciones = new ArrayList<OpcionAnalisis>();
+					int totalAbsoluto = 0;
+
+					for (OpcionEntity opcion : pregunta.getOpciones()){
+						OpcionAnalisis opcionAnalisis = new OpcionAnalisis();
+
+						opcionAnalisis.setIdopcion(opcion.getId());
+						opcionAnalisis.setTitulo(opcion.getTitulo());
+
+						int totalOpcion = analisisEncuestaServicio.buscarTotalOpcion(pregunta,opcion, estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
+						totalAbsoluto += totalOpcion;
+
+						opcionAnalisis.setTotalOpcion(totalOpcion);
+
+						listaOpciones.add(opcionAnalisis);
+					}
+
+					preguntaAnalisis.setOpciones(listaOpciones);
+					preguntaAnalisis.setTotalAbsoluto(totalAbsoluto);
+
+				}else{  //Tipo ranking
+
+					preguntaAnalisis.setEscalavaloracion(Math.round(pregunta.getEscalaValoracion()));
+
+					Float totalRanking = analisisEncuestaServicio.buscarTotalRanking(pregunta, estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
+					preguntaAnalisis.setTotalRanking(Math.round(totalRanking));
+				}
+
+				this.preguntas.add(preguntaAnalisis);
+			}
 
 		}else{
 			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_FECHA_INVALIDA);
@@ -114,8 +154,7 @@ public class AnalisisEncuestaBean {
 
 	public void inicialiazarItems() {
 
-		respuestas = new ArrayList<RespuestaEntity>();
-		totalRelativo = 0;
+		preguntas = new ArrayList<PreguntaAnalisis>();
 	}
 
 	public Boolean fechasValidas(){
@@ -162,14 +201,13 @@ public class AnalisisEncuestaBean {
 		this.mensajesComun = mensajesComun;
 	}
 
-	public List<RespuestaEntity> getRespuestas() {
-		return respuestas;
+	public List<PreguntaAnalisis> getPreguntas() {
+		return preguntas;
 	}
 
-	public void setRespuestas(List<RespuestaEntity> respuestas) {
-		this.respuestas = respuestas;
+	public void setPreguntas(List<PreguntaAnalisis> preguntas) {
+		this.preguntas = preguntas;
 	}
-
 
 	public String getTipoPregunta() {
 		return tipoPregunta;

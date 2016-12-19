@@ -81,57 +81,59 @@
 
 		<h:form id="analisisEncuestas" styleClass="fuenteLetra">
 
-			<ui:repeat value="#{analisisEncuestaBean.respuestas}" var="respuesta">
+			<c:forEach items="#{analisisEncuestaBean.preguntas}" var="pregunta">
 
 				<div class="detallePregunta">
 
-					<p:outputLabel styleClass="tituloPreg" value="#{respuesta.pregunta.titulo}" />
+					<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}" />
 
 					<div class="tipoPreg">
+						<p:panelGrid styleClass="simplePreg" rendered="#{pregunta.tipoPregunta == 'simple'}">
 
-						<p:panelGrid id="simplePreg" styleClass="simplePreg" rendered="false">
-
-							<c:forEach begin="1" end="2">
+							<c:forEach items="#{pregunta.opciones}" var="opcion">
 								<p:row>
 									<p:column>
-										<p:outputLabel value="Esra es la opcion a la pregunta con un titulo muy extenso"/>
+										<p:outputLabel value="#{opcion.titulo}"/>
 									</p:column>
 
 									<p:column>
-										<p:outputLabel value="relativo"/>
+										<p:outputLabel value="#{opcion.totalOpcion}"/>
 									</p:column>
 
 									<p:column>
-										<p:outputLabel value="absoluto"/>
+										<p:outputLabel value="#{opcion.totalOpcion / pregunta.totalAbsoluto}">
+											<f:convertNumber type="percent" maxFractionDigits="2" />
+										</p:outputLabel>
 									</p:column>
 								</p:row>
 							</c:forEach>
 
 							<p:row>
 								<p:column>
-									<p:outputLabel id="total" value="TOTAL"/>
+									<p:outputLabel value="TOTAL"/>
 								</p:column>
 								<p:column>
-									<p:outputLabel value="relativaTotal"/>
+									<p:outputLabel value="#{pregunta.totalAbsoluto}"/>
 								</p:column>
 								<p:column>
-									<p:outputLabel value="absolutaTotal"/>
+									<p:outputLabel value="#{pregunta.totalAbsoluto / pregunta.totalAbsoluto}">
+										<f:convertNumber type="percent" maxFractionDigits="2" />
+									</p:outputLabel>
 								</p:column>
 							</p:row>
 
 						</p:panelGrid>
 
-
-						<h:panelGroup id="rankingPreg" styleClass="rankingPreg" rendered="true">
-							<c:forEach begin="1" end="10">
+						<h:panelGroup styleClass="rankingPreg" rendered="#{pregunta.tipoPregunta == 'ranking'}">
+							<c:forEach begin="1" end="#{pregunta.totalRanking}">
 								<h:graphicImage name="star.png" library="img"
-												style="height: 50px"/>
+												style="height: 50px" />
 							</c:forEach>
 						</h:panelGroup>
 					</div>
 
 				</div>
-			</ui:repeat>
+			</c:forEach>
 
 		</h:form>
 
