@@ -1,8 +1,5 @@
 package com.satisfaccion.jpa.data;
 
-import org.springframework.dao.DataAccessException;
-
-import javax.faces.context.FacesContext;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -23,6 +20,7 @@ import java.util.Date;
 						"where rv.tipoPregunta in ('ranking') and rv.tipoEncuestaPreg = :tipoEncuesta and rv.estadoPreg = :estado " +
 						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto) " +
 						"and rv.idpregunta = :pregunta")
+
 
 })
 

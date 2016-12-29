@@ -1,0 +1,35 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<body>
+
+<div>
+
+    <p>Por medio de la presente se les inviata a realizar las respectivas evaluaciones a los miembros del equipo de TCS, la misma no le tomara mas de 5 minutos.</p>
+
+    <br/>
+
+    <p>Recuerde que debe realizar una por cada recurso que tenga a su cargo, puede acceder a la evaluación por el siguiente link: </p>
+
+    <br/>
+
+    <a href="${linkEncuesta}" style="text-align: center"> Realizar Evaluación</a>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <p>Muchas gracias por su colaboración,</p>
+    <p>Equipo de Technology Consulting Solution, C.A</p>
+
+    <!--
+    <div style="text-align: left">
+        <img src="cdi:logoTCS" alt="LogoTCS"/>
+    </div>
+-->
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="plantilla/plantilla.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<div id="tituloEnviarEncuesta">
+			<h1 style="text-align: center"> Enviar Encuesta </h1>
+		</div>
+
+		<h:panelGroup id="envioEncuestaGroup">
+			<h:form id="EnviarEncuesta" rendered="#{!enviarEncuestaBean.resumen}">
+
+				<p:panelGrid styleClass="panelInvisible panelFormulario">
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:panelGroup id="EncuestaEvaluacionOuput">
+								<h:outputLabel value="Encuesta" rendered="#{!enviarEncuestaBean.evaluacion}"/>
+								<h:outputLabel value="Evaluacion" rendered="#{enviarEncuestaBean.evaluacion}"/>
+							</h:panelGroup>
+						</p:column>
+
+						<p:column styleClass="columnaDer">
+							<h:panelGroup id="EncuestaEvaluacionSelect">
+								<p:selectOneMenu id="EncuestaEvaluacion" style="width:250px" required="true" value="#{enviarEncuestaBean.encuestaSelect.id}"
+												 requiredMessage="Debe ingresar una encuesta o evaluacion a enviar">
+									<f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+									<f:selectItems value="#{enviarEncuestaBean.encuestas}" var="encuesta"
+												   itemLabel="#{encuesta.nombre}" itemValue="#{encuesta.id}" />
+								</p:selectOneMenu>
+							</h:panelGroup>
+							<h:outputLabel value="*" styleClass="requerido"/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq"/>
+
+						<p:column styleClass="columnaDer">
+							<p:selectBooleanCheckbox id="evaluacion" value="#{enviarEncuestaBean.evaluacion}">
+								<p:ajax update="EncuestaEvaluacionOuput EncuestaEvaluacionSelect"
+										resetValues="true" listener="#{enviarEncuestaBean.cambiarEvaluacion}"/>
+							</p:selectBooleanCheckbox>
+
+							<h:outputLabel value="Evaluacion" style="margin-left: 10px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:panelGroup id="ProyectoOutput">
+								<h:outputLabel value="Proyecto" rendered="#{!enviarEncuestaBean.anonimo}"/>
+							</h:panelGroup>
+						</p:column>
+
+						<p:column styleClass="columnaDer">
+							<h:panelGroup id="ProyectoSelect">
+								<p:selectOneMenu id="proyecto" style="width:250px" required="true" editable="true" value="#{enviarEncuestaBean.proyectoSelect.nombre}"
+												 requiredMessage="Debe ingresar el proyecto asociado al envio" rendered="#{!enviarEncuestaBean.anonimo}">
+									<f:selectItems value="#{enviarEncuestaBean.proyectos}" var="proyecto"
+												   itemLabel="#{proyecto.nombre}" itemValue="#{proyecto.nombre}" />
+								</p:selectOneMenu>
+							<h:outputLabel value="*" styleClass="requerido" rendered="#{!enviarEncuestaBean.anonimo}"/>
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq"/>
+
+						<p:column styleClass="columnaDer">
+							<p:selectBooleanCheckbox id="anonimo" value="#{enviarEncuestaBean.anonimo}">
+								<p:ajax update="ProyectoOutput ProyectoSelect"
+										resetValues="true"/>
+							</p:selectBooleanCheckbox>
+
+							<h:outputLabel value="Anonimo" style="margin-left: 10px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column styleClass="columnaIzq">
+							<h:outputLabel value="Destinatarios"/>
+						</p:column>
+
+						<p:column styleClass="columnaDer">
+							<p:inputTextarea rows="4" cols="70" autoResize="false" required="true" requiredMessage="Debe ingresar al menos 1 destinatario"
+											 value="#{enviarEncuestaBean.destinatarios}" />
+							<h:outputLabel value="*" styleClass="requerido"/>
+							<h:outputLabel value="Ingrese cada destinatario separado por comas (,)" style="font-size: x-small; display: block"/>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+				<div id="BotonesEnvio" class="botonFormulario">
+
+					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
+						<p:row>
+							<p:column>
+								<p:commandButton id="enviar" value="Enviar" update=":envioEncuestaGroup" action="#{enviarEncuestaBean.bt_enviarEncuesta}"
+										onstart="PF('cargando').show()">
+								</p:commandButton>
+
+							</p:column>
+							<p:column>
+								<p:commandButton id="cancelar" value="Cancelar" immediate="true" ajax="false" action="#{enviarEncuestaBean.bt_cancelar}"
+												 onclick="if (! confirm('¿Seguro desea cancelar? Se perderan los cambios realizados.')) return false"/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+				</div>
+
+			</h:form>
+
+
+			<h:form id="resumenEnvio" rendered="#{enviarEncuestaBean.resumen}">
+
+				<p:panelGrid styleClass="panelInvisible panelFormulario">
+
+					<p:row>
+						<p:column rendered="#{enviarEncuestaBean.destinosValidos != ''}" style="font-size: larger" >
+							<p:outputLabel value="La encuesta fue enviada satisfactoriamente a los siguientes destinatarios:"/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column rendered="#{enviarEncuestaBean.destinosValidos != ''}" style="padding: 2% 0 5% 5%">
+							<p:outputLabel value="#{enviarEncuestaBean.destinosValidos}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column rendered="#{enviarEncuestaBean.destinosInvalidos != ''}" style="font-size: larger">
+							<p:outputLabel value="Ocurrio un error al enviar la encuesta a los siguientes destinatarios,
+					por favor verifique el correo electronico suministrado e intentelo de nuevo mas tarde."/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column rendered="#{enviarEncuestaBean.destinosInvalidos != ''}" style="padding: 2% 0 5% 5%" >
+							<p:outputLabel value="#{enviarEncuestaBean.destinosInvalidos}" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+			</h:form>
+
+			<p:dialog modal="true" widgetVar="cargando" draggable="false" closable="false" resizable="false">
+				<p:graphicImage value="resources/img/enviando.gif" />
+			</p:dialog>
+
+		</h:panelGroup>
+
+	</ui:define>
+
+</ui:composition>

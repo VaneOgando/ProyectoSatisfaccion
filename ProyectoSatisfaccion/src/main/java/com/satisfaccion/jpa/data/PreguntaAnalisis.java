@@ -9,11 +9,16 @@ public class PreguntaAnalisis {
 	private String titulo;
 	private String tipoPregunta;
 
+	//Simple
 	private List<OpcionAnalisis> opciones = new ArrayList<OpcionAnalisis>();
 	private int totalAbsoluto = 0;
 
+	//Ranking
 	private int escalavaloracion;
 	private int totalRanking = 0;
+
+	//Abierta
+	private List<ObservacionAnalisis> observaciones;
 
 
 
@@ -73,5 +78,13 @@ public class PreguntaAnalisis {
 
 	public void setTotalRanking(int totalRanking) {
 		this.totalRanking = totalRanking;
+	}
+
+	public List<ObservacionAnalisis> getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(List<ObservacionAnalisis> observaciones) {
+		this.observaciones = observaciones;
 	}
 }

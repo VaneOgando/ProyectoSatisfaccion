@@ -50,12 +50,16 @@
 								<p:menuitem value="Analisis" outcome="/analisisEncuesta.xhtml">
 									<f:param name="i" value="3" />
 								</p:menuitem>
-								<p:menuitem value="Buzon de sugerencias" outcome="/consultarPregunta.xhtml">
+								<p:menuitem value="Buzon de sugerencias" outcome="/buzonSugerencia.xhtml">
 									<f:param name="i" value="4" />
 								</p:menuitem>
 
 							</p:tabMenu>
 						</h:form>
+
+						<p:dialog modal="true" widgetVar="cargando" draggable="false" closable="false" resizable="false">
+							<p:graphicImage value="resources/img/loading.gif"/>
+						</p:dialog>
 					</div>
 
 				</div>
