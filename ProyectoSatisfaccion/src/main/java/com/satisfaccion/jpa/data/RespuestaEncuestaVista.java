@@ -19,6 +19,12 @@ import java.util.Date;
 				query = "Select AVG(rv.valoracion) from RespuestaEncuestaVista rv " +
 						"where rv.tipoPregunta in ('ranking') and rv.tipoEncuestaPreg = :tipoEncuesta and rv.estadoPreg = :estado " +
 						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto) " +
+						"and rv.idpregunta = :pregunta"),
+
+		@NamedQuery(name = "HQL_RESPUESTA_VISTA_OBSERVACIONES",
+				query = "Select rv from RespuestaEncuestaVista rv " +
+						"where rv.tipoPregunta in ('abierta') and rv.tipoEncuestaPreg = 'N' and rv.estadoPreg = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto)" +
 						"and rv.idpregunta = :pregunta")
 
 
@@ -28,7 +34,7 @@ public class RespuestaEncuestaVista {
 
 	@Id
 	@Column(name = "IDRESPUESTA")
-	private int idrespuesta;
+	private Integer idrespuesta;
 	@Column(name = "OBSERVACION")
 	private String observacion;
 	@Column(name = "VALORACION")
@@ -36,7 +42,7 @@ public class RespuestaEncuestaVista {
 	@Column(name = "USUARIOEVALUADO")
 	private String usuarioEvaluado;
 	@Column(name = "IDPREGUNTA")
-	private int idpregunta;
+	private Integer idpregunta;
 	@Column(name = "TITULO")
 	private String titulo;
 	@Column(name = "TIPOPREGUNTA")
@@ -48,7 +54,7 @@ public class RespuestaEncuestaVista {
 	@Column(name = "ESCALAVALORACION")
 	private Float escalaValoracion;
 	@Column(name = "IDOPCION")
-	private int idopcion;
+	private Integer idopcion;
 	@Column(name = "OPCION")
 	private String opcion;
 	@Column(name = "VALOR")
@@ -56,15 +62,15 @@ public class RespuestaEncuestaVista {
 	@Column(name = "FECHAENVIO")
 	private Date fechaEnvio;
 	@Column(name = "IDENVIO")
-	private int idEnvio;
+	private Integer idEnvio;
 	@Column(name = "USUARIOCREADOR")
 	private String usuarioCreador;
 	@Column(name = "IDPROYECTO")
-	private int idproyecto;
+	private Integer idproyecto;
 	@Column(name = "PROYECTO")
 	private String proyecto;
 	@Column(name = "IDENCUESTA")
-	private int idEncuesta;
+	private Integer idEncuesta;
 	@Column(name = "ENCUESTA")
 	private String encuesta;
 	@Column(name = "TIPOENCUESTAENC")
@@ -76,11 +82,11 @@ public class RespuestaEncuestaVista {
 
 	/*GET AND SET*/
 
-	public int getIdrespuesta() {
+	public Integer getIdrespuesta() {
 		return idrespuesta;
 	}
 
-	public void setIdrespuesta(int idrespuesta) {
+	public void setIdrespuesta(Integer idrespuesta) {
 		this.idrespuesta = idrespuesta;
 	}
 
@@ -108,11 +114,11 @@ public class RespuestaEncuestaVista {
 		this.usuarioEvaluado = usuarioEvaluado;
 	}
 
-	public int getIdpregunta() {
+	public Integer getIdpregunta() {
 		return idpregunta;
 	}
 
-	public void setIdpregunta(int idpregunta) {
+	public void setIdpregunta(Integer idpregunta) {
 		this.idpregunta = idpregunta;
 	}
 
@@ -156,11 +162,11 @@ public class RespuestaEncuestaVista {
 		this.escalaValoracion = escalaValoracion;
 	}
 
-	public int getIdopcion() {
+	public Integer getIdopcion() {
 		return idopcion;
 	}
 
-	public void setIdopcion(int idopcion) {
+	public void setIdopcion(Integer idopcion) {
 		this.idopcion = idopcion;
 	}
 
@@ -188,11 +194,11 @@ public class RespuestaEncuestaVista {
 		this.fechaEnvio = fechaEnvio;
 	}
 
-	public int getIdEnvio() {
+	public Integer getIdEnvio() {
 		return idEnvio;
 	}
 
-	public void setIdEnvio(int idEnvio) {
+	public void setIdEnvio(Integer idEnvio) {
 		this.idEnvio = idEnvio;
 	}
 
@@ -204,11 +210,11 @@ public class RespuestaEncuestaVista {
 		this.usuarioCreador = usuarioCreador;
 	}
 
-	public int getIdproyecto() {
+	public Integer getIdproyecto() {
 		return idproyecto;
 	}
 
-	public void setIdproyecto(int idproyecto) {
+	public void setIdproyecto(Integer idproyecto) {
 		this.idproyecto = idproyecto;
 	}
 
@@ -220,11 +226,11 @@ public class RespuestaEncuestaVista {
 		this.proyecto = proyecto;
 	}
 
-	public int getIdEncuesta() {
+	public Integer getIdEncuesta() {
 		return idEncuesta;
 	}
 
-	public void setIdEncuesta(int idEncuesta) {
+	public void setIdEncuesta(Integer idEncuesta) {
 		this.idEncuesta = idEncuesta;
 	}
 

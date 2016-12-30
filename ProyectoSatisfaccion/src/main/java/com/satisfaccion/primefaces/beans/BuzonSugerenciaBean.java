@@ -24,9 +24,11 @@ public class BuzonSugerenciaBean {
 	@ManagedProperty(value = "#{mensajesComun}")
 	private MensajesComun mensajesComun;
 
+	private List<ObservacionAnalisis> prueba = new ArrayList<ObservacionAnalisis>();
 
-	private List<PreguntaAnalisis> preguntas = new ArrayList<PreguntaAnalisis>();
-	private List<ObservacionAnalisis> itemsBuscados = new ArrayList<ObservacionAnalisis>();
+
+	private List<PreguntaAnalisis> preguntasBuzon = new ArrayList<PreguntaAnalisis>();
+	private List<ObservacionAnalisis> itemsBuscados;
 
 	/*Manejo de filtro*/
 	private String estado = "A";
@@ -66,7 +68,7 @@ public class BuzonSugerenciaBean {
 
 	public void cargarEncuestaFiltro(){
 
-		//Solo se observaran preguntas de encuestas
+		//Solo se observaran preguntasBuzon de encuestas
 		encuestas = buzonSugerenciaServicio.buscarEncuestas();
 	}
 
@@ -90,7 +92,7 @@ public class BuzonSugerenciaBean {
 			inicialiazarItems();
 
 			/*Preguntas respondidas dado el filtro*/
-			/*List<PreguntaEntity> preguntas = buzonSugerenciaServicio.buscarPreguntasObservacion(estado, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
+			List<PreguntaEntity> preguntas = buzonSugerenciaServicio.buscarPreguntasObservacion(estado, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
 
 			for(PreguntaEntity pregunta : preguntas){
 				PreguntaAnalisis preguntaAnalisis = new PreguntaAnalisis();
@@ -114,10 +116,10 @@ public class BuzonSugerenciaBean {
 					listaObservaciones.add(observacionAnalisis);
 				}
 
+				prueba = listaObservaciones;
 				preguntaAnalisis.setObservaciones(listaObservaciones);
-				this.preguntas.add(preguntaAnalisis);
+				preguntasBuzon.add(preguntaAnalisis);
 			}
-*/
 		}else{
 			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_FECHA_INVALIDA);
 		}
@@ -126,7 +128,7 @@ public class BuzonSugerenciaBean {
 
 	public void inicialiazarItems() {
 
-		preguntas = new ArrayList<PreguntaAnalisis>();
+		preguntasBuzon = new ArrayList<PreguntaAnalisis>();
 	}
 
 	public Boolean fechasValidas(){
@@ -173,12 +175,12 @@ public class BuzonSugerenciaBean {
 		this.mensajesComun = mensajesComun;
 	}
 
-	public List<PreguntaAnalisis> getPreguntas() {
-		return preguntas;
+	public List<PreguntaAnalisis> getPreguntasBuzon() {
+		return preguntasBuzon;
 	}
 
-	public void setPreguntas(List<PreguntaAnalisis> preguntas) {
-		this.preguntas = preguntas;
+	public void setPreguntasBuzon(List<PreguntaAnalisis> preguntasBuzon) {
+		this.preguntasBuzon = preguntasBuzon;
 	}
 
 	public String getEstado() {
@@ -251,5 +253,13 @@ public class BuzonSugerenciaBean {
 
 	public void setItemsBuscados(List<ObservacionAnalisis> itemsBuscados) {
 		this.itemsBuscados = itemsBuscados;
+	}
+
+	public List<ObservacionAnalisis> getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(List<ObservacionAnalisis> prueba) {
+		this.prueba = prueba;
 	}
 }

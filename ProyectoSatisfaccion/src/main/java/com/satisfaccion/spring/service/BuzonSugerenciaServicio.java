@@ -52,6 +52,36 @@ public class BuzonSugerenciaServicio {
 		return resultList;
 	}
 
+	@Transactional
+	public List<PreguntaEntity> buscarPreguntasObservacion(String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
+
+		List<PreguntaEntity> resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ABIERTAS")
+				.setParameter("estado", estado)
+				.setParameter("encuesta", encuestaSelect.getId())
+				.setParameter("proyecto", proyectoSelect.getId())
+				.getResultList();
+
+		return resultList;
+	}
+
+	@Transactional
+	public List<RespuestaEncuestaVista> buscarObservaciones(PreguntaEntity pregunta, String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
+
+		List<RespuestaEncuestaVista> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_VISTA_OBSERVACIONES")
+				.setParameter("estado", estado)
+				.setParameter("encuesta", encuestaSelect.getId())
+				.setParameter("proyecto", proyectoSelect.getId())
+				.setParameter("pregunta", pregunta.getId())
+				.getResultList();
+/*
+				.setParameter("fechaInicio", fechaInicio, TemporalType.DATE)
+				.setParameter("fechaFin", fechaFin, TemporalType.DATE)
+*/
+
+		return resultList;
+	}
+
+
 
 
 	/*GET & SET*/

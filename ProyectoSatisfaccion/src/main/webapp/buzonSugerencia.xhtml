@@ -47,7 +47,7 @@
 					</h:panelGrid>
 
 
-					<p:commandButton value="Filtrar" ajax="false" action="#{buzonSugerenciaBean.filtrarPreguntas}" update=":analisisEncuestas"
+					<p:commandButton value="Filtrar" ajax="false" action="#{buzonSugerenciaBean.filtrarPreguntas}" update=":buzonSugerencia"
 									 style="height: 30px; font-size: small; margin-top: 20px; margin-left: 50%">
 					</p:commandButton>
 
@@ -58,59 +58,60 @@
 
 		<br/>
 
-		<h:form id="analisisEncuestas" styleClass="fuenteLetra">
+		<h:form id="buzonSugerencia" styleClass="fuenteLetra">
 
-			<c:forEach items="#{buzonSugerenciaBean.preguntas}" var="pregunta">
+			<c:forEach items="#{buzonSugerenciaBean.preguntasBuzon}" var="pregunta">
 
-				<div class="detallePregunta">
+				<div class="detallePreguntaBuzon">
 
-					<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}" />
+					<p:outputLabel styleClass="tituloPreg paddingBuzon" value="#{pregunta.titulo}" />
 
-					<div class="tipoPreg">
+						<div class="tipoPreg paddingBuzon">
 
-						<p:dataTable value="#{pregunta.observaciones}" var="item" styleClass="datatable"
-									 rows="5" paginator="true" rowsPerPageTemplate="5,10,25"
-									 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									 widgetVar="itemTabla" emptyMessage="No se encontraron registros"
-									 filteredValue="#{buzonSugerenciaBean.itemsBuscados}" tableStyle="table-layout: auto">
+							<p:dataTable value="#{pregunta.observaciones}" var="item" styleClass="datatable"
+										 rows="5" paginator="true" rowsPerPageTemplate="5,10,15,25"
+										 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										 widgetVar="itemTabla" emptyMessage="No se encontraron registros"
+										 filteredValue="#{buzonSugerenciaBean.itemsBuscados}" tableStyle="table-layout: auto">
 
-							<f:facet name="header" >
+								<f:facet name="header" >
 
-								<p:panelGrid style="height: 30px" styleClass="panelInvisible" >
+									<p:panelGrid style="height: 30px" styleClass="panelInvisible" >
 
-									<p:row>
-										<p:column>
-											<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:150px; height: 30px; float: right;"/>
-											<h:outputText value="Buscar: " style="float: right; font-size: small; display: inline; padding-top: 8px;"/>
-										</p:column>
-									</p:row>
-								</p:panelGrid>
+										<p:row>
+											<p:column>
+												<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:150px; height: 30px; float: right;"/>
+												<h:outputText value="Buscar: " style="float: right; font-size: small; display: inline; padding-top: 8px;"/>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
 
-							</f:facet>
+								</f:facet>
 
-							<p:column headerText="Observacion" style="display: none">
-								<h:outputText value="#{item.observacion}"/>
-							</p:column>
+								<p:column headerText="Observacion" filterBy="#{item.observacion}" filterStyle="display:none" style="max-width: 350px">
+									<h:outputText value="#{item.observacion}" />
+								</p:column>
 
-							<p:column headerText="Encuesta" style="display: none">
-								<h:outputText value="#{item.encuesta}"/>
-							</p:column>
+								<p:column headerText="Encuesta" filterBy="#{item.encuesta}" filterStyle="display:none" style="text-align: center">
+									<h:outputText value="#{item.encuesta}" />
+								</p:column>
 
-							<p:column headerText="Proyecto" style="display: none">
-								<h:outputText value="#{item.proyecto}"/>
-							</p:column>
+								<p:column headerText="Proyecto" filterBy="#{item.proyecto}" filterStyle="display:none" style="text-align: center">
+									<h:outputText value="#{item.proyecto}" rendered="#{item.proyecto != null}"/>
+									<h:outputText value="Anónimo" rendered="#{item.proyecto == null}"/>
+								</p:column>
 
-							<p:column headerText="Fecha" style="display: none">
-								<h:outputText value="#{item.fecha}">
-									<f:convertDateTime pattern="dd-MM-yyyy" />
-								</h:outputText>
-							</p:column>
+								<p:column headerText="Fecha" filterBy="#{item.fecha}" filterStyle="display:none" style="text-align: center">
+									<h:outputText value="#{item.fecha}">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
+								</p:column>
 
-						</p:dataTable>
+							</p:dataTable>
 
-					</div>
-
+						</div>
 				</div>
+
 			</c:forEach>
 
 		</h:form>
