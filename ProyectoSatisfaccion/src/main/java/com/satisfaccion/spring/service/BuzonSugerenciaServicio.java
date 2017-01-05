@@ -55,11 +55,26 @@ public class BuzonSugerenciaServicio {
 	@Transactional
 	public List<PreguntaEntity> buscarPreguntasObservacion(String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
 
-		List<PreguntaEntity> resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ABIERTAS")
-				.setParameter("estado", estado)
-				.setParameter("encuesta", encuestaSelect.getId())
-				.setParameter("proyecto", proyectoSelect.getId())
-				.getResultList();
+		List<PreguntaEntity> resultList = null;
+
+		if(fechaInicio == null && fechaFin == null){
+
+			resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ABIERTAS_SIN_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())
+					.getResultList();
+		}else{
+
+			resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ABIERTAS_CON_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("fechaInicio", fechaInicio)
+					.setParameter("fechaFin", fechaFin)
+					.getResultList();
+
+		}
 
 		return resultList;
 	}
@@ -67,16 +82,29 @@ public class BuzonSugerenciaServicio {
 	@Transactional
 	public List<RespuestaEncuestaVista> buscarObservaciones(PreguntaEntity pregunta, String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
 
-		List<RespuestaEncuestaVista> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_VISTA_OBSERVACIONES")
-				.setParameter("estado", estado)
-				.setParameter("encuesta", encuestaSelect.getId())
-				.setParameter("proyecto", proyectoSelect.getId())
-				.setParameter("pregunta", pregunta.getId())
-				.getResultList();
-/*
-				.setParameter("fechaInicio", fechaInicio, TemporalType.DATE)
-				.setParameter("fechaFin", fechaFin, TemporalType.DATE)
-*/
+		List<RespuestaEncuestaVista> resultList = null;
+
+		if(fechaInicio == null && fechaFin == null){
+
+			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_VISTA_OBSERVACIONES_SIN_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("pregunta", pregunta.getId())
+					.getResultList();
+
+		}else{
+
+			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_VISTA_OBSERVACIONES_CON_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("pregunta", pregunta.getId())
+					.setParameter("fechaInicio", fechaInicio)
+					.setParameter("fechaFin", fechaFin)
+					.getResultList();
+
+		}
 
 		return resultList;
 	}

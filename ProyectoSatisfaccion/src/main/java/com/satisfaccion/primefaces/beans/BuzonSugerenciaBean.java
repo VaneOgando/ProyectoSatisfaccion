@@ -24,9 +24,6 @@ public class BuzonSugerenciaBean {
 	@ManagedProperty(value = "#{mensajesComun}")
 	private MensajesComun mensajesComun;
 
-	private List<ObservacionAnalisis> prueba = new ArrayList<ObservacionAnalisis>();
-
-
 	private List<PreguntaAnalisis> preguntasBuzon = new ArrayList<PreguntaAnalisis>();
 	private List<ObservacionAnalisis> itemsBuscados;
 
@@ -116,10 +113,14 @@ public class BuzonSugerenciaBean {
 					listaObservaciones.add(observacionAnalisis);
 				}
 
-				prueba = listaObservaciones;
 				preguntaAnalisis.setObservaciones(listaObservaciones);
 				preguntasBuzon.add(preguntaAnalisis);
 			}
+
+			if(preguntas.size() < 1){
+				mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.NO_REGISTROS);
+			}
+
 		}else{
 			mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_FECHA_INVALIDA);
 		}
@@ -255,11 +256,4 @@ public class BuzonSugerenciaBean {
 		this.itemsBuscados = itemsBuscados;
 	}
 
-	public List<ObservacionAnalisis> getPrueba() {
-		return prueba;
-	}
-
-	public void setPrueba(List<ObservacionAnalisis> prueba) {
-		this.prueba = prueba;
-	}
 }

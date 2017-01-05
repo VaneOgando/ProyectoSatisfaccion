@@ -34,15 +34,28 @@ import java.util.Set;
 				query = "SELECT COUNT(p) FROM PreguntaEntity p join p.encuestas e " +
 						"WHERE p.estado = 'A' and e.id = :idEncuesta"),
 
-		@NamedQuery(name = "HQL_PREGUNTA_ANALISIS",
+		@NamedQuery(name = "HQL_PREGUNTA_ANALISIS_SIN_FECHA",
 				query = "SELECT distinct p FROM PreguntaEntity p join p.respuestas r left join p.opciones o join r.envio env join env.encuesta e left join env.proyecto pro " +
 						"WHERE env.estado = 'R' and p.tipoPregunta in ('simple', 'ranking') and p.tipoEncuesta = :tipoEncuesta and p.estado = :estado " +
 						"and (:encuesta is null or :encuesta = '0' or e.id = :encuesta) and (:proyecto is null or :proyecto = '0' or pro.id = :proyecto) "),
 
-		@NamedQuery(name = "HQL_PREGUNTA_ABIERTAS",
+		@NamedQuery(name = "HQL_PREGUNTA_ANALISIS_CON_FECHA",
+				query = "SELECT distinct p FROM PreguntaEntity p join p.respuestas r left join p.opciones o join r.envio env join env.encuesta e left join env.proyecto pro " +
+						"WHERE env.estado = 'R' and p.tipoPregunta in ('simple', 'ranking') and p.tipoEncuesta = :tipoEncuesta and p.estado = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or e.id = :encuesta) and (:proyecto is null or :proyecto = '0' or pro.id = :proyecto)" +
+						"and env.fechaEnvio between :fechaInicio and :fechaFin"),
+
+		@NamedQuery(name = "HQL_PREGUNTA_ABIERTAS_SIN_FECHA",
 				query = "SELECT distinct p FROM PreguntaEntity p join p.respuestas r join r.envio env join env.encuesta e left join env.proyecto pro " +
 						"WHERE env.estado = 'R' and p.tipoPregunta in ('abierta') and p.tipoEncuesta = 'N' and p.estado = :estado " +
-						"and (:encuesta is null or :encuesta = '0' or e.id = :encuesta) and (:proyecto is null or :proyecto = '0' or pro.id = :proyecto)")
+						"and (:encuesta is null or :encuesta = '0' or e.id = :encuesta) and (:proyecto is null or :proyecto = '0' or pro.id = :proyecto)"),
+
+		@NamedQuery(name = "HQL_PREGUNTA_ABIERTAS_CON_FECHA",
+				query = "SELECT distinct p FROM PreguntaEntity p join p.respuestas r join r.envio env join env.encuesta e left join env.proyecto pro " +
+						"WHERE env.estado = 'R' and p.tipoPregunta in ('abierta') and p.tipoEncuesta = 'N' and p.estado = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or e.id = :encuesta) and (:proyecto is null or :proyecto = '0' or pro.id = :proyecto)" +
+						"and env.fechaEnvio between :fechaInicio and :fechaFin")
+
 
 })
 

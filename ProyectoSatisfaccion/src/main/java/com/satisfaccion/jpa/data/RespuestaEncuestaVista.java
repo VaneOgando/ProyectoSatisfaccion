@@ -21,12 +21,17 @@ import java.util.Date;
 						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto) " +
 						"and rv.idpregunta = :pregunta"),
 
-		@NamedQuery(name = "HQL_RESPUESTA_VISTA_OBSERVACIONES",
+		@NamedQuery(name = "HQL_RESPUESTA_VISTA_OBSERVACIONES_SIN_FECHA",
 				query = "Select rv from RespuestaEncuestaVista rv " +
 						"where rv.tipoPregunta in ('abierta') and rv.tipoEncuestaPreg = 'N' and rv.estadoPreg = :estado " +
 						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto)" +
-						"and rv.idpregunta = :pregunta")
+						"and rv.idpregunta = :pregunta"),
 
+		@NamedQuery(name = "HQL_RESPUESTA_VISTA_OBSERVACIONES_CON_FECHA",
+				query = "Select rv from RespuestaEncuestaVista rv " +
+						"where rv.tipoPregunta in ('abierta') and rv.tipoEncuestaPreg = 'N' and rv.estadoPreg = :estado " +
+						"and (:encuesta is null or :encuesta = '0' or rv.idEncuesta = :encuesta) and (:proyecto is null or :proyecto = '0' or rv.idproyecto = :proyecto)" +
+						"and rv.idpregunta = :pregunta and rv.fechaEnvio between :fechaInicio and :fechaFin")
 
 })
 

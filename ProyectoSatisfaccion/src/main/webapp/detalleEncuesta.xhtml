@@ -22,10 +22,10 @@
 
 			<h:panelGroup id="usuarioEvaluacion" rendered="#{!detalleEncuestaBean.detalleEncuesta and detalleEncuestaBean.encuesta.tipoEncuesta.equals('E')}" >
 
-				<div  class="detallePregunta">
-					<p:outputLabel styleClass="tituloPreg" value="Seleccione usuario a evaluar"/>
+				<div  class="detallePreguntaBuzon">
+					<p:outputLabel styleClass="paddingBuzon tituloPreg" value="Seleccione usuario a evaluar"/>
 
-					<div class="tipoPreg">
+					<div class="paddingBuzon tipoPreg">
 						<p:selectOneMenu value="#{detalleEncuestaBean.usuarioEvaluado}" styleClass="selectUsuario">
 							<f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
 							<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />

@@ -1,6 +1,8 @@
 package com.satisfaccion.spring.service;
 
 import com.satisfaccion.jpa.data.*;
+import org.hibernate.Hibernate;
+import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,17 +57,35 @@ public class AnalisisEncuestaServicio {
 	@Transactional
 	public List<PreguntaEntity> buscarPreguntasAnalisis(String estado, String tipoPregunta, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin, String usuario) throws DataAccessException {
 
-		List<PreguntaEntity> resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ANALISIS")
-				.setParameter("estado", estado)
-				.setParameter("tipoEncuesta", tipoPregunta)
-				.setParameter("encuesta", encuestaSelect.getId())
-				.setParameter("proyecto", proyectoSelect.getId())
-/*
-				.setParameter("fechaInicio", fechaInicio, TemporalType.DATE)
-				.setParameter("fechaFin", fechaFin, TemporalType.DATE)
+		List<PreguntaEntity> resultList = null;
+
+		if(fechaInicio == null && fechaFin == null){
+
+			 resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ANALISIS_SIN_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("tipoEncuesta", tipoPregunta)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())/*
 				.setParameter("usuario", usuario)
 */
-				.getResultList();
+					.getResultList();
+
+		}else{
+
+			resultList = getEntityManager().createNamedQuery("HQL_PREGUNTA_ANALISIS_CON_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("tipoEncuesta", tipoPregunta)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("fechaInicio", fechaInicio)
+					.setParameter("fechaFin", fechaFin)
+/*
+				.setParameter("usuario", usuario)
+*/
+					.getResultList();
+
+		}
+
 
 		return resultList;
 	}

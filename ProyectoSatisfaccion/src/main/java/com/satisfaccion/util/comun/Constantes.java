@@ -84,5 +84,7 @@ public class Constantes {
     public static final String EX_MODIFICAR_ENCUESTA = "La encuesta fue modificada exitosamente.";
 
 
+    public static final String NO_REGISTROS = "No se encontraron registros";
+
 
 }
