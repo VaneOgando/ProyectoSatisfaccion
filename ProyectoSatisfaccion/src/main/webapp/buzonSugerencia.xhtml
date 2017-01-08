@@ -17,13 +17,13 @@
 					<h:panelGrid columns="6" width="100%" styleClass="panelFiltro">
 
 							<p:outputLabel value="Estado:" style="float: right;" />
-							<p:selectOneMenu id="estado"  style="width:150px" value="#{buzonSugerenciaBean.estado}">
+							<p:selectOneMenu id="estado"  style="width:200px" value="#{buzonSugerenciaBean.estado}">
 								<f:selectItem itemLabel="Activo" itemValue="A" />
 								<f:selectItem itemLabel="Inactivo" itemValue="I" />
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Encuesta:" style="float: right;" />
-							<p:selectOneMenu id="encuesta"  style="width:150px" value="#{buzonSugerenciaBean.encuestaSelect.id}">
+							<p:selectOneMenu id="encuesta"  style="width:200px" value="#{buzonSugerenciaBean.encuestaSelect.id}">
 								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 								<f:selectItems value="#{buzonSugerenciaBean.encuestas}" var="encuesta"
 											   itemLabel="#{encuesta.nombre}" itemValue="#{encuesta.id}"/>
@@ -31,7 +31,7 @@
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Proyecto:" style="float: right;" />
-							<p:selectOneMenu id="proyecto"  style="width:150px" value="#{buzonSugerenciaBean.proyectoSelect.id}">
+							<p:selectOneMenu id="proyecto"  style="width:200px" value="#{buzonSugerenciaBean.proyectoSelect.id}">
 								<f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
 								<f:selectItems value="#{buzonSugerenciaBean.proyectos}" var="proyecto"
 											   itemLabel="#{proyecto.nombre}" itemValue="#{proyecto.id}"/>
@@ -80,7 +80,7 @@
 
 										<p:row>
 											<p:column>
-												<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:150px; height: 30px; float: right;"/>
+												<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:200px; height: 30px; float: right;"/>
 												<h:outputText value="Buscar: " style="float: right; font-size: small; display: inline; padding-top: 8px;"/>
 											</p:column>
 										</p:row>

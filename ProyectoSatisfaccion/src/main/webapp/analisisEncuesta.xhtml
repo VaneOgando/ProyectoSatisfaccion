@@ -14,57 +14,59 @@
 			<div>
 				<p:fieldset widgetVar="filtro" legend="Filtros" toggleable="true" collapsed="true" toggleSpeed="500" style="font-size: small">
 
-					<h:panelGrid columns="6" width="100%" styleClass="panelFiltro">
-
+					<h:panelGrid id="panelFiltro" columns="6" width="100%" styleClass="panelFiltro">
 
 							<p:outputLabel value="Tipo:" style="float: right;" />
-							<p:selectOneMenu id="tipoPregunta"  style="width:150px" value="#{analisisEncuestaBean.tipoPregunta}">
+							<p:selectOneMenu id="tipoPregunta"  style="width:200px" value="#{analisisEncuestaBean.tipoPregunta}">
 								<f:selectItem itemLabel="Normal" itemValue="N" />
 								<f:selectItem itemLabel="Evaluacion" itemValue="E" />
-								<p:ajax listener="#{analisisEncuestaBean.recargarFiltos}" update="encuesta proyecto usuarioLabelGroup usuarioSelectGroup" />
+								<p:ajax listener="#{analisisEncuestaBean.recargarFiltos}" update="panelFiltro" />
 							</p:selectOneMenu>
 
-
 							<p:outputLabel value="Estado:" style="float: right;" />
-							<p:selectOneMenu id="estado"  style="width:150px" value="#{analisisEncuestaBean.estado}">
+							<p:selectOneMenu id="estado"  style="width:200px" value="#{analisisEncuestaBean.estado}">
 								<f:selectItem itemLabel="Activo" itemValue="A" />
 								<f:selectItem itemLabel="Inactivo" itemValue="I" />
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Encuesta:" style="float: right;" />
-							<p:selectOneMenu id="encuesta"  style="width:150px" value="#{analisisEncuestaBean.encuestaSelect.id}">
+							<p:outputLabel value="Encuesta:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}" />
+							<p:selectOneMenu id="encuesta"  style="width:200px" value="#{analisisEncuestaBean.encuestaSelect.id}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}">
 								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 								<f:selectItems value="#{analisisEncuestaBean.encuestas}" var="encuesta"
 											   itemLabel="#{encuesta.nombre}" itemValue="#{encuesta.id}"/>
 								<p:ajax listener="#{analisisEncuestaBean.cargarProyectoFiltro}" update="proyecto" />
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Proyecto:" style="float: right;" />
-							<p:selectOneMenu id="proyecto"  style="width:150px" value="#{analisisEncuestaBean.proyectoSelect.id}">
+							<p:outputLabel value="Proyecto:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}" />
+							<p:selectOneMenu id="proyecto"  style="width:200px" value="#{analisisEncuestaBean.proyectoSelect.id}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}">
 								<f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
 								<f:selectItems value="#{analisisEncuestaBean.proyectos}" var="proyecto"
 											   itemLabel="#{proyecto.nombre}" itemValue="#{proyecto.id}"/>
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Fecha envio:" style="float: right;" />
-						<h:panelGroup>
-							<p:calendar id="fechaInicio" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaInicio}" maxdate="#{analisisEncuestaBean.hoy}"/>
-							-
-							<p:calendar id="fechaFin" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaFin}" maxdate="#{analisisEncuestaBean.hoy}"/>
-						</h:panelGroup>
-
-						<h:panelGroup id="usuarioLabelGroup">
-							<p:outputLabel value="Usuario:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}"/>
-						</h:panelGroup>
-						<h:panelGroup id="usuarioSelectGroup">
-								<p:selectOneMenu id="ususario"  style="width:150px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
+							<p:outputLabel value="Evaluacion:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}"/>
+							<p:selectOneMenu id="evaluacion"  style="width:200px" value="#{analisisEncuestaBean.encuestaSelect.id}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
 								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
-									<f:selectItem itemLabel="Estefania.fernandez" itemValue="estefania.fernandez"/>
+								<f:selectItems value="#{analisisEncuestaBean.encuestas}" var="encuesta"
+											   itemLabel="#{encuesta.nombre}" itemValue="#{encuesta.id}"/>
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Usuario:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}" />
+							<p:selectOneMenu id="ususario"  style="width:200px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
+								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
+								<f:selectItem itemLabel="Estefania.fernandez" itemValue="estefania.fernandez"/>
 								<f:selectItems value="#{analisisEncuestaBean.usuarios}" var="usuario">
 									<f:selectItem itemLabel="#{usuario.usuario}" itemValue="#{usuario.usuario}"/>
 								</f:selectItems>
 							</p:selectOneMenu>
-						</h:panelGroup>
+
+							<p:outputLabel value="Fecha envio:" style="float: right;" />
+							<h:panelGroup>
+								<p:calendar id="fechaInicio" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaInicio}" maxdate="#{analisisEncuestaBean.hoy}"/>
+								-
+								<p:calendar id="fechaFin" readonlyInput="true" size="5" value="#{analisisEncuestaBean.fechaFin}" maxdate="#{analisisEncuestaBean.hoy}"/>
+							</h:panelGroup>
+
 					</h:panelGrid>
 
 
@@ -81,63 +83,113 @@
 
 		<h:form id="analisisEncuestas" styleClass="fuenteLetra">
 
-			<c:forEach items="#{analisisEncuestaBean.preguntas}" var="pregunta">
+			<h:panelGroup id="encuestaGroup" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}">
+				<c:forEach items="#{analisisEncuestaBean.preguntas}" var="pregunta">
 
-				<div class="detallePregunta">
+					<div class="detallePregunta">
 
-					<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}" />
+						<p:outputLabel styleClass="tituloPreg" value="#{pregunta.titulo}" />
 
-					<div class="tipoPreg">
-						<p:panelGrid styleClass="simplePreg" rendered="#{pregunta.tipoPregunta == 'simple'}">
+						<div class="tipoPreg">
+							<p:panelGrid styleClass="simplePreg" rendered="#{pregunta.tipoPregunta == 'simple'}">
 
-							<c:forEach items="#{pregunta.opciones}" var="opcion">
+								<c:forEach items="#{pregunta.opciones}" var="opcion">
+									<p:row>
+										<p:column>
+											<p:outputLabel value="#{opcion.titulo}"/>
+										</p:column>
+
+										<p:column>
+											<p:outputLabel value="#{opcion.totalOpcion}"/>
+										</p:column>
+
+										<p:column>
+											<p:outputLabel value="#{opcion.totalOpcion / pregunta.totalAbsoluto}">
+												<f:convertNumber type="percent" maxFractionDigits="2" />
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+								</c:forEach>
+
 								<p:row>
 									<p:column>
-										<p:outputLabel value="#{opcion.titulo}"/>
+										<p:outputLabel value="TOTAL"/>
 									</p:column>
-
 									<p:column>
-										<p:outputLabel value="#{opcion.totalOpcion}"/>
+										<p:outputLabel value="#{pregunta.totalAbsoluto}"/>
 									</p:column>
-
 									<p:column>
-										<p:outputLabel value="#{opcion.totalOpcion / pregunta.totalAbsoluto}">
+										<p:outputLabel value="#{pregunta.totalAbsoluto / pregunta.totalAbsoluto}">
 											<f:convertNumber type="percent" maxFractionDigits="2" />
 										</p:outputLabel>
 									</p:column>
 								</p:row>
-							</c:forEach>
+
+							</p:panelGrid>
+
+							<h:panelGroup styleClass="rankingPreg" rendered="#{pregunta.tipoPregunta == 'ranking'}">
+								<c:forEach begin="1" end="#{pregunta.totalRanking}">
+									<h:graphicImage name="star_yellow.png" library="img"
+													style="height: 50px" />
+								</c:forEach>
+								<c:forEach begin="#{pregunta.totalRanking +1}" end="#{pregunta.escalavaloracion}">
+									<h:graphicImage name="star_silver.png" library="img"
+													style="height: 50px" />
+								</c:forEach>
+							</h:panelGroup>
+						</div>
+
+					</div>
+				</c:forEach>
+			</h:panelGroup>
+
+			<h:panelGroup id="evaluacionGroup" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
+
+				<p:dataTable id="evaluaciones" value="#{analisisEncuestaBean.evaluaciones}" var="item" styleClass="datatable"
+							 rows="15" paginator="true" rowsPerPageTemplate="15,30,50,100"
+							 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							 widgetVar="itemTabla" emptyMessage="No se encontraron registros"
+							 filteredValue="#{consultarEncuestaBean.itemsBuscados}" tableStyle="table-layout: auto">
+
+					<f:facet name="header" >
+
+						<p:panelGrid style="height: 30px" styleClass="panelInvisible" >
 
 							<p:row>
 								<p:column>
-									<p:outputLabel value="TOTAL"/>
-								</p:column>
-								<p:column>
-									<p:outputLabel value="#{pregunta.totalAbsoluto}"/>
-								</p:column>
-								<p:column>
-									<p:outputLabel value="#{pregunta.totalAbsoluto / pregunta.totalAbsoluto}">
-										<f:convertNumber type="percent" maxFractionDigits="2" />
-									</p:outputLabel>
+									<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:200px; height: 30px; float: right;"/>
+									<h:outputText value="Buscar: " style="float: right; font-size: small; display: inline; padding-top: 8px;"/>
 								</p:column>
 							</p:row>
-
 						</p:panelGrid>
 
-						<h:panelGroup styleClass="rankingPreg" rendered="#{pregunta.tipoPregunta == 'ranking'}">
-							<c:forEach begin="1" end="#{pregunta.totalRanking}">
-								<h:graphicImage name="star_yellow.png" library="img"
-												style="height: 50px" />
-							</c:forEach>
-							<c:forEach begin="#{pregunta.totalRanking +1}" end="#{pregunta.escalavaloracion}">
-								<h:graphicImage name="star_silver.png" library="img"
-												style="height: 50px" />
-							</c:forEach>
-						</h:panelGroup>
-					</div>
+					</f:facet>
 
-				</div>
-			</c:forEach>
+					<p:column headerText="Usuario evaluado" filterBy="#{item.usuarioEvaluado}" filterStyle="display:none" style="max-width: 350px">
+						<h:outputText value="#{item.usuarioEvaluado}" />
+					</p:column>
+
+					<p:column headerText="Evaluacion" filterBy="#{item.encuesta}" filterStyle="display:none" style="text-align: center">
+						<h:outputText value="#{item.encuesta}" />
+					</p:column>
+
+					<p:column headerText="Fecha" filterBy="#{item.fechaEnvio}" filterStyle="display:none" style="text-align: center">
+						<h:outputText value="#{item.fechaEnvio}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Puntuacion obtenida" filterBy="#{item.totalRespuesta}" filterStyle="display:none" style="text-align: center">
+						<h:outputText value="#{item.totalRespuesta}" />
+					</p:column>
+
+					<p:column headerText="Puntuacion total" filterBy="#{item.totalEncuesta}" filterStyle="display:none" style="text-align: center">
+						<h:outputText value="#{item.totalEncuesta}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGroup>
 
 		</h:form>
 

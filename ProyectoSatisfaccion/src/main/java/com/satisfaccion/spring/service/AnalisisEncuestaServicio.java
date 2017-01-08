@@ -55,7 +55,7 @@ public class AnalisisEncuestaServicio {
 	}
 
 	@Transactional
-	public List<PreguntaEntity> buscarPreguntasAnalisis(String estado, String tipoPregunta, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin, String usuario) throws DataAccessException {
+	public List<PreguntaEntity> buscarPreguntasAnalisis(String estado, String tipoPregunta, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
 
 		List<PreguntaEntity> resultList = null;
 
@@ -65,9 +65,7 @@ public class AnalisisEncuestaServicio {
 					.setParameter("estado", estado)
 					.setParameter("tipoEncuesta", tipoPregunta)
 					.setParameter("encuesta", encuestaSelect.getId())
-					.setParameter("proyecto", proyectoSelect.getId())/*
-				.setParameter("usuario", usuario)
-*/
+					.setParameter("proyecto", proyectoSelect.getId())
 					.getResultList();
 
 		}else{
@@ -79,9 +77,6 @@ public class AnalisisEncuestaServicio {
 					.setParameter("proyecto", proyectoSelect.getId())
 					.setParameter("fechaInicio", fechaInicio)
 					.setParameter("fechaFin", fechaFin)
-/*
-				.setParameter("usuario", usuario)
-*/
 					.getResultList();
 
 		}
@@ -135,6 +130,33 @@ public class AnalisisEncuestaServicio {
 		}
 	}
 
+	@Transactional
+	public List<RespuestaEvaluacionVista> buscarEvaluaciones(String estado, EncuestaEntity encuestaSelect, String usuario, Date fechaInicio, Date fechaFin) throws DataAccessException {
+
+		List<RespuestaEvaluacionVista> resultList = null;
+
+		if(fechaInicio == null && fechaFin == null){
+
+			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_EVALUACION_VISTA_SIN_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("usuario", usuario)
+					.getResultList();
+
+		}else{
+
+			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_EVALUACION_VISTA_CON_FECHA")
+					.setParameter("estado", estado)
+					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("usuario", usuario)
+					.setParameter("fechaInicio", fechaInicio)
+					.setParameter("fechaFin", fechaFin)
+					.getResultList();
+
+		}
+
+		return resultList;
+	}
 
 
 

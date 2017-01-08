@@ -29,7 +29,7 @@
 					<h:panelGrid columns="6" width="100%">
 
 						<p:outputLabel value="Estado:" style="float: right;" />
-						<p:selectOneMenu id="estado"  style="width:150px"
+						<p:selectOneMenu id="estado"  style="width:200px"
 										 value="#{consultarEncuestaBean.estado}">
 							<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 							<f:selectItem itemLabel="Activo" itemValue="A" />
@@ -37,7 +37,7 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Tipo:" style="float: right;" />
-						<p:selectOneMenu id="tiporEncuesta"  style="width:150px"
+						<p:selectOneMenu id="tiporEncuesta"  style="width:200px"
 										 value="#{consultarEncuestaBean.tipoEncuesta}">
 							<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
 							<f:selectItem itemLabel="Normal" itemValue="N" />
@@ -77,7 +77,7 @@
 							</p:column>
 
 							<p:column>
-								<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:150px; height: 30px; float: right;"/>
+								<p:inputText id="globalFilter" onkeyup="PF('itemTabla').filter()" style="width:200px; height: 30px; float: right;"/>
 								<h:outputText value="Buscar: " style="float: right; font-size: small; display: inline; padding-top: 8px;"/>
 							</p:column>
 						</p:row>
