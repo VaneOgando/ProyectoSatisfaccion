@@ -12,7 +12,7 @@ CREATE TABLE ENCUESTA(
 
 	idEncuesta 			INT 		NOT NULL,
 	encuesta			VARCHAR(50) NOT NULL,
-	titulo				VARCHAR(250),
+	titulo				VARCHAR(150),
 	descripcion			VARCHAR(500),
 	tipoEncuesta		CHAR(1)		NOT NULL,
 	estado				CHAR(1)		NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE ENVIO(
 CREATE TABLE OPCION(
 
 	idOpcion 			INT 		 NOT NULL,
-	opcion				VARCHAR(250) NOT NULL,
+	opcion				VARCHAR(100) NOT NULL,
 	valor				FLOAT,
 	
 	CONSTRAINT opcion_pk PRIMARY KEY (idOpcion)
@@ -45,7 +45,7 @@ CREATE TABLE OPCION(
 CREATE TABLE PREGUNTA(
 
 	idPregunta 			INT 		 NOT NULL,
-	titulo				VARCHAR(250) NOT NULL,
+	titulo				VARCHAR(150) NOT NULL,
 	ayuda				VARCHAR(250),
 	tipoPregunta		VARCHAR(50)  NOT NULL,
 	tipoEncuesta		CHAR(1)		 NOT NULL,
@@ -93,3 +93,10 @@ Select r.IDRESPUESTA, r.OBSERVACION, r.VALORACION, r.USUARIOEVALUADO, p.IDPREGUN
 from respuesta r join PREGUNTA p on r.FKPREGUNTA = p.IDPREGUNTA LEFT JOIN OPCION o on r.FKOPCION = o.IDOPCION join ENVIO en on r.FKENVIO = en.IDENVIO 
   join ENCUESTA e on en.FKENCUESTA = e.IDENCUESTA LEFT JOIN PROYECTO pro on en.FKPROYECTO = pro.IDPROYECTO
 WHERE en.ESTADO = 'R')
+
+create view RESPUESTA_EVALUACION AS ( select r.idrespuesta, en.IDENVIO, r.USUARIOEVALUADO, en.FECHAENVIO, e.IDENCUESTA ,e.ENCUESTA, e.estado, r.FKPREGUNTA, r.FKOPCION, opr.VALOR as valorR ,r.VALORACION as valoracionR, totalpreguntas.valor as valorTotalP, totalpreguntas.valoracion as valoracionTotalP
+from RESPUESTA r join ENVIO en on r.FKENVIO = en.IDENVIO join ENCUESTA E on en.FKENCUESTA = e.IDENCUESTA
+  left join opcion opr on r.FKOPCION = opr.IDOPCION, (select  p.IDPREGUNTA as pregunta , max(o.VALOR) as valor, p.ESCALAVALORACION as valoracion from pregunta p left join opcion o on p.IDPREGUNTA = o.FKPREGUNTA
+where p.TIPOENCUESTA = 'E' and p.TIPOPREGUNTA in ('simple', 'ranking') GROUP BY p.IDPREGUNTA , p.ESCALAVALORACION) totalpreguntas 
+where e.TIPOENCUESTA = 'E' and totalpreguntas.pregunta = r.FKPREGUNTA )
+
