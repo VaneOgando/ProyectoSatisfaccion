@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ public class BuzonSugerenciaBean {
 	private String estado = "A";
 	private EncuestaEntity encuestaSelect = new EncuestaEntity();
 	private ProyectoEntity proyectoSelect = new ProyectoEntity();
+	private PreguntaEntity preguntaSelect = new PreguntaEntity();
 
 	/*Fecha*/
 	private Date fechaInicio;
@@ -46,6 +48,13 @@ public class BuzonSugerenciaBean {
 
 	@PostConstruct
 	private void init() {
+
+		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+
+		if(id != null){
+
+			preguntaSelect = buzonSugerenciaServicio.buscarPreguntaPorId(Integer.parseInt(id));
+		}
 
 		recargarFiltos();
 		filtrarPreguntas();
@@ -89,7 +98,7 @@ public class BuzonSugerenciaBean {
 			inicialiazarItems();
 
 			/*Preguntas respondidas dado el filtro*/
-			List<PreguntaEntity> preguntas = buzonSugerenciaServicio.buscarPreguntasObservacion(estado, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
+			List<PreguntaEntity> preguntas = buzonSugerenciaServicio.buscarPreguntasObservacion(estado, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, preguntaSelect);
 
 			for(PreguntaEntity pregunta : preguntas){
 				PreguntaAnalisis preguntaAnalisis = new PreguntaAnalisis();

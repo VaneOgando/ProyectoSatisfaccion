@@ -45,6 +45,15 @@ public class DetalleEncuestaServicio {
 				entityManager.merge(envio);
 			}
 
+			//Eliminar las respuestas existentes (solo para evaluaciones)
+			if(envio.getEncuesta().getTipoEncuesta().equals("E")){
+				List<RespuestaEntity> existentes = respuestasExistentesEvaluacion(envio, usuaioEvaluado);
+
+				for(RespuestaEntity respEliminar : existentes){
+					entityManager.remove(entityManager.contains(respEliminar) ? respEliminar : entityManager.merge(respEliminar));
+				}
+			}
+
 			for (RespuestaEntity respuesta : respuestas){
 
 				//Para encuestas almacenar usuario
@@ -60,7 +69,6 @@ public class DetalleEncuestaServicio {
 
 		}catch(Exception e){
 			crecionRespuestas = false;
-			throw e;
 
 		}finally {
 
@@ -70,6 +78,19 @@ public class DetalleEncuestaServicio {
 		}
 
 	}
+
+	@Transactional
+	public List<RespuestaEntity> respuestasExistentesEvaluacion(EnvioEntity envio, String usuaioEvaluado) throws DataAccessException {
+
+		List<RespuestaEntity> resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_EVALUACION")
+				.setParameter("envio", envio.getId())
+				.setParameter("usuario", usuaioEvaluado)
+				.getResultList();
+
+		return resultList;
+	}
+
+
 
 
 	/*GET & SET*/

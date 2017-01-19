@@ -1,28 +1,19 @@
 package com.satisfaccion.primefaces.beans;
 
 import com.satisfaccion.jpa.data.*;
-import com.satisfaccion.spring.service.CrearEncuestaServicio;
 import com.satisfaccion.spring.service.DetalleEncuestaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
-import com.sun.deploy.net.URLEncoder;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 @ManagedBean
@@ -186,15 +177,13 @@ public class DetalleEncuestaBean {
 
 						return "exitoEncuesta.xhtml";
 					}
+
+
 				}
 			}
 
 		}
 	}
-
-
-
-
 
 
 	/*GET & SET*/

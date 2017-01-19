@@ -110,6 +110,15 @@ public class DetallePreguntaBean{
 
 	}
 
+	public String bt_analisisPregunta(){
+
+		if(pregunta.getTipoPregunta().equals("abierta")){
+			return "buzonSugerencia.xhtml?faces-redirect=true&id=" + pregunta.getId();
+
+		}else{
+			return "analisisEncuesta.xhtml?faces-redirect=true&id=" + pregunta.getId();
+		}
+	}
 
 
 

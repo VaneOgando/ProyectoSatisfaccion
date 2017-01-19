@@ -137,12 +137,12 @@
 								</p:commandButton>
 							</p:column>
 							<p:column>
-								<p:commandButton id="analizar" value="Analizar" immediate="true"/>
+								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this)" action="#{detallePreguntaBean.bt_analisisPregunta}" onstart="PF('cargando').show()">
+									<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
+								</p:commandButton>
 							</p:column>
 							<p:column>
-
-
-														<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" action="#{detallePreguntaBean.bt_eliminarPregunta}"
+								<p:commandButton id="eliminar" value="Eliminar" immediate="true" ajax="false" action="#{detallePreguntaBean.bt_eliminarPregunta}"
 												 update=":DialogoMensajes DetallePregunta" onclick="if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false" />
 							</p:column>
 						</p:row>

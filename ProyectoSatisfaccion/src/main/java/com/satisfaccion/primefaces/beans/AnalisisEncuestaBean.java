@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.*;
 
 @ManagedBean
@@ -34,6 +35,8 @@ public class AnalisisEncuestaBean {
 	private EncuestaEntity encuestaSelect = new EncuestaEntity();
 	private ProyectoEntity proyectoSelect = new ProyectoEntity();
 	private UsuarioEntity usuarioSelect = new UsuarioEntity();
+	private PreguntaEntity preguntaSelect = new PreguntaEntity();
+
 	private String usuario;
 
 	/*Fecha*/
@@ -54,6 +57,15 @@ public class AnalisisEncuestaBean {
 
 	@PostConstruct
 	private void init() {
+
+		//Obtener parametro por redireccion
+		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+
+		if(id != null){
+
+			preguntaSelect = analisisEncuestaServicio.buscarPreguntaPorId(Integer.parseInt(id));
+			tipoPregunta = preguntaSelect.getTipoEncuesta();
+		}
 
 		recargarFiltos();
 		filtrarPreguntas();
@@ -122,7 +134,7 @@ public class AnalisisEncuestaBean {
 	private void preguntasEncuesta() {
 
     /*Preguntas respondidas dado el filtro*/
-		List<PreguntaEntity> preguntas = analisisEncuestaServicio.buscarPreguntasAnalisis(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin);
+		List<PreguntaEntity> preguntas = analisisEncuestaServicio.buscarPreguntasAnalisis(estado, tipoPregunta, encuestaSelect, proyectoSelect, fechaInicio, fechaFin, preguntaSelect);
 
 		for(PreguntaEntity pregunta : preguntas){
             PreguntaAnalisis preguntaAnalisis = new PreguntaAnalisis();
@@ -172,7 +184,7 @@ public class AnalisisEncuestaBean {
 	private void preguntasEvaluacion() {
 
 		/*Evaluaciones registradas dado el filtro*/
-		List<RespuestaEvaluacionVista> evaluacionVista = analisisEncuestaServicio.buscarEvaluaciones(estado, encuestaSelect, usuario, fechaInicio, fechaFin);
+		List<RespuestaEvaluacionVista> evaluacionVista = analisisEncuestaServicio.buscarEvaluaciones(estado, encuestaSelect, usuario, fechaInicio, fechaFin, preguntaSelect);
 
 		for (RespuestaEvaluacionVista vista : evaluacionVista){
 
@@ -337,6 +349,22 @@ public class AnalisisEncuestaBean {
 
 	public void setUsuarioSelect(UsuarioEntity usuarioSelect) {
 		this.usuarioSelect = usuarioSelect;
+	}
+
+	public List<EvaluacionAnalisis> getItemsBuscados() {
+		return itemsBuscados;
+	}
+
+	public void setItemsBuscados(List<EvaluacionAnalisis> itemsBuscados) {
+		this.itemsBuscados = itemsBuscados;
+	}
+
+	public PreguntaEntity getPreguntaSelect() {
+		return preguntaSelect;
+	}
+
+	public void setPreguntaSelect(PreguntaEntity preguntaSelect) {
+		this.preguntaSelect = preguntaSelect;
 	}
 
 	public Date getFechaInicio() {

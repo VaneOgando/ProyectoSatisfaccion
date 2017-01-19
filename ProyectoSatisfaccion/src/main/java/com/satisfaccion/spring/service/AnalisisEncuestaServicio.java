@@ -55,7 +55,7 @@ public class AnalisisEncuestaServicio {
 	}
 
 	@Transactional
-	public List<PreguntaEntity> buscarPreguntasAnalisis(String estado, String tipoPregunta, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
+	public List<PreguntaEntity> buscarPreguntasAnalisis(String estado, String tipoPregunta, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin, PreguntaEntity preguntaSelect) throws DataAccessException {
 
 		List<PreguntaEntity> resultList = null;
 
@@ -66,6 +66,7 @@ public class AnalisisEncuestaServicio {
 					.setParameter("tipoEncuesta", tipoPregunta)
 					.setParameter("encuesta", encuestaSelect.getId())
 					.setParameter("proyecto", proyectoSelect.getId())
+					 .setParameter("pregunta", preguntaSelect.getId())
 					.getResultList();
 
 		}else{
@@ -75,6 +76,7 @@ public class AnalisisEncuestaServicio {
 					.setParameter("tipoEncuesta", tipoPregunta)
 					.setParameter("encuesta", encuestaSelect.getId())
 					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("pregunta", preguntaSelect.getId())
 					.setParameter("fechaInicio", fechaInicio)
 					.setParameter("fechaFin", fechaFin)
 					.getResultList();
@@ -131,7 +133,7 @@ public class AnalisisEncuestaServicio {
 	}
 
 	@Transactional
-	public List<RespuestaEvaluacionVista> buscarEvaluaciones(String estado, EncuestaEntity encuestaSelect, String usuario, Date fechaInicio, Date fechaFin) throws DataAccessException {
+	public List<RespuestaEvaluacionVista> buscarEvaluaciones(String estado, EncuestaEntity encuestaSelect, String usuario, Date fechaInicio, Date fechaFin, PreguntaEntity preguntaSelect) throws DataAccessException {
 
 		List<RespuestaEvaluacionVista> resultList = null;
 
@@ -140,6 +142,7 @@ public class AnalisisEncuestaServicio {
 			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_EVALUACION_VISTA_SIN_FECHA")
 					.setParameter("estado", estado)
 					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("pregunta", preguntaSelect.getId())
 					.setParameter("usuario", usuario)
 					.getResultList();
 
@@ -148,6 +151,7 @@ public class AnalisisEncuestaServicio {
 			resultList = getEntityManager().createNamedQuery("HQL_RESPUESTA_EVALUACION_VISTA_CON_FECHA")
 					.setParameter("estado", estado)
 					.setParameter("encuesta", encuestaSelect.getId())
+					.setParameter("pregunta", preguntaSelect.getId())
 					.setParameter("usuario", usuario)
 					.setParameter("fechaInicio", fechaInicio)
 					.setParameter("fechaFin", fechaFin)
@@ -158,7 +162,11 @@ public class AnalisisEncuestaServicio {
 		return resultList;
 	}
 
+	@Transactional
+	public PreguntaEntity buscarPreguntaPorId(int idPregunta) throws DataAccessException {
 
+		return entityManager.find(PreguntaEntity.class, idPregunta);
+	}
 
 
 

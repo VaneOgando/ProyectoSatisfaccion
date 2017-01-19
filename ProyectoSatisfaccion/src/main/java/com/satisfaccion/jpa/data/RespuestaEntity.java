@@ -17,6 +17,10 @@ import java.util.List;
 				query = "SELECT COUNT (r) FROM RespuestaEntity r JOIN r.envio e join e.encuesta enc " +
 						"WHERE enc.id = :idEncuesta"),
 
+		@NamedQuery(name = "HQL_RESPUESTA_EVALUACION",
+				query = "SELECT r FROM RespuestaEntity r JOIN r.envio e " +
+						"WHERE e.id = :envio and r.usuarioEvaluado = :usuario"),
+
 		@NamedQuery(name = "HQL_RESPUESTA_ENCUESTA",
 				query = "SELECT r FROM RespuestaEntity r join r.pregunta p join r.envio en join en.encuesta e left join en.proyecto pro " +
 						"where p.tipoPregunta in ('simple', 'ranking') and (p.tipoEncuesta = :tipoEncuesta)  and (p.estado = :estado) and en.estado = 'R' " +

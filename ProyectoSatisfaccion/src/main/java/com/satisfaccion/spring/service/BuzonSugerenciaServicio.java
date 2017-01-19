@@ -53,7 +53,7 @@ public class BuzonSugerenciaServicio {
 	}
 
 	@Transactional
-	public List<PreguntaEntity> buscarPreguntasObservacion(String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin) throws DataAccessException {
+	public List<PreguntaEntity> buscarPreguntasObservacion(String estado, EncuestaEntity encuestaSelect, ProyectoEntity proyectoSelect, Date fechaInicio, Date fechaFin, PreguntaEntity preguntaSelect) throws DataAccessException {
 
 		List<PreguntaEntity> resultList = null;
 
@@ -63,6 +63,7 @@ public class BuzonSugerenciaServicio {
 					.setParameter("estado", estado)
 					.setParameter("encuesta", encuestaSelect.getId())
 					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("pregunta", preguntaSelect.getId())
 					.getResultList();
 		}else{
 
@@ -70,6 +71,7 @@ public class BuzonSugerenciaServicio {
 					.setParameter("estado", estado)
 					.setParameter("encuesta", encuestaSelect.getId())
 					.setParameter("proyecto", proyectoSelect.getId())
+					.setParameter("pregunta", preguntaSelect.getId())
 					.setParameter("fechaInicio", fechaInicio)
 					.setParameter("fechaFin", fechaFin)
 					.getResultList();
@@ -109,6 +111,11 @@ public class BuzonSugerenciaServicio {
 		return resultList;
 	}
 
+	@Transactional
+	public PreguntaEntity buscarPreguntaPorId(int idPregunta) throws DataAccessException {
+
+		return entityManager.find(PreguntaEntity.class, idPregunta);
+	}
 
 
 

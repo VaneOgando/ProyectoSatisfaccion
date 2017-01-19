@@ -82,10 +82,21 @@
 		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
 			<p:row>
 				<p:column>
-					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" />
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onclick="if (!confirmarEnvio('#{detalleEncuestaBean.encuesta.tipoEncuesta}')) return false;" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
+
+		<script>
+			function confirmarEnvio(tipoEncuesta) {
+
+				if (tipoEncuesta == 'E') {
+					return confirm("Si ya se encuetra registrada una respuesta para este usuario la misma se sobreescribira, ¿desea continuar?")
+				}
+
+				return true;
+			}
+		</script>
 
 	</ui:define>
 
