@@ -132,12 +132,12 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" >
+								<p:commandButton id="modificar" value="Modificar" immediate="true"  onclick="bloquear(this)" action="#{detallePreguntaBean.bt_modificarPregunta}" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()" >
 									<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
 								</p:commandButton>
 							</p:column>
 							<p:column>
-								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this)" action="#{detallePreguntaBean.bt_analisisPregunta}" onstart="PF('cargando').show()">
+								<p:commandButton id="analizar" value="Analizar" immediate="true" onclick="bloquear(this)" action="#{detallePreguntaBean.bt_analisisPregunta}" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()">
 									<f:param name="id" value="#{detallePreguntaBean.pregunta.id}" />
 								</p:commandButton>
 							</p:column>

@@ -2,14 +2,18 @@ package com.satisfaccion.primefaces.beans;
 
 import com.satisfaccion.jpa.data.*;
 import com.satisfaccion.spring.service.AnalisisEncuestaServicio;
+import com.satisfaccion.spring.service.LdapServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
+import org.springframework.dao.DataAccessException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import java.util.*;
 
 @ManagedBean
@@ -23,6 +27,8 @@ public class AnalisisEncuestaBean {
 	@ManagedProperty(value = "#{mensajesComun}")
 	private MensajesComun mensajesComun;
 
+	@ManagedProperty(value = "#{ldapServicio}")
+	private LdapServicio ldapServicio;
 
 	private List<PreguntaAnalisis> preguntas = new ArrayList<PreguntaAnalisis>();
 	private List<EvaluacionAnalisis> evaluaciones = new ArrayList<EvaluacionAnalisis>();
@@ -87,25 +93,38 @@ public class AnalisisEncuestaBean {
 
 	public void cargarEncuestaFiltro(){
 
-		encuestas = analisisEncuestaServicio.buscarEncuestas(tipoPregunta);
+		try {
+			encuestas = analisisEncuestaServicio.buscarEncuestas(tipoPregunta);
+
+		} catch (Exception e) {
+			encuestas = new ArrayList<EncuestaEntity>();
+		}
 	}
 
 	public void cargarProyectoFiltro(){
 
-		if( encuestaSelect.getId() != 0){
-			List<EncuestaEntity> encuestas = new ArrayList<EncuestaEntity>();
-			encuestas.add(encuestaSelect);
-			proyectos = analisisEncuestaServicio.buscarProyectos(encuestas);
-		}else{
-			proyectos = analisisEncuestaServicio.buscarProyectos(encuestas);
+		try {
+			if( encuestaSelect.getId() != 0){
+                List<EncuestaEntity> encuestas = new ArrayList<EncuestaEntity>();
+                encuestas.add(encuestaSelect);
+                proyectos = analisisEncuestaServicio.buscarProyectos(encuestas);
+            }else{
+                proyectos = analisisEncuestaServicio.buscarProyectos(encuestas);
+            }
+		} catch (Exception e) {
+			proyectos = new ArrayList<ProyectoEntity>();
 		}
 
 	}
 
 	public void cargarUsuarioFiltro(){
 
-		if (tipoPregunta.equals("E")){
-			//Fata conexion a  LDAP
+		try {
+			if (tipoPregunta.equals("E")){
+                usuarios = ldapServicio.obtenerTodosUsuarios();
+            }
+		} catch (Exception e) {
+			usuarios = new ArrayList<UsuarioEntity>();
 		}
 
 	}
@@ -277,6 +296,8 @@ public class AnalisisEncuestaBean {
 
 
 
+
+
 /* GET & SET */
 
 	public AnalisisEncuestaServicio getAnalisisEncuestaServicio() {
@@ -293,6 +314,14 @@ public class AnalisisEncuestaBean {
 
 	public void setMensajesComun(MensajesComun mensajesComun) {
 		this.mensajesComun = mensajesComun;
+	}
+
+	public LdapServicio getLdapServicio() {
+		return ldapServicio;
+	}
+
+	public void setLdapServicio(LdapServicio ldapServicio) {
+		this.ldapServicio = ldapServicio;
 	}
 
 	public List<PreguntaAnalisis> getPreguntas() {
@@ -432,4 +461,73 @@ public class AnalisisEncuestaBean {
 		this.totalRelativo = totalRelativo;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AnalisisEncuestaBean)) return false;
+
+		AnalisisEncuestaBean that = (AnalisisEncuestaBean) o;
+
+		if (getTotalRelativo() != that.getTotalRelativo()) return false;
+		if (getAnalisisEncuestaServicio() != null ? !getAnalisisEncuestaServicio().equals(that.getAnalisisEncuestaServicio()) : that.getAnalisisEncuestaServicio() != null)
+			return false;
+		if (getMensajesComun() != null ? !getMensajesComun().equals(that.getMensajesComun()) : that.getMensajesComun() != null)
+			return false;
+		if (getLdapServicio() != null ? !getLdapServicio().equals(that.getLdapServicio()) : that.getLdapServicio() != null)
+			return false;
+		if (getPreguntas() != null ? !getPreguntas().equals(that.getPreguntas()) : that.getPreguntas() != null)
+			return false;
+		if (getEvaluaciones() != null ? !getEvaluaciones().equals(that.getEvaluaciones()) : that.getEvaluaciones() != null)
+			return false;
+		if (getItemsBuscados() != null ? !getItemsBuscados().equals(that.getItemsBuscados()) : that.getItemsBuscados() != null)
+			return false;
+		if (getTipoPregunta() != null ? !getTipoPregunta().equals(that.getTipoPregunta()) : that.getTipoPregunta() != null)
+			return false;
+		if (getEstado() != null ? !getEstado().equals(that.getEstado()) : that.getEstado() != null) return false;
+		if (getEncuestaSelect() != null ? !getEncuestaSelect().equals(that.getEncuestaSelect()) : that.getEncuestaSelect() != null)
+			return false;
+		if (getProyectoSelect() != null ? !getProyectoSelect().equals(that.getProyectoSelect()) : that.getProyectoSelect() != null)
+			return false;
+		if (getUsuarioSelect() != null ? !getUsuarioSelect().equals(that.getUsuarioSelect()) : that.getUsuarioSelect() != null)
+			return false;
+		if (getPreguntaSelect() != null ? !getPreguntaSelect().equals(that.getPreguntaSelect()) : that.getPreguntaSelect() != null)
+			return false;
+		if (getUsuario() != null ? !getUsuario().equals(that.getUsuario()) : that.getUsuario() != null) return false;
+		if (getFechaInicio() != null ? !getFechaInicio().equals(that.getFechaInicio()) : that.getFechaInicio() != null)
+			return false;
+		if (getFechaFin() != null ? !getFechaFin().equals(that.getFechaFin()) : that.getFechaFin() != null)
+			return false;
+		if (getHoy() != null ? !getHoy().equals(that.getHoy()) : that.getHoy() != null) return false;
+		if (getEncuestas() != null ? !getEncuestas().equals(that.getEncuestas()) : that.getEncuestas() != null)
+			return false;
+		if (getProyectos() != null ? !getProyectos().equals(that.getProyectos()) : that.getProyectos() != null)
+			return false;
+		return !(getUsuarios() != null ? !getUsuarios().equals(that.getUsuarios()) : that.getUsuarios() != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getAnalisisEncuestaServicio() != null ? getAnalisisEncuestaServicio().hashCode() : 0;
+		result = 31 * result + (getMensajesComun() != null ? getMensajesComun().hashCode() : 0);
+		result = 31 * result + (getLdapServicio() != null ? getLdapServicio().hashCode() : 0);
+		result = 31 * result + (getPreguntas() != null ? getPreguntas().hashCode() : 0);
+		result = 31 * result + (getEvaluaciones() != null ? getEvaluaciones().hashCode() : 0);
+		result = 31 * result + (getItemsBuscados() != null ? getItemsBuscados().hashCode() : 0);
+		result = 31 * result + (getTipoPregunta() != null ? getTipoPregunta().hashCode() : 0);
+		result = 31 * result + (getEstado() != null ? getEstado().hashCode() : 0);
+		result = 31 * result + (getEncuestaSelect() != null ? getEncuestaSelect().hashCode() : 0);
+		result = 31 * result + (getProyectoSelect() != null ? getProyectoSelect().hashCode() : 0);
+		result = 31 * result + (getUsuarioSelect() != null ? getUsuarioSelect().hashCode() : 0);
+		result = 31 * result + (getPreguntaSelect() != null ? getPreguntaSelect().hashCode() : 0);
+		result = 31 * result + (getUsuario() != null ? getUsuario().hashCode() : 0);
+		result = 31 * result + (getFechaInicio() != null ? getFechaInicio().hashCode() : 0);
+		result = 31 * result + (getFechaFin() != null ? getFechaFin().hashCode() : 0);
+		result = 31 * result + (getHoy() != null ? getHoy().hashCode() : 0);
+		result = 31 * result + (getEncuestas() != null ? getEncuestas().hashCode() : 0);
+		result = 31 * result + (getProyectos() != null ? getProyectos().hashCode() : 0);
+		result = 31 * result + (getUsuarios() != null ? getUsuarios().hashCode() : 0);
+		result = 31 * result + getTotalRelativo();
+		return result;
+	}
 }

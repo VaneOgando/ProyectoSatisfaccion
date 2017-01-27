@@ -241,6 +241,12 @@
 			<version>2.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+
 
 	</dependencies>
 

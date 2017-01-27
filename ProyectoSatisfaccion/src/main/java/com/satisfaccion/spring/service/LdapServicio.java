@@ -21,7 +21,7 @@ public class LdapServicio {
 
 	/*METODOS*/
 
-	public List<Object> obtenerTodosUsuarios() {
+	public List<UsuarioEntity> obtenerTodosUsuarios() {
 
 		AndFilter filter = new AndFilter();
 		filter.and(new EqualsFilter("objectclass", "user"));
@@ -31,7 +31,7 @@ public class LdapServicio {
 					@Override
 					public Object mapFromAttributes(javax.naming.directory.Attributes attributes) throws NamingException {
 
-						Object usuario = (Object) new UsuarioEntity( attributes.get("name").get().toString(), attributes.get("sAMAccountName").get().toString());
+						UsuarioEntity usuario = new UsuarioEntity( attributes.get("name").get().toString(), attributes.get("sAMAccountName").get().toString());
 
 						return usuario;
 					}
@@ -66,7 +66,4 @@ public class LdapServicio {
 		this.ldapTemplate = ldapTemplate;
 	}
 
-	public LdapTemplate getLdapTemplate() {
-		return ldapTemplate;
-	}
 }

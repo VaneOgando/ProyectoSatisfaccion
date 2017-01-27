@@ -48,7 +48,7 @@
 
 
 					<p:commandButton value="Filtrar" ajax="false" action="#{buzonSugerenciaBean.filtrarPreguntas}" update=":buzonSugerencia"
-									 style="height: 30px; font-size: small; margin-top: 20px; margin-left: 50%">
+									 style="height: 30px; font-size: small; margin-top: 20px; margin-left: 50%" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()">
 					</p:commandButton>
 
 				</p:fieldset>

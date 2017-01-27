@@ -9,6 +9,8 @@
 			<script type="text/javascript" src="resources/js/metodosTCS.js"/>
 
 			<link rel="stylesheet" type="text/css" href="resources/css/estilosTCS.css" media="screen" />
+			<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+					rel="stylesheet"  type='text/css'/>
 			<link rel="icon" type="image/png" href="resources/img/favicon.ico" />
 			<title>Satisfaccion Clientes</title>
 		</h:head>
@@ -47,10 +49,10 @@
 								<p:menuitem value="Envio" outcome="/enviarEncuesta.xhtml">
 									<f:param name="i" value="2" />
 								</p:menuitem>
-								<p:menuitem value="Analisis" outcome="/analisisEncuesta.xhtml">
+								<p:menuitem value="Analisis" outcome="/analisisEncuesta.xhtml" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()">
 									<f:param name="i" value="3" />
 								</p:menuitem>
-								<p:menuitem value="Buzon de sugerencias" outcome="/buzonSugerencia.xhtml">
+								<p:menuitem value="Buzon de sugerencias" outcome="/buzonSugerencia.xhtml" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()">
 									<f:param name="i" value="4" />
 								</p:menuitem>
 

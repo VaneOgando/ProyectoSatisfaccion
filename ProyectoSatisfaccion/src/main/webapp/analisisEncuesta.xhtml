@@ -52,12 +52,9 @@
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Usuario:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}" />
-							<p:selectOneMenu id="ususario"  style="width:200px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
-								<f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
-								<f:selectItem itemLabel="Estefania.fernandez" itemValue="estefania.fernandez"/>
-								<f:selectItems value="#{analisisEncuestaBean.usuarios}" var="usuario">
-									<f:selectItem itemLabel="#{usuario.usuario}" itemValue="#{usuario.usuario}"/>
-								</f:selectItems>
+							<p:selectOneMenu id="usuario"  style="width:200px" value="#{analisisEncuestaBean.usuario}" rendered="#{analisisEncuestaBean.tipoPregunta.equals('E')}">
+								<f:selectItems value="#{analisisEncuestaBean.usuarios}" var="usuario"
+											   itemLabel="#{usuario.nombre}" itemValue="#{usuario.usuario}"/>
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Fecha envio:" style="float: right;" />

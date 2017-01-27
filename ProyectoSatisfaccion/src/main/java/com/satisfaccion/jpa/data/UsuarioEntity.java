@@ -33,4 +33,23 @@ public class UsuarioEntity {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof UsuarioEntity)) return false;
+
+		UsuarioEntity that = (UsuarioEntity) o;
+
+		if (getNombre() != null ? !getNombre().equals(that.getNombre()) : that.getNombre() != null) return false;
+		return !(getUsuario() != null ? !getUsuario().equals(that.getUsuario()) : that.getUsuario() != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getNombre() != null ? getNombre().hashCode() : 0;
+		result = 31 * result + (getUsuario() != null ? getUsuario().hashCode() : 0);
+		return result;
+	}
 }

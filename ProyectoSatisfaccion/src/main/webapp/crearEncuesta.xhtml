@@ -170,7 +170,7 @@
 					<p:panelGrid id="botones" styleClass="panelInvisible botonesPanel" style="margin: 0 auto; font-size: small">
 						<p:row>
 							<p:column>
-								<p:commandButton id="crear" value="Crear" update="CrearEncuesta" action="#{crearEncuestaBean.bt_crearEncuesta}"/>
+								<p:commandButton id="crear" value="Crear" update="CrearEncuesta" action="#{crearEncuestaBean.bt_crearEncuesta}" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()"/>
 							</p:column>
 							<p:column>
 								<p:commandButton id="limpiar" value="Limpiar" ajax="false" onclick="if (! confirm('¿Seguro desea limpiar los datos? Se perderan los cambios realizados.')) return false"

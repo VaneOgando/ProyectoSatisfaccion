@@ -4,6 +4,7 @@ import com.satisfaccion.jpa.data.*;
 import com.satisfaccion.spring.service.BuzonSugerenciaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
+import org.springframework.dao.DataAccessException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -75,20 +76,31 @@ public class BuzonSugerenciaBean {
 	public void cargarEncuestaFiltro(){
 
 		//Solo se observaran preguntasBuzon de encuestas
-		encuestas = buzonSugerenciaServicio.buscarEncuestas();
+		try {
+			encuestas = buzonSugerenciaServicio.buscarEncuestas();
+
+		} catch (DataAccessException e) {
+			encuestas = new ArrayList<EncuestaEntity>();
+		}
 	}
 
 	public void cargarProyectoFiltro(){
 
-		if( encuestaSelect.getId() != 0){
-			List<EncuestaEntity> encuestas = new ArrayList<EncuestaEntity>();
-			encuestas.add(encuestaSelect); //Query busca en lista
-			proyectos = buzonSugerenciaServicio.buscarProyectos(encuestas);
-		}else{
-			proyectos = buzonSugerenciaServicio.buscarProyectos(encuestas);
+		try {
+			if( encuestaSelect.getId() != 0){
+                List<EncuestaEntity> encuestas = new ArrayList<EncuestaEntity>();
+                encuestas.add(encuestaSelect); //Query busca en lista
+                proyectos = buzonSugerenciaServicio.buscarProyectos(encuestas);
+            }else{
+                proyectos = buzonSugerenciaServicio.buscarProyectos(encuestas);
+            }
+
+		} catch (Exception e) {
+			proyectos = new ArrayList<ProyectoEntity>();
 		}
 
 	}
+
 
 	public void filtrarPreguntas() {
 

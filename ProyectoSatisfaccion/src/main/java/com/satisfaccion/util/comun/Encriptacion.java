@@ -1,5 +1,6 @@
 package com.satisfaccion.util.comun;
 
+
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;

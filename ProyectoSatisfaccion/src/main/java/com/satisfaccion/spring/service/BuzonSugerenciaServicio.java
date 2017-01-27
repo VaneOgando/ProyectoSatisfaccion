@@ -38,16 +38,18 @@ public class BuzonSugerenciaServicio {
 
 		List<Integer> encuestaList = new ArrayList<Integer>();
 
-		Iterator<EncuestaEntity> iterator = encuestas.iterator();
+		List<ProyectoEntity> resultList = null;
 
-		while (iterator.hasNext()) {
-			EncuestaEntity enc = iterator.next();
-			encuestaList.add(enc.getId());
-		}
+			Iterator<EncuestaEntity> iterator = encuestas.iterator();
 
-		List<ProyectoEntity> resultList = getEntityManager().createNamedQuery("HQL_PROYECTO_ENCUESTA")
-				.setParameter("encuestaList", encuestaList)
-				.getResultList();
+			while (iterator.hasNext()) {
+                EncuestaEntity enc = iterator.next();
+                encuestaList.add(enc.getId());
+            }
+
+			resultList = getEntityManager().createNamedQuery("HQL_PROYECTO_ENCUESTA")
+                    .setParameter("encuestaList", encuestaList)
+                    .getResultList();
 
 		return resultList;
 	}

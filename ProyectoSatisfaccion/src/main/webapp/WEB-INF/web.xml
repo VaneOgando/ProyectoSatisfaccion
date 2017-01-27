@@ -33,26 +33,32 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/applicationContext.xml
+			/WEB-INF/springSecurity.xml
 		</param-value>
 	</context-param>
-
-	<!--			/WEB-INF/springSecurity.xml -->
 
 	<context-param>
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/faces-config.xml</param-value>
 	</context-param>
 
+	<!-- FontAwesome -->
+
+	<context-param>
+		<param-name>primefaces.FONT_AWESOME</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
 	<!-- Spring Security -->
-<!--
+
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
--->
+
 	<!-- Allow login pages with JSF which redirects to security check,
      therefore we have to add the forward entry here -->
-<!--
+
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -65,16 +71,14 @@
 			org.springframework.security.web.session.HttpSessionEventPublisher
 		</listener-class>
 	</listener>
--->
+
 
 	<!-- in minutes -->
-<!--
 	<session-config>
-		<session-timeout>30</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
--->
+
 	<!-- Manejo de errores -->
-<!--
 	<error-page>
 		<error-code>404</error-code>
 		<location>/error.xhtml</location>
@@ -87,6 +91,5 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/error.xhtml</location>
 	</error-page>
--->
 
 </web-app>

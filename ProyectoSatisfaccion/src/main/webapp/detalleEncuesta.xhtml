@@ -28,9 +28,9 @@
 					<div class="paddingBuzon tipoPreg">
 						<p:selectOneMenu value="#{detalleEncuestaBean.usuarioEvaluado}" styleClass="selectUsuario">
 							<f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
-							<f:selectItem itemLabel="Vanessa Rodriguez O" itemValue="vanessa.rodriguez" />
-							<f:selectItem itemLabel="Gustavo Acuña" itemValue="gustavo.acuna" />
-							<f:selectItem itemLabel="Dexy Guerrero" itemValue="dexy.guerrero" />
+							<f:selectItems value="#{detalleEncuestaBean.usuarios}" var="usuario"
+										   itemLabel="#{usuario.nombre}" itemValue="#{usuario.usuario}"/>
+
 						</p:selectOneMenu>
 					</div>
 				</div>
@@ -82,7 +82,8 @@
 		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
 			<p:row>
 				<p:column>
-					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onclick="if (!confirmarEnvio('#{detalleEncuestaBean.encuesta.tipoEncuesta}')) return false;" />
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onclick="if (!confirmarEnvio('#{detalleEncuestaBean.encuesta.tipoEncuesta}')) return false;"
+									 onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()"/>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
