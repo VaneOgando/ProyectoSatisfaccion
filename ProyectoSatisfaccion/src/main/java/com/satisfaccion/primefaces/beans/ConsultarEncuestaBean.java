@@ -185,7 +185,16 @@ public class ConsultarEncuestaBean {
 		return "";
 	}
 
+	public String bt_analizarEncuesta() {
 
+		if (itemSeleccionado != null) {
+
+			return "analisisEncuesta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId()+"&e=t";
+
+		}
+
+		return "";
+	}
 
 
 /* GET & SET */

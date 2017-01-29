@@ -5,6 +5,8 @@ import com.satisfaccion.spring.service.CrearPreguntaServicio;
 import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.util.comun.MensajesComun;
 import org.primefaces.context.RequestContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -92,10 +94,8 @@ public class CrearPreguntaBean {
 			pregunta.setFechaCreacion(fechaActual);
 
 			//Obtener usuario conectado
-			//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			//pregunta.setUsuarioCreador(auth.getName);
-
-			pregunta.setUsuarioCreador("vanessa.rodriguez");
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			pregunta.setUsuarioCreador(auth.getName());
 
 			if (evaluacion) {
 				pregunta.setTipoEncuesta("E");

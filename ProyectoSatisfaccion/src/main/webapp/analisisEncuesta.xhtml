@@ -27,6 +27,7 @@
 							<p:selectOneMenu id="estado"  style="width:200px" value="#{analisisEncuestaBean.estado}">
 								<f:selectItem itemLabel="Activo" itemValue="A" />
 								<f:selectItem itemLabel="Inactivo" itemValue="I" />
+								<p:ajax listener="#{analisisEncuestaBean.recargarFiltos}" update="panelFiltro" />
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Encuesta:" style="float: right;" rendered="#{analisisEncuestaBean.tipoPregunta.equals('N')}" />

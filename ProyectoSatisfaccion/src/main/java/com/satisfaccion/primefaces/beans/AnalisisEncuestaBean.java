@@ -64,14 +64,25 @@ public class AnalisisEncuestaBean {
 	@PostConstruct
 	private void init() {
 
-		//Obtener parametro por redireccion
+		/*//Obtener parametro por redireccion
 		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+		String enc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("e");
 
 		if(id != null){
 
-			preguntaSelect = analisisEncuestaServicio.buscarPreguntaPorId(Integer.parseInt(id));
-			tipoPregunta = preguntaSelect.getTipoEncuesta();
-		}
+			//Analizar pregunta especifica
+			if("f".equals(enc)){
+
+				preguntaSelect = analisisEncuestaServicio.buscarPreguntaPorId(Integer.parseInt(id));
+				tipoPregunta = preguntaSelect.getTipoEncuesta();
+
+			}else{//Analizar encuesta especifica
+
+				encuestaSelect = analisisEncuestaServicio.buscarEncuestaPorId(Integer.parseInt(id));
+				tipoPregunta = encuestaSelect.getTipoEncuesta();
+			}
+
+		}*/
 
 		recargarFiltos();
 		filtrarPreguntas();

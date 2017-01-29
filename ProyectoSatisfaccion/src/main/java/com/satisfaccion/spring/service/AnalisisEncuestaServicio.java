@@ -168,6 +168,11 @@ public class AnalisisEncuestaServicio {
 		return entityManager.find(PreguntaEntity.class, idPregunta);
 	}
 
+	@Transactional
+	public EncuestaEntity buscarEncuestaPorId(int idEncuesta) throws DataAccessException {
+
+		return entityManager.find(EncuestaEntity.class, idEncuesta);
+	}
 
 
 

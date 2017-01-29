@@ -39,6 +39,7 @@ Se añaden los grupos (como roles de usuario) al que pertenezca.
 
         <authentication-provider user-service-ref="userAdmin"/>
         <authentication-provider ref="ldapAuthProviderLideres"/>
+        <authentication-provider ref="ldapAuthProviderEncuesta"/>
 
     </authentication-manager>
 
@@ -47,6 +48,21 @@ Se añaden los grupos (como roles de usuario) al que pertenezca.
                  url="ldap://infra.tcs.local:389/DC=tcs,DC=local"
                  manager-dn="CN=incidencias, CN=Users, DC=tcs, DC=local"
                  manager-password="sDuZv5TfCMOgQ5" />
+
+    <bean:bean id="ldapAuthProviderEncuesta" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <bean:constructor-arg name="authenticator">
+            <bean:bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <bean:constructor-arg ref="ldapLocal" />
+                <bean:property name="userSearch">
+                    <bean:bean class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+                        <bean:constructor-arg name="searchBase" value="CN=Users"/>
+                        <bean:constructor-arg name="searchFilter" value="(&amp;(sAMAccountName={0})(memberof=CN=encuestas, CN=users, DC=tcs, DC=local))"/>
+                        <bean:constructor-arg name="contextSource" ref="ldapLocal"/>
+                    </bean:bean>
+                </bean:property>
+            </bean:bean>
+        </bean:constructor-arg>
+    </bean:bean>
 
     <bean:bean id="ldapAuthProviderLideres" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
         <bean:constructor-arg name="authenticator">

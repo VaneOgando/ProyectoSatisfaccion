@@ -71,11 +71,11 @@
 
 	<!-- Configuracion Correo electronico -->
 	<bean id="configuracionCorreo" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
+		<property name="host" value="jupiter.calcanet.com" />
+		<property name="port" value="995" />
 		<property name="defaultEncoding" value="UTF-8"/>
-		<property name="username" value="nessaOgando@gmail.com" />
-		<property name="password" value="Nessa204932766" />
+		<property name="username" value="encuestas@tcs.com.ve" />
+		<property name="password" value="Caracas01." />
 
 		<property name="javaMailProperties">
 			<props>

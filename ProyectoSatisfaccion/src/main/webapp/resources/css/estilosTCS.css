@@ -340,3 +340,7 @@ body {
     padding-right: 2%;
     padding-top: 1%;
 }
+
+.ui-icon-excel {
+    background: url("images/toexcel.gif")  no-repeat top left !important;;
+}

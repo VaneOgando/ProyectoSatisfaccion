@@ -121,31 +121,32 @@
 				</p:column>
 
 				<p:column headerText="Enviar" style="text-align: center">
-					<p:commandButton id="Enviar" icon="fa fa-envelope-o" title="Enviar" style="font-size: small" action="#{consultarEncuestaBean.bt_enviarEncuesta}">
+					<p:commandLink action="#{consultarEncuestaBean.bt_enviarEncuesta}" title="Enviar">
+						<i class="fa fa-envelope-o"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
-					</p:commandButton>
+					</p:commandLink>
 				</p:column>
 
 				<p:column headerText="Acciones" style="text-align: center">
-					<p:commandButton id="Ver" icon="fa fa-fw fa-eye" type="button" title="Ver" style="font-size: small" action="#{consultarEncuestaBean.bt_detalleEncuesta}" >
+					<p:commandLink action="#{consultarEncuestaBean.bt_detalleEncuesta}" title="Ver">
+						<i class="fa fa-eye"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
-					</p:commandButton>
-					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarEncuestaBean.bt_modificarEncuesta}"
-							onclick="if (!confirmarModificacion('#{item.estado}')) return false;">
-						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
-					</p:commandButton>
-					<p:commandButton id="Analizar" icon="ui-icon fa fa-line-chart"  title="Analizar" style="font-size: small" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()">
-						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
+					</p:commandLink>
 
-					</p:commandButton>
-					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarEncuestaBean.eliminarEncuesta}"
-							update=":Datatable:TablaEncuesta" ajax="false" onclick="if (! confirm('¿Seguro desea realizar esta acción? La encuesta será eliminada o desactivada definitivamente.')) return false">
+					<p:commandLink action="#{consultarEncuestaBean.bt_modificarEncuesta}" style="margin-left: 5%" title="Modificar" onclick="if (!confirmarModificacion('#{item.estado}')) return false;">
+						<i class="fa fa-pencil"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
-					</p:commandButton>
+					</p:commandLink>
+
+					<p:commandLink action="#{consultarEncuestaBean.eliminarEncuesta}" style="margin-left: 5%" title="Eliminar"
+								   update=":Datatable:TablaEncuesta" ajax="false" onclick="if (! confirm('¿Seguro desea realizar esta acción? La encuesta será eliminada o desactivada definitivamente.')) return false">
+						<i class="fa fa-trash-o"/>
+						<f:setPropertyActionListener value="#{item}" target="#{consultarEncuestaBean.itemSeleccionado}" />
+					</p:commandLink>
 				</p:column>
 
 			</p:dataTable>
-			<p:commandLink><i class="fa fa-line-chart"/></p:commandLink>
+
 		</h:form>
 
 

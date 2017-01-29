@@ -139,6 +139,14 @@ public class ConsultarPreguntaBean {
 		return "Crear";
 	}
 
+	public String analizarPregunta() {
+
+		if (itemSeleccionado != null) {
+			return "analisisEncuesta.xhtml?faces-redirect=true&id=" + itemSeleccionado.getId() + "&e=f";
+		}
+
+		return "";
+	}
 
 
 

@@ -82,8 +82,7 @@
 		<p:panelGrid id="botones" styleClass="panelInvisible botonDetalle" rendered="#{!detalleEncuestaBean.errorEncuesta}">
 			<p:row>
 				<p:column>
-					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onclick="if (!confirmarEnvio('#{detalleEncuestaBean.encuesta.tipoEncuesta}')) return false;"
-									 onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()"/>
+					<p:commandButton id="listo" value="Listo" action="#{detalleEncuestaBean.bt_listoEncuesta}" onclick="if (!confirmarEnvio('#{detalleEncuestaBean.encuesta.tipoEncuesta}')) return false;"/>
 				</p:column>
 			</p:row>
 		</p:panelGrid>

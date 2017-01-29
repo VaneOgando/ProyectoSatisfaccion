@@ -115,17 +115,21 @@
 				</p:column>
 
 				<p:column headerText="Acciones" style="text-align: center">
-					<p:commandButton id="Ver" icon="ui-icon-eye" title="Ver" style="font-size: small" action="#{consultarPreguntaBean.detallePregunta}">
+					<p:commandLink action="#{consultarPreguntaBean.detallePregunta}" title="Ver">
+						<i class="fa fa-eye"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
-					</p:commandButton>
-					<p:commandButton id="Modificar" icon="ui-icon-pencil" title="Modificar" style="font-size: small" action="#{consultarPreguntaBean.modificarPregunta}">
+					</p:commandLink>
+
+					<p:commandLink action="#{consultarPreguntaBean.modificarPregunta}" style="margin-left: 5%" title="Modificar">
+						<i class="fa fa-pencil"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
-					</p:commandButton>
-					<p:commandButton id="Analizar" icon="ui-icon-chart-pie"  title="Analizar" style="font-size: small" onstart="PF('cargando').show()" oncomplete="PF('cargando').hide()" />
-					<p:commandButton id="Eliminar" icon="ui-icon-trash" title="Eliminar" style="font-size: small" action="#{consultarPreguntaBean.eliminarPregunta}"
-							update=":Datatable:TablaPregunta" ajax="false" onclick="if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false">
+					</p:commandLink>
+
+					<p:commandLink  action="#{consultarPreguntaBean.eliminarPregunta}" style="margin-left: 5%" title="Eliminar"
+									update=":Datatable:TablaPregunta" ajax="false" onclick="if (! confirm('¿Seguro desea realizar esta acción? La pregunta será eliminada o desactivada definitivamente.')) return false">
+						<i class="fa fa-trash-o"/>
 						<f:setPropertyActionListener value="#{item}" target="#{consultarPreguntaBean.itemSeleccionado}" />
-					</p:commandButton>
+					</p:commandLink>
 				</p:column>
 
 			</p:dataTable>

@@ -8,6 +8,8 @@ import com.satisfaccion.util.comun.Constantes;
 import com.satisfaccion.spring.service.EmailServicio;
 import com.satisfaccion.util.comun.Encriptacion;
 import com.satisfaccion.util.comun.MensajesComun;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -131,11 +133,11 @@ public class EnviarEncuestaBean{
 
 					envio.setEstado("P");
 					envio.setFechaEnvio(fechaActual);
-					//Obtener usuario conectado
-					//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-					//encuesta.setUsuarioCreador(auth.getName);
 
-					envio.setUsuarioCreador("vanessa.rodriguez");
+					//Obtener usuario conectado
+					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+					envio.setUsuarioCreador(auth.getName());
+
 					envio.setEncuesta(enviarEncuestaServicio.buscarEncuestaPorId(encuestaSelect.getId()));
 
 					envio.setDestinatario(destino.trim());
