@@ -72,7 +72,7 @@
 	<!-- Configuracion Correo electronico -->
 	<bean id="configuracionCorreo" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="jupiter.calcanet.com" />
-		<property name="port" value="995" />
+		<property name="port" value="465" />
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="username" value="encuestas@tcs.com.ve" />
 		<property name="password" value="Caracas01." />
@@ -82,6 +82,8 @@
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
 				<prop key="mail.mime.charset">UTF-8</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.socketFactory.port">465</prop>
 			</props>
 		</property>
 	</bean>

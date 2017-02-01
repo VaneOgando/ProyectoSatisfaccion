@@ -23,8 +23,8 @@ public class Constantes {
     public static final String ENVIO_ASUNTO_ENCUESTA = "Invitacion a realizar encuesta de TCS";
 
     public static final String KEY_ENCRIPT = "TechnoConsulSoluti78";
-    public static final String CORREO_FROM = "no-reply@tcs.com.ve";
-    public static final String NOMBRE_CORREO_FROM = "Equipo TCS";
+    public static final String CORREO_FROM = "encuestas@tcs.com.ve";
+    public static final String NOMBRE_CORREO_FROM = "Encuestas TCS";
 
 
     public static final String MENSAJE_TIPO_EXITO  = "Éxito!";

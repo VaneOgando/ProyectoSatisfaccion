@@ -117,6 +117,8 @@ public class ConsultarPreguntaBean {
 			}else{
 				//Eliminar pregunta
 
+				//se llama 2 veces pq no se elimina la pregunta, solo la relacion a encuesta
+				eliminar = consultarPreguntaServicio.eliminarPregunta(true, itemSeleccionado);
 				eliminar = consultarPreguntaServicio.eliminarPregunta(true, itemSeleccionado);
 
 				if (eliminar){
@@ -125,6 +127,7 @@ public class ConsultarPreguntaBean {
 				}else{
 					mensajesComun.guardarMensaje(false, Constantes.MENSAJE_TIPO_ERROR, Constantes.ERR_ELIMINAR_DEFINITIVO);
 				}
+
 
 			}
 
